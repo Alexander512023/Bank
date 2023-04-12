@@ -6,20 +6,20 @@ import java.util.List;
 
 public class AccountCacheKeyFactoryStub implements CacheKeyFactory {
 
-    private boolean generateAllInvoked;
+  private boolean generateAllInvoked;
 
-    @Override
-    public CacheKey generateCacheKey(Object o, String s) {
-        return null;
-    }
+  @Override
+  public CacheKey generateCacheKey(Object o, String s) {
+    return null;
+  }
 
-    @Override
-    public List<CacheKey> generateAllCacheKeys(Object o) {
-        generateAllInvoked = true;
-        return null;
-    }
+  @Override
+  public List<CacheKey> generateAllCacheKeys(Object o) {
+    generateAllInvoked = true;
+    return null;
+  }
 
-    public boolean isGenerateAllInvoked() {
-        return generateAllInvoked;
-    }
+  public boolean isGenerateAllInvoked() {
+    return generateAllInvoked;
+  }
 }

@@ -5,5 +5,5 @@ import java.util.Optional;
 
 public interface ClientDAO {
 
-    Optional<Client> findByPassport(String passport);
+  Optional<Client> findByPassport(String passport);
 }

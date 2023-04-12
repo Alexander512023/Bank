@@ -12,38 +12,39 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class RepositoryLayer {
-    private final AccountRepositoryCached accountRep;
-    private final ClientRepositoryPOJO clientRep;
-    private final NumberCapacityRepositoryPOJO numberCapacityRep;
-    private final TransactionRepositoryPOJO transactRep;
+  private final AccountRepositoryCached accountRep;
+  private final ClientRepositoryPOJO clientRep;
+  private final NumberCapacityRepositoryPOJO numberCapacityRep;
+  private final TransactionRepositoryPOJO transactRep;
 
-    /* default */ RepositoryLayer(CacheLayer cacheLayer, DaoLayer daoLayer) {
-        transactRep = new TransactionRepositoryPOJO(daoLayer.getTransactionDAO());
-        KeyExtractStrategy accountNumberExtractStrategy = new AccountNumberExtractStrategy();
-        Map<String, KeyExtractStrategy> accountKeyExtractStrategies = new ConcurrentHashMap<>();
-        accountKeyExtractStrategies.
-                put(accountNumberExtractStrategy.getStrategyType(), accountNumberExtractStrategy);
-        CacheKeyFactory accountCacheKeyFactory = new CacheKeyFactoryStandard(accountKeyExtractStrategies);
-        accountRep = new AccountRepositoryCached(cacheLayer.getAccountCache(), daoLayer.getAccountDAO(),
-                transactRep, accountCacheKeyFactory);
+  /* default */ RepositoryLayer(CacheLayer cacheLayer, DaoLayer daoLayer) {
+    transactRep = new TransactionRepositoryPOJO(daoLayer.getTransactionDAO());
+    KeyExtractStrategy accountNumberExtractStrategy = new AccountNumberExtractStrategy();
+    Map<String, KeyExtractStrategy> accountKeyExtractStrategies = new ConcurrentHashMap<>();
+    accountKeyExtractStrategies.
+        put(accountNumberExtractStrategy.getStrategyType(), accountNumberExtractStrategy);
+    CacheKeyFactory accountCacheKeyFactory =
+        new CacheKeyFactoryStandard(accountKeyExtractStrategies);
+    accountRep = new AccountRepositoryCached(cacheLayer.getAccountCache(), daoLayer.getAccountDAO(),
+        transactRep, accountCacheKeyFactory);
 
-        clientRep = new ClientRepositoryPOJO(daoLayer.getClientDAO());
-        numberCapacityRep = new NumberCapacityRepositoryPOJO(daoLayer.getNumberCapacity());
-    }
+    clientRep = new ClientRepositoryPOJO(daoLayer.getClientDAO());
+    numberCapacityRep = new NumberCapacityRepositoryPOJO(daoLayer.getNumberCapacity());
+  }
 
-    /* default */ AccountRepositoryCached getAccountRep() {
-        return accountRep;
-    }
+  /* default */ AccountRepositoryCached getAccountRep() {
+    return accountRep;
+  }
 
-    /* default */ ClientRepositoryPOJO getClientRep() {
-        return clientRep;
-    }
+  /* default */ ClientRepositoryPOJO getClientRep() {
+    return clientRep;
+  }
 
-    /* default */ NumberCapacityRepositoryPOJO getNumberCapacityRep() {
-        return numberCapacityRep;
-    }
+  /* default */ NumberCapacityRepositoryPOJO getNumberCapacityRep() {
+    return numberCapacityRep;
+  }
 
-    /* default */ TransactionRepositoryPOJO getTransactRep() {
-        return transactRep;
-    }
+  /* default */ TransactionRepositoryPOJO getTransactRep() {
+    return transactRep;
+  }
 }

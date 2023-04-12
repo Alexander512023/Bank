@@ -9,15 +9,15 @@ import com.goryaninaa.web.bank.model.operation.ServiceInitiator;
 
 public class RequisitesGenerator {
 
-    public static OperationRequisites defineOperationRequisites() {
-        OperationRequisites requisites =
-                new OperationRequisites(5, ServiceInitiator.POSTMAN, new Client());
-        requisites.setAccountFrom(new Account(1));
-        requisites.setAccountRecipient(new Account(2));
-        return requisites;
-    }
+  public static OperationRequisites defineOperationRequisites() {
+    OperationRequisites requisites =
+        new OperationRequisites(5, ServiceInitiator.POSTMAN, new Client());
+    requisites.setAccountFrom(new Account(1));
+    requisites.setAccountRecipient(new Account(2));
+    return requisites;
+  }
 
-    public static AccountOpenRequisites defineOpenRequisites() {
-        return new AccountOpenRequisites(defineOperationRequisites(), AccountType.VKLAD75, 1);
-    }
+  public static AccountOpenRequisites defineOpenRequisites() {
+    return new AccountOpenRequisites(defineOperationRequisites(), AccountType.VKLAD75, 1);
+  }
 }

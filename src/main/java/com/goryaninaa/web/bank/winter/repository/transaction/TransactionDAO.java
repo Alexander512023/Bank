@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface TransactionDAO {
 
-    void save(Operation transaction);
+  void save(Operation transaction);
 
-    List<Operation> findTransactionsOfAccount(int accountId);
+  List<Operation> findTransactionsOfAccount(int accountId);
 }

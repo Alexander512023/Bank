@@ -6,15 +6,15 @@ import java.util.Optional;
 
 public class ClientRepositoryPOJO implements ClientRepositoryRequisite {
 
-	private final ClientDAO clientDAO;
-	
-	public ClientRepositoryPOJO(ClientDAO clientDAO) {
-		this.clientDAO = clientDAO;
-	}
-	
-	@Override
-	public Optional<Client> findByPassport(String passport) {
-		return clientDAO.findByPassport(passport);
-	}
+  private final ClientDAO clientDAO;
+
+  public ClientRepositoryPOJO(ClientDAO clientDAO) {
+    this.clientDAO = clientDAO;
+  }
+
+  @Override
+  public Optional<Client> findByPassport(String passport) {
+    return clientDAO.findByPassport(passport);
+  }
 
 }

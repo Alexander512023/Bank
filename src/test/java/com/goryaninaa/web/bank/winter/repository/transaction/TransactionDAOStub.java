@@ -5,25 +5,25 @@ import java.util.List;
 
 public class TransactionDAOStub implements TransactionDAO {
 
-    private boolean saveInvoked;
-    private boolean findInvoked;
+  private boolean saveInvoked;
+  private boolean findInvoked;
 
-    @Override
-    public void save(Operation transaction) {
-        saveInvoked = true;
-    }
+  @Override
+  public void save(Operation transaction) {
+    saveInvoked = true;
+  }
 
-    @Override
-    public List<Operation> findTransactionsOfAccount(int accountId) {
-        findInvoked = true;
-        return null;
-    }
+  @Override
+  public List<Operation> findTransactionsOfAccount(int accountId) {
+    findInvoked = true;
+    return null;
+  }
 
-    public boolean isSaveInvoked() {
-        return saveInvoked;
-    }
+  public boolean isSaveInvoked() {
+    return saveInvoked;
+  }
 
-    public boolean isFindInvoked() {
-        return findInvoked;
-    }
+  public boolean isFindInvoked() {
+    return findInvoked;
+  }
 }

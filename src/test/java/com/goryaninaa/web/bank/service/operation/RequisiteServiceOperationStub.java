@@ -9,45 +9,45 @@ import com.goryaninaa.web.bank.model.operation.ServiceInitiator;
 
 public class RequisiteServiceOperationStub implements RequisiteServiceOperation {
 
-    private boolean openInvoked;
-    private boolean depositInvoked;
-    private boolean withdrawInvoked;
+  private boolean openInvoked;
+  private boolean depositInvoked;
+  private boolean withdrawInvoked;
 
-    @Override
-    public OperationRequisites prepareAccountOpenOperationRequisites(
-            Account account, AccountOpenRequisites requisites) {
-        openInvoked = true;
-        OperationRequisites operationRequisites = new OperationRequisites(5,
-                ServiceInitiator.POSTMAN, new Client());
-        operationRequisites.setOperationType(OperationType.DEPOSIT);
-        operationRequisites.setAccountFrom(new Account(1));
-        operationRequisites.setAccountRecipient(new Account(2));
-        return operationRequisites;
-    }
+  @Override
+  public OperationRequisites prepareAccountOpenOperationRequisites(
+      Account account, AccountOpenRequisites requisites) {
+    openInvoked = true;
+    OperationRequisites operationRequisites = new OperationRequisites(5,
+        ServiceInitiator.POSTMAN, new Client());
+    operationRequisites.setOperationType(OperationType.DEPOSIT);
+    operationRequisites.setAccountFrom(new Account(1));
+    operationRequisites.setAccountRecipient(new Account(2));
+    return operationRequisites;
+  }
 
-    @Override
-    public OperationRequisites prepareDepositOperationRequisites(
-            Account account, OperationRequisites requisites) {
-        depositInvoked = true;
-        return requisites;
-    }
+  @Override
+  public OperationRequisites prepareDepositOperationRequisites(
+      Account account, OperationRequisites requisites) {
+    depositInvoked = true;
+    return requisites;
+  }
 
-    @Override
-    public OperationRequisites prepareWithdrawOperationRequisites(
-            Account account, OperationRequisites requisites) {
-        withdrawInvoked = true;
-        return requisites;
-    }
+  @Override
+  public OperationRequisites prepareWithdrawOperationRequisites(
+      Account account, OperationRequisites requisites) {
+    withdrawInvoked = true;
+    return requisites;
+  }
 
-    public boolean isOpenInvoked() {
-        return openInvoked;
-    }
+  public boolean isOpenInvoked() {
+    return openInvoked;
+  }
 
-    public boolean isDepositInvoked() {
-        return depositInvoked;
-    }
+  public boolean isDepositInvoked() {
+    return depositInvoked;
+  }
 
-    public boolean isWithdrawInvoked() {
-        return withdrawInvoked;
-    }
+  public boolean isWithdrawInvoked() {
+    return withdrawInvoked;
+  }
 }

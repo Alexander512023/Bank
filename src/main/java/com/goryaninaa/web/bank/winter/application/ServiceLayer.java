@@ -8,26 +8,26 @@ import com.goryaninaa.web.bank.service.requisite.RequisiteServicePojo;
 
 @SuppressWarnings("unused")
 public class ServiceLayer {
-    private final AccountService accountService;
-    private final OperationService operationService;
-    private final RequisiteServicePojo requisiteService;
+  private final AccountService accountService;
+  private final OperationService operationService;
+  private final RequisiteServicePojo requisiteService;
 
-    /* default */ ServiceLayer(RepositoryLayer repLayer) {
-        requisiteService = new RequisiteServicePojo(repLayer.getClientRep());
-        operationService = new OperationServicePojo(requisiteService, repLayer.getTransactRep());
-        accountService = new AccountServicePojo(repLayer.getAccountRep(), operationService,
-                repLayer.getNumberCapacityRep(), requisiteService);
-    }
+  /* default */ ServiceLayer(RepositoryLayer repLayer) {
+    requisiteService = new RequisiteServicePojo(repLayer.getClientRep());
+    operationService = new OperationServicePojo(requisiteService, repLayer.getTransactRep());
+    accountService = new AccountServicePojo(repLayer.getAccountRep(), operationService,
+        repLayer.getNumberCapacityRep(), requisiteService);
+  }
 
-    /* default */ AccountService getAccountService() {
-        return accountService;
-    }
+  /* default */ AccountService getAccountService() {
+    return accountService;
+  }
 
-    /* default */ OperationService getOperationService() {
-        return operationService;
-    }
+  /* default */ OperationService getOperationService() {
+    return operationService;
+  }
 
-    /* default */ RequisiteServicePojo getRequisiteService() {
-        return requisiteService;
-    }
+  /* default */ RequisiteServicePojo getRequisiteService() {
+    return requisiteService;
+  }
 }

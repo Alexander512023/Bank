@@ -4,128 +4,128 @@ import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.client.Client;
 
 public class OperationRequisites {
-	
-	private int amount;
-	private int balanceBefore;
-	private int balanceAfter;
-	private Account account;
-	private Account accountFrom;
-	private Account accountRecipient;
-	private Client client;
-	private ServiceInitiator service;
-	private OperationType operationType;
-	private int historyNumber;
 
-	public OperationRequisites() {
-		
-	}
-	
-	public OperationRequisites(int amount, ServiceInitiator service, Client client) {
-		this.amount = amount;
-		this.service = service;
-		this.client = client;
-	}
+  private int amount;
+  private int balanceBefore;
+  private int balanceAfter;
+  private Account account;
+  private Account accountFrom;
+  private Account accountRecipient;
+  private Client client;
+  private ServiceInitiator service;
+  private OperationType operationType;
+  private int historyNumber;
 
-	public void enrich(Account account, Client client, OperationType operationType) {
-		this.setAccount(account);
-		this.setAccountRecipient(account);
-		this.setClient(client);
-		this.setBalanceAfter(account.getBalance());
-		this.setHistoryNumber(account.getLastOperationNumber());
-		this.setOperationType(operationType);
-		defineBalanceBefore(operationType, amount, balanceAfter);
-	}
+  public OperationRequisites() {
 
-	public int getAmount() {
-		return amount;
-	}
+  }
 
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
+  public OperationRequisites(int amount, ServiceInitiator service, Client client) {
+    this.amount = amount;
+    this.service = service;
+    this.client = client;
+  }
 
-	public int getBalanceBefore() {
-		return balanceBefore;
-	}
+  public void enrich(Account account, Client client, OperationType operationType) {
+    this.setAccount(account);
+    this.setAccountRecipient(account);
+    this.setClient(client);
+    this.setBalanceAfter(account.getBalance());
+    this.setHistoryNumber(account.getLastOperationNumber());
+    this.setOperationType(operationType);
+    defineBalanceBefore(operationType, amount, balanceAfter);
+  }
 
-	public void setBalanceBefore(int balanceBefore) {
-		this.balanceBefore = balanceBefore;
-	}
+  public int getAmount() {
+    return amount;
+  }
 
-	public int getBalanceAfter() {
-		return balanceAfter;
-	}
+  public void setAmount(int amount) {
+    this.amount = amount;
+  }
 
-	public void setBalanceAfter(int balanceAfter) {
-		this.balanceAfter = balanceAfter;
-	}
+  public int getBalanceBefore() {
+    return balanceBefore;
+  }
 
-	public Account getAccount() {
-		return account;
-	}
+  public void setBalanceBefore(int balanceBefore) {
+    this.balanceBefore = balanceBefore;
+  }
 
-	public void setAccount(Account account) {
-		this.account = account;
-	}
+  public int getBalanceAfter() {
+    return balanceAfter;
+  }
 
-	public Account getAccountFrom() {
-		return accountFrom;
-	}
+  public void setBalanceAfter(int balanceAfter) {
+    this.balanceAfter = balanceAfter;
+  }
 
-	public void setAccountFrom(Account accountFrom) {
-		this.accountFrom = accountFrom;
-	}
+  public Account getAccount() {
+    return account;
+  }
 
-	public Account getAccountRecipient() {
-		return accountRecipient;
-	}
+  public void setAccount(Account account) {
+    this.account = account;
+  }
 
-	public void setAccountRecipient(Account accountRecipient) {
-		this.accountRecipient = accountRecipient;
-	}
+  public Account getAccountFrom() {
+    return accountFrom;
+  }
 
-	public Client getClient() {
-		return client;
-	}
+  public void setAccountFrom(Account accountFrom) {
+    this.accountFrom = accountFrom;
+  }
 
-	public void setClient(Client client) {
-		this.client = client;
-	}
+  public Account getAccountRecipient() {
+    return accountRecipient;
+  }
 
-	public ServiceInitiator getService() {
-		return service;
-	}
+  public void setAccountRecipient(Account accountRecipient) {
+    this.accountRecipient = accountRecipient;
+  }
 
-	public void setService(ServiceInitiator service) {
-		this.service = service;
-	}
+  public Client getClient() {
+    return client;
+  }
 
-	public OperationType getOperationType() {
-		return operationType;
-	}
+  public void setClient(Client client) {
+    this.client = client;
+  }
 
-	public void setOperationType(OperationType operationType) {
-		this.operationType = operationType;
-	}
+  public ServiceInitiator getService() {
+    return service;
+  }
 
-	public int getHistoryNumber() {
-		return historyNumber;
-	}
+  public void setService(ServiceInitiator service) {
+    this.service = service;
+  }
 
-	public void setHistoryNumber(int historyNumber) {
-		this.historyNumber = historyNumber;
-	}
+  public OperationType getOperationType() {
+    return operationType;
+  }
 
-	private void defineBalanceBefore(OperationType operationType, int amount, int balanceAfter) {
-		switch (operationType) {
-			case DEPOSIT:
-				this.setBalanceBefore(balanceAfter - amount);
-				break;
-			case WITHDRAW:
-				this.setBalanceBefore(balanceAfter + Math.abs(amount));
-				break;
-			default:
-				break;
-		}
-	}
+  public void setOperationType(OperationType operationType) {
+    this.operationType = operationType;
+  }
+
+  public int getHistoryNumber() {
+    return historyNumber;
+  }
+
+  public void setHistoryNumber(int historyNumber) {
+    this.historyNumber = historyNumber;
+  }
+
+  private void defineBalanceBefore(OperationType operationType, int amount, int balanceAfter) {
+    switch (operationType) {
+      case DEPOSIT:
+        this.setBalanceBefore(balanceAfter - amount);
+        break;
+      case WITHDRAW:
+        this.setBalanceBefore(balanceAfter + Math.abs(amount));
+        break;
+      default:
+        break;
+    }
+  }
 }

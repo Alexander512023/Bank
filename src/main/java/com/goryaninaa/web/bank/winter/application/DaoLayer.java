@@ -12,39 +12,39 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DaoLayer {
-    private final AccountDAOConcurrentStub accountDAO = new AccountDAOConcurrentStub();
-    private final AccountDataMediator accountDataMediator;
-    private final ClientDAOConcurrentStub clientDAO = new ClientDAOConcurrentStub();
-    private final NumberCapacity numberCapacity = new NumberCapacity();
-    private final TransactionDAOConcurrentStub transactionDAO = new TransactionDAOConcurrentStub();
+  private final AccountDAOConcurrentStub accountDAO = new AccountDAOConcurrentStub();
+  private final AccountDataMediator accountDataMediator;
+  private final ClientDAOConcurrentStub clientDAO = new ClientDAOConcurrentStub();
+  private final NumberCapacity numberCapacity = new NumberCapacity();
+  private final TransactionDAOConcurrentStub transactionDAO = new TransactionDAOConcurrentStub();
 
-    /* default */ AccountDAOConcurrentStub getAccountDAO() {
-        return accountDAO;
-    }
+  /* default */ DaoLayer() {
+    DataAccessStrategy<Account> accountDataAccessByNumber =
+        new AccountDataAccessByNumberStrategy(accountDAO);
+    Map<String, DataAccessStrategy<Account>> accountDataAccesses =
+        new ConcurrentHashMap<>();
+    accountDataAccesses.put(accountDataAccessByNumber.getStrategyType(),
+        accountDataAccessByNumber);
+    accountDataMediator = new AccountDataMediator(accountDataAccesses);
+  }
 
-    /* default */ AccountDataMediator getAccountDataMediator() {
-        return accountDataMediator;
-    }
+  /* default */ AccountDAOConcurrentStub getAccountDAO() {
+    return accountDAO;
+  }
 
-    /* default */ ClientDAOConcurrentStub getClientDAO() {
-        return clientDAO;
-    }
+  /* default */ AccountDataMediator getAccountDataMediator() {
+    return accountDataMediator;
+  }
 
-    /* default */ NumberCapacity getNumberCapacity() {
-        return numberCapacity;
-    }
+  /* default */ ClientDAOConcurrentStub getClientDAO() {
+    return clientDAO;
+  }
 
-    /* default */ TransactionDAOConcurrentStub getTransactionDAO() {
-        return transactionDAO;
-    }
+  /* default */ NumberCapacity getNumberCapacity() {
+    return numberCapacity;
+  }
 
-    /* default */ DaoLayer() {
-        DataAccessStrategy<Account> accountDataAccessByNumber =
-                new AccountDataAccessByNumberStrategy(accountDAO);
-        Map<String, DataAccessStrategy<Account>> accountDataAccesses =
-                new ConcurrentHashMap<>();
-        accountDataAccesses.put(accountDataAccessByNumber.getStrategyType(),
-                accountDataAccessByNumber);
-        accountDataMediator = new AccountDataMediator(accountDataAccesses);
-    }
+  /* default */ TransactionDAOConcurrentStub getTransactionDAO() {
+    return transactionDAO;
+  }
 }

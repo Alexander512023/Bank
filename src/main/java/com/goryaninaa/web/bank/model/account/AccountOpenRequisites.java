@@ -4,42 +4,43 @@ import com.goryaninaa.web.bank.model.operation.OperationRequisites;
 
 @SuppressWarnings("unused")
 public class AccountOpenRequisites {
-	private OperationRequisites operationRequisites;
-	private AccountType accountType;
-	private int term;
-	
-	public AccountOpenRequisites() {
-	}
+  private OperationRequisites operationRequisites;
+  private AccountType accountType;
+  private int term;
 
-	public AccountOpenRequisites(OperationRequisites operationRequisites, AccountType accountType, int term) {
-		super();
-		this.operationRequisites = operationRequisites;
-		this.accountType = accountType;
-		this.term = term;
-	}
+  public AccountOpenRequisites() {
+  }
 
-	public OperationRequisites getOperationRequisites() {
-		return operationRequisites;
-	}
+  public AccountOpenRequisites(OperationRequisites operationRequisites, AccountType accountType,
+                               int term) {
+    super();
+    this.operationRequisites = operationRequisites;
+    this.accountType = accountType;
+    this.term = term;
+  }
 
-	public void setOperationRequisites(OperationRequisites operationRequisites) {
-		this.operationRequisites = operationRequisites;
-	}
+  public OperationRequisites getOperationRequisites() {
+    return operationRequisites;
+  }
 
-	public AccountType getAccountType() {
-		return accountType;
-	}
+  public void setOperationRequisites(OperationRequisites operationRequisites) {
+    this.operationRequisites = operationRequisites;
+  }
 
-	public void setAccountType(AccountType accountType) {
-		this.accountType = accountType;
-	}
+  public AccountType getAccountType() {
+    return accountType;
+  }
 
-	public int getTerm() {
-		return term;
-	}
+  public void setAccountType(AccountType accountType) {
+    this.accountType = accountType;
+  }
 
-	public void setTerm(int term) {
-		this.term = term;
-	}
-	
+  public int getTerm() {
+    return term;
+  }
+
+  public void setTerm(int term) {
+    this.term = term;
+  }
+
 }

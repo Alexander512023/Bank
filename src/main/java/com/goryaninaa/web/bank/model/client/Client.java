@@ -1,100 +1,102 @@
 package com.goryaninaa.web.bank.model.client;
 
+import com.goryaninaa.web.bank.model.account.Account;
 import java.util.List;
 import java.util.Objects;
 
-import com.goryaninaa.web.bank.model.account.Account;
-
 @SuppressWarnings("unused")
 public class Client {
-	
-	private int id;
-	private String passport;
-	private String firstName;
-	private String secondName;
-	private String dateOfBirth;
-	private List<Account> products;
-	
-	public Client() {
-	}
-	
-	public Client(String passport) {
-		this.passport = passport;
-	}
-	
-	public Client(int id, String passport, String firstName, String secondName, String dateOfBirth) {
-		super();
-		this.id = id;
-		this.passport = passport;
-		this.firstName = firstName;
-		this.secondName = secondName;
-		this.dateOfBirth = dateOfBirth;
-	}
 
-	public int getId() {
-		return id;
-	}
+  private int id;
+  private String passport;
+  private String firstName;
+  private String secondName;
+  private String dateOfBirth;
+  private List<Account> products;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  public Client() {
+  }
 
-	public String getPassport() {
-		return passport;
-	}
+  public Client(String passport) {
+    this.passport = passport;
+  }
 
-	public void setPassport(String passport) {
-		this.passport = passport;
-	}
+  public Client(int id, String passport, String firstName, String secondName, String dateOfBirth) {
+    super();
+    this.id = id;
+    this.passport = passport;
+    this.firstName = firstName;
+    this.secondName = secondName;
+    this.dateOfBirth = dateOfBirth;
+  }
 
-	public String getFirstName() {
-		return firstName;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public String getSecondName() {
-		return secondName;
-	}
+  public String getPassport() {
+    return passport;
+  }
 
-	public void setSecondName(String secondName) {
-		this.secondName = secondName;
-	}
+  public void setPassport(String passport) {
+    this.passport = passport;
+  }
 
-	public List<Account> getProducts() {
-		return products;
-	}
+  public String getFirstName() {
+    return firstName;
+  }
 
-	public void setProducts(List<Account> products) {
-		this.products = products;
-	}
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
+  public String getSecondName() {
+    return secondName;
+  }
 
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+  public void setSecondName(String secondName) {
+    this.secondName = secondName;
+  }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(passport);
-	}
+  public List<Account> getProducts() {
+    return products;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Client other = (Client) obj;
-		return Objects.equals(passport, other.passport);
-	}
-	
-	
+  public void setProducts(List<Account> products) {
+    this.products = products;
+  }
+
+  public String getDateOfBirth() {
+    return dateOfBirth;
+  }
+
+  public void setDateOfBirth(String dateOfBirth) {
+    this.dateOfBirth = dateOfBirth;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(passport);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    Client other = (Client) obj;
+    return Objects.equals(passport, other.passport);
+  }
+
+
 }

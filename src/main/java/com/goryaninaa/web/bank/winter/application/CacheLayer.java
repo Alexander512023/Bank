@@ -6,13 +6,13 @@ import com.goryaninaa.winter.cache.CacheStorage;
 import java.util.Properties;
 
 public class CacheLayer {
-    private final Cache<Account> accountCache;
+  private final Cache<Account> accountCache;
 
-    /* default */ CacheLayer(DaoLayer daoLayer, Properties properties) {
-        accountCache = new CacheStorage<>(daoLayer.getAccountDataMediator(), properties);
-    }
+  /* default */ CacheLayer(DaoLayer daoLayer, Properties properties) {
+    accountCache = new CacheStorage<>(daoLayer.getAccountDataMediator(), properties);
+  }
 
-    /* default */ Cache<Account> getAccountCache() {
-        return accountCache;
-    }
+  /* default */ Cache<Account> getAccountCache() {
+    return accountCache;
+  }
 }

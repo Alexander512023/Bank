@@ -1,102 +1,101 @@
 package com.goryaninaa.web.bank.dto;
 
+import com.goryaninaa.web.bank.model.account.Account;
+import com.goryaninaa.web.bank.model.account.AccountType;
+import com.goryaninaa.web.bank.model.account.State;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.goryaninaa.web.bank.model.account.Account;
-import com.goryaninaa.web.bank.model.account.AccountType;
-import com.goryaninaa.web.bank.model.account.State;
-
 @SuppressWarnings("unused")
 public class AccountDTO {
 
-	private int lastTransactionNumber;
-	private int balance;
-	private int number;
-	private State state;
-	private LocalDateTime openedAt;
-	private LocalDateTime closedAt;
-	private ClientDTO owner;
-	private List<OperationDTO> historyDTO;
-	private AccountType type;
-	private int term;
-	private LocalDate prolongationDate;
-	
-	public AccountDTO() {
-	}
-	
-	public AccountDTO(Account account) {
-		this.number = account.getNumber();
-	}
+  private int lastTransactionNumber;
+  private int balance;
+  private int number;
+  private State state;
+  private LocalDateTime openedAt;
+  private LocalDateTime closedAt;
+  private ClientDTO owner;
+  private List<OperationDTO> historyDTO;
+  private AccountType type;
+  private int term;
+  private LocalDate prolongationDate;
 
-	public AccountDTO(Account account, List<OperationDTO> historyDTO, ClientDTO owner) {
-		this.lastTransactionNumber = account.getLastOperationNumber();
-		this.balance = account.getBalance();
-		this.number = account.getNumber();
-		this.state = account.getState();
-		this.openedAt = account.getOpenedAt();
-		this.closedAt = account.getClosedAt();
-		this.owner = owner;
-		this.historyDTO = historyDTO;
-		this.type = account.getType();
-		this.term = account.getTerm();
-		this.prolongationDate = account.getProlongationDate();
-	}
+  public AccountDTO() {
+  }
 
-	public int getLastTransactionNumber() {
-		return lastTransactionNumber;
-	}
+  public AccountDTO(Account account) {
+    this.number = account.getNumber();
+  }
 
-	public void setLastTransactionNumber(int lastTransactionNumber) {
-		this.lastTransactionNumber = lastTransactionNumber;
-	}
+  public AccountDTO(Account account, List<OperationDTO> historyDTO, ClientDTO owner) {
+    this.lastTransactionNumber = account.getLastOperationNumber();
+    this.balance = account.getBalance();
+    this.number = account.getNumber();
+    this.state = account.getState();
+    this.openedAt = account.getOpenedAt();
+    this.closedAt = account.getClosedAt();
+    this.owner = owner;
+    this.historyDTO = historyDTO;
+    this.type = account.getType();
+    this.term = account.getTerm();
+    this.prolongationDate = account.getProlongationDate();
+  }
 
-	public int getBalance() {
-		return balance;
-	}
+  public int getLastTransactionNumber() {
+    return lastTransactionNumber;
+  }
 
-	public void setBalance(int balance) {
-		this.balance = balance;
-	}
+  public void setLastTransactionNumber(int lastTransactionNumber) {
+    this.lastTransactionNumber = lastTransactionNumber;
+  }
 
-	public int getNumber() {
-		return number;
-	}
+  public int getBalance() {
+    return balance;
+  }
 
-	public void setNumber(int number) {
-		this.number = number;
-	}
+  public void setBalance(int balance) {
+    this.balance = balance;
+  }
 
-	public State getState() {
-		return state;
-	}
+  public int getNumber() {
+    return number;
+  }
 
-	public void setState(State state) {
-		this.state = state;
-	}
+  public void setNumber(int number) {
+    this.number = number;
+  }
 
-	public LocalDateTime getOpenedAt() {
-		return openedAt;
-	}
+  public State getState() {
+    return state;
+  }
 
-	public void setOpenedAt(LocalDateTime openedAt) {
-		this.openedAt = openedAt;
-	}
+  public void setState(State state) {
+    this.state = state;
+  }
 
-	public LocalDateTime getClosedAt() {
-		return closedAt;
-	}
+  public LocalDateTime getOpenedAt() {
+    return openedAt;
+  }
 
-	public void setClosedAt(LocalDateTime closedAt) {
-		this.closedAt = closedAt;
-	}
+  public void setOpenedAt(LocalDateTime openedAt) {
+    this.openedAt = openedAt;
+  }
 
-	public ClientDTO getOwner() {
-		return owner;
-	}
+  public LocalDateTime getClosedAt() {
+    return closedAt;
+  }
 
-	public void setOwner(ClientDTO owner) {
+  public void setClosedAt(LocalDateTime closedAt) {
+    this.closedAt = closedAt;
+  }
+
+  public ClientDTO getOwner() {
+    return owner;
+  }
+
+  public void setOwner(ClientDTO owner) {
 		this.owner = owner;
 	}
 
@@ -131,5 +130,5 @@ public class AccountDTO {
 	public void setProlongationDate(LocalDate prolongationDate) {
 		this.prolongationDate = prolongationDate;
 	}
-	
+
 }

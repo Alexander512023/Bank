@@ -8,15 +8,15 @@ import java.util.List;
 
 public class ControllerLayer {
 
-    private final List<Controller> controllers = new ArrayList<>();
+  private final List<Controller> controllers = new ArrayList<>();
 
-    /* default */ ControllerLayer(ServiceLayer serviceLayer) {
-        Controller controller = new AccountController(serviceLayer.getAccountService(),
-                new GenericSynchronizer<>());
-        controllers.add(controller);
-    }
+  /* default */ ControllerLayer(ServiceLayer serviceLayer) {
+    Controller controller = new AccountController(serviceLayer.getAccountService(),
+        new GenericSynchronizer<>());
+    controllers.add(controller);
+  }
 
-    /* default */ List<Controller> getControllers() {
-        return controllers;
-    }
+  /* default */ List<Controller> getControllers() {
+    return controllers;
+  }
 }

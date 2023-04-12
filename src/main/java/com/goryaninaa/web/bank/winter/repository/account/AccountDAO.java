@@ -4,7 +4,7 @@ import com.goryaninaa.web.bank.model.account.Account;
 
 public interface AccountDAO {
 
-    void save(Account account);
+  void save(Account account);
 
-    void update(Account account);
+  void update(Account account);
 }

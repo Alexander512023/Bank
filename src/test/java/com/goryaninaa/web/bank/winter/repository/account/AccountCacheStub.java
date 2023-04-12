@@ -8,24 +8,25 @@ import java.util.Optional;
 
 public class AccountCacheStub implements Cache<Account> {
 
-    private Account account;
+  private Account account;
 
-    private boolean removeInvoked;
-    @Override
-    public Optional<Account> getData(CacheKey cacheKey) {
-        return Optional.of(account);
-    }
+  private boolean removeInvoked;
 
-    @Override
-    public void remove(List<CacheKey> list) {
-        removeInvoked = true;
-    }
+  @Override
+  public Optional<Account> getData(CacheKey cacheKey) {
+    return Optional.of(account);
+  }
 
-    public boolean isRemoveInvoked() {
-        return removeInvoked;
-    }
+  @Override
+  public void remove(List<CacheKey> list) {
+    removeInvoked = true;
+  }
 
-    public void setAccount(Account account) {
-        this.account = account;
-    }
+  public boolean isRemoveInvoked() {
+    return removeInvoked;
+  }
+
+  public void setAccount(Account account) {
+    this.account = account;
+  }
 }

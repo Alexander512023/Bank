@@ -1,194 +1,197 @@
 package com.goryaninaa.web.bank.model.operation;
 
+import com.goryaninaa.web.bank.model.account.Account;
+import com.goryaninaa.web.bank.model.client.Client;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import com.goryaninaa.web.bank.model.account.Account;
-import com.goryaninaa.web.bank.model.client.Client;
-
 public class Operation implements Comparable<Operation> {
-	
-	private int id;
-	private int amount;
-	private int balanceBefore;
-	private int balanceAfter;
-	private LocalDateTime performedAt;
-	private Account account;
-	private Account accountFrom;
-	private Account accountRecipient;
-	private Client client;
-	private ServiceInitiator service;
-	private OperationType operationType;
-	private int historyNumber;
-	
-	public Operation() {
-	}
-	
-	//Open account with this constructor
-	public Operation(int amount, Client client, ServiceInitiator service) {
-		setAmount(amount);
-		setBalanceBefore(0);
-		setBalanceAfter(amount);
-		setPerformedAt(LocalDateTime.now());
-		setClient(client);
-		setService(service);
-		setOperationType(OperationType.DEPOSIT);
-		setHistoryNumber(1);
-	}
-	
-	//Standard operation constructor
-	public Operation(OperationRequisites requisites) {
-		setAmount(requisites.getAmount());
-		setBalanceBefore(requisites.getBalanceBefore());
-		setBalanceAfter(requisites.getBalanceAfter());
-		setPerformedAt(LocalDateTime.now());
-		setClient(requisites.getClient());
-		setService(requisites.getService());
-		setOperationType(requisites.getOperationType());
-		setHistoryNumber(requisites.getHistoryNumber());
-		defineAccounts(requisites);
-	}
 
-	@Override
-	public int compareTo(Operation that) {
-		if (this.historyNumber > that.historyNumber) {
-			return 1;
-		} else if (this.equals(that)) {
-			return 0;
-		} else {
-			return -1;
-		}
-	}
+  private int id;
+  private int amount;
+  private int balanceBefore;
+  private int balanceAfter;
+  private LocalDateTime performedAt;
+  private Account account;
+  private Account accountFrom;
+  private Account accountRecipient;
+  private Client client;
+  private ServiceInitiator service;
+  private OperationType operationType;
+  private int historyNumber;
 
-	@SuppressWarnings("unused")
-	public int getId() {
-		return id;
-	}
+  public Operation() {
+  }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  //Open account with this constructor
+  public Operation(int amount, Client client, ServiceInitiator service) {
+    setAmount(amount);
+    setBalanceBefore(0);
+    setBalanceAfter(amount);
+    setPerformedAt(LocalDateTime.now());
+    setClient(client);
+    setService(service);
+    setOperationType(OperationType.DEPOSIT);
+    setHistoryNumber(1);
+  }
 
-	public int getAmount() {
-		return amount;
-	}
+  //Standard operation constructor
+  public Operation(OperationRequisites requisites) {
+    setAmount(requisites.getAmount());
+    setBalanceBefore(requisites.getBalanceBefore());
+    setBalanceAfter(requisites.getBalanceAfter());
+    setPerformedAt(LocalDateTime.now());
+    setClient(requisites.getClient());
+    setService(requisites.getService());
+    setOperationType(requisites.getOperationType());
+    setHistoryNumber(requisites.getHistoryNumber());
+    defineAccounts(requisites);
+  }
 
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
+  @Override
+  public int compareTo(Operation that) {
+    if (this.historyNumber > that.historyNumber) {
+      return 1;
+    } else if (this.equals(that)) {
+      return 0;
+    } else {
+      return -1;
+    }
+  }
 
-	public int getBalanceBefore() {
-		return balanceBefore;
-	}
+  @SuppressWarnings("unused")
+  public int getId() {
+    return id;
+  }
 
-	public void setBalanceBefore(int balanceBefore) {
-		this.balanceBefore = balanceBefore;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public int getBalanceAfter() {
-		return balanceAfter;
-	}
+  public int getAmount() {
+    return amount;
+  }
 
-	public void setBalanceAfter(int balanceAfter) {
-		this.balanceAfter = balanceAfter;
-	}
+  public void setAmount(int amount) {
+    this.amount = amount;
+  }
 
-	public LocalDateTime getPerformedAt() {
-		return performedAt;
-	}
+  public int getBalanceBefore() {
+    return balanceBefore;
+  }
 
-	public void setPerformedAt(LocalDateTime performedAt) {
-		this.performedAt = performedAt;
-	}
+  public void setBalanceBefore(int balanceBefore) {
+    this.balanceBefore = balanceBefore;
+  }
 
-	public Account getAccount() {
-		return account;
-	}
+  public int getBalanceAfter() {
+    return balanceAfter;
+  }
 
-	public void setAccount(Account account) {
-		this.account = account;
-	}
+  public void setBalanceAfter(int balanceAfter) {
+    this.balanceAfter = balanceAfter;
+  }
 
-	public Account getAccountFrom() {
-		return accountFrom;
-	}
+  public LocalDateTime getPerformedAt() {
+    return performedAt;
+  }
 
-	public void setAccountFrom(Account accountFrom) {
-		this.accountFrom = accountFrom;
-	}
+  public void setPerformedAt(LocalDateTime performedAt) {
+    this.performedAt = performedAt;
+  }
 
-	public Account getAccountRecipient() {
-		return accountRecipient;
-	}
+  public Account getAccount() {
+    return account;
+  }
 
-	public void setAccountRecipient(Account accountRecipient) {
-		this.accountRecipient = accountRecipient;
-	}
+  public void setAccount(Account account) {
+    this.account = account;
+  }
 
-	public Client getClient() {
-		return client;
-	}
+  public Account getAccountFrom() {
+    return accountFrom;
+  }
 
-	public void setClient(Client client) {
-		this.client = client;
-	}
+  public void setAccountFrom(Account accountFrom) {
+    this.accountFrom = accountFrom;
+  }
 
-	public ServiceInitiator getService() {
-		return service;
-	}
+  public Account getAccountRecipient() {
+    return accountRecipient;
+  }
 
-	public void setService(ServiceInitiator service) {
-		this.service = service;
-	}
+  public void setAccountRecipient(Account accountRecipient) {
+    this.accountRecipient = accountRecipient;
+  }
 
-	public OperationType getOperationType() {
-		return operationType;
-	}
+  public Client getClient() {
+    return client;
+  }
 
-	public void setOperationType(OperationType operationType) {
-		this.operationType = operationType;
-	}
+  public void setClient(Client client) {
+    this.client = client;
+  }
 
-	public int getHistoryNumber() {
-		return historyNumber;
-	}
+  public ServiceInitiator getService() {
+    return service;
+  }
 
-	public void setHistoryNumber(int historyNumber) {
-		this.historyNumber = historyNumber;
-	}
+  public void setService(ServiceInitiator service) {
+    this.service = service;
+  }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, amount, historyNumber, account);
-	}
+  public OperationType getOperationType() {
+    return operationType;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Operation other = (Operation) obj;
-		return id == other.id && amount == other.amount && historyNumber == other.historyNumber && Objects.equals(account, other.account);
-	}
-	
-	private void defineAccounts(OperationRequisites requisites) {
-		setAccount(requisites.getAccount());
-		switch (operationType) {
-		case DEPOSIT:
-			setAccountRecipient(requisites.getAccountRecipient());
-			break;
-		case WITHDRAW:
-			setAccountFrom(requisites.getAccountFrom());
-			break;
-		case TRANSFER:
-			setAccountFrom(requisites.getAccountFrom());
-			setAccountRecipient(requisites.getAccountRecipient());
-			break;
-		default:
-			break;
-		}
-	}
+  public void setOperationType(OperationType operationType) {
+    this.operationType = operationType;
+  }
+
+  public int getHistoryNumber() {
+    return historyNumber;
+  }
+
+  public void setHistoryNumber(int historyNumber) {
+    this.historyNumber = historyNumber;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, amount, historyNumber, account);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    Operation other = (Operation) obj;
+    return id == other.id && amount == other.amount && historyNumber == other.historyNumber &&
+        Objects.equals(account, other.account);
+  }
+
+  private void defineAccounts(OperationRequisites requisites) {
+    setAccount(requisites.getAccount());
+    switch (operationType) {
+      case DEPOSIT:
+        setAccountRecipient(requisites.getAccountRecipient());
+        break;
+      case WITHDRAW:
+        setAccountFrom(requisites.getAccountFrom());
+        break;
+      case TRANSFER:
+        setAccountFrom(requisites.getAccountFrom());
+        setAccountRecipient(requisites.getAccountRecipient());
+        break;
+      default:
+        break;
+    }
+  }
 }

@@ -9,12 +9,15 @@ import com.goryaninaa.web.bank.model.operation.OperationRequisites;
 import com.goryaninaa.web.bank.service.account.OperationServiceAccount;
 
 public interface OperationService extends OperationServiceAccount {
-    @Override
-    void processAccountOpen(Account account, AccountOpenRequisites requisites) throws AccountOpenException;
+  @Override
+  void processAccountOpen(Account account, AccountOpenRequisites requisites)
+      throws AccountOpenException;
 
-    @Override
-    void processDeposit(Account account, OperationRequisites requisites) throws AccountDepositException;
+  @Override
+  void processDeposit(Account account, OperationRequisites requisites)
+      throws AccountDepositException;
 
-    @Override
-    void processWithdraw(Account account, OperationRequisites requisites) throws AccountWithdrawException;
+  @Override
+  void processWithdraw(Account account, OperationRequisites requisites)
+      throws AccountWithdrawException;
 }

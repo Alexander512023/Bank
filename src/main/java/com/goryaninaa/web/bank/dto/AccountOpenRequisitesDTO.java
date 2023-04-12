@@ -8,62 +8,62 @@ import com.goryaninaa.web.bank.model.operation.ServiceInitiator;
 
 @SuppressWarnings("unused")
 public class AccountOpenRequisitesDTO {
-	
-	private int amount;
-	private ClientDTO clientDTO;
-	private AccountType accountType;
-	private ServiceInitiator service;
-	private int term;
 
-	public AccountOpenRequisitesDTO() {
-		// Default constructor
-	}
-	
-	public AccountOpenRequisites extractAccountRequisites() {
-		Client client = new Client(clientDTO.getPassport());
-		OperationRequisites transaction = new OperationRequisites(amount, service, client);
-		
-		return new AccountOpenRequisites(transaction, accountType, term);
-	}
+  private int amount;
+  private ClientDTO clientDTO;
+  private AccountType accountType;
+  private ServiceInitiator service;
+  private int term;
 
-	public int getAmount() {
-		return amount;
-	}
+  public AccountOpenRequisitesDTO() {
+    // Default constructor
+  }
 
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
+  public AccountOpenRequisites extractAccountRequisites() {
+    Client client = new Client(clientDTO.getPassport());
+    OperationRequisites transaction = new OperationRequisites(amount, service, client);
 
-	public ClientDTO getClientDTO() {
-		return clientDTO;
-	}
+    return new AccountOpenRequisites(transaction, accountType, term);
+  }
 
-	public void setClientDTO(ClientDTO clientDTO) {
-		this.clientDTO = clientDTO;
-	}
+  public int getAmount() {
+    return amount;
+  }
 
-	public AccountType getAccountType() {
-		return accountType;
-	}
+  public void setAmount(int amount) {
+    this.amount = amount;
+  }
 
-	public void setAccountType(AccountType accountType) {
-		this.accountType = accountType;
-	}
+  public ClientDTO getClientDTO() {
+    return clientDTO;
+  }
 
-	public ServiceInitiator getService() {
-		return service;
-	}
+  public void setClientDTO(ClientDTO clientDTO) {
+    this.clientDTO = clientDTO;
+  }
 
-	public void setService(ServiceInitiator service) {
-		this.service = service;
-	}
+  public AccountType getAccountType() {
+    return accountType;
+  }
 
-	public int getTerm() {
-		return term;
-	}
+  public void setAccountType(AccountType accountType) {
+    this.accountType = accountType;
+  }
 
-	public void setTerm(int term) {
-		this.term = term;
-	}
-	
+  public ServiceInitiator getService() {
+    return service;
+  }
+
+  public void setService(ServiceInitiator service) {
+    this.service = service;
+  }
+
+  public int getTerm() {
+    return term;
+  }
+
+  public void setTerm(int term) {
+    this.term = term;
+  }
+
 }

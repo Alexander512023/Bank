@@ -5,14 +5,14 @@ import java.util.Optional;
 
 public class ClientDAOStub implements ClientDAO {
 
-    private Client client;
+  private Client client;
 
-    @Override
-    public Optional<Client> findByPassport(String passport) {
-        return Optional.of(client);
-    }
+  @Override
+  public Optional<Client> findByPassport(String passport) {
+    return Optional.of(client);
+  }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
+  public void setClient(Client client) {
+    this.client = client;
+  }
 }

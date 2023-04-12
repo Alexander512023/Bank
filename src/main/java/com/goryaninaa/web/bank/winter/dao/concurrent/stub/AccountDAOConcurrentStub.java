@@ -9,30 +9,30 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class AccountDAOConcurrentStub implements AccountDAO {
-	
-	private static final AtomicInteger idCounter = new AtomicInteger(0);
-	private final List<Account> accounts = new CopyOnWriteArrayList<>();
 
-	@Override
-	public void save(Account account) {
-		for (Account savedEarlierAccount : accounts) {
-			if (savedEarlierAccount.equals(account)) {
-				throw new DuplicateRequestException("This account already exists");
-			}
-		}
-		account.setId(idCounter.addAndGet(1));
-		accounts.add(account);
-	}
+  private static final AtomicInteger idCounter = new AtomicInteger(0);
+  private final List<Account> accounts = new CopyOnWriteArrayList<>();
 
-	public Account getOneByNumber(int number) {
-		return accounts.stream()
-				.filter(acc -> acc.getNumber() == number).findFirst().orElseThrow();
-	}
+  @Override
+  public void save(Account account) {
+    for (Account savedEarlierAccount : accounts) {
+      if (savedEarlierAccount.equals(account)) {
+        throw new DuplicateRequestException("This account already exists");
+      }
+    }
+    account.setId(idCounter.addAndGet(1));
+    accounts.add(account);
+  }
 
-	@Override
-	public void update(Account account) {
-		accounts.remove(account);
-		accounts.add(account);
-	}
+  public Account getOneByNumber(int number) {
+    return accounts.stream()
+        .filter(acc -> acc.getNumber() == number).findFirst().orElseThrow();
+  }
+
+  @Override
+  public void update(Account account) {
+    accounts.remove(account);
+    accounts.add(account);
+  }
 
 }

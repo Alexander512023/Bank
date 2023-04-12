@@ -1,69 +1,68 @@
 package com.goryaninaa.web.bank.dto;
 
-import java.util.List;
-
 import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.client.Client;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class ClientDTO {
 
-	private String passport;
-	private String firstName;
-	private String secondName;
-	private String dateOfBirth;
-	private List<Account> products;
-	
-	public ClientDTO() {
-		
-	}
-	
-	public ClientDTO(Client client) {
-		this.passport = client.getPassport();
-		this.firstName = client.getFirstName();
-		this.secondName = client.getSecondName();
-		this.dateOfBirth = client.getDateOfBirth();
-		this.products = client.getProducts();
-	}
+  private String passport;
+  private String firstName;
+  private String secondName;
+  private String dateOfBirth;
+  private List<Account> products;
 
-	public String getPassport() {
-		return passport;
-	}
+  public ClientDTO() {
 
-	public void setPassport(String passport) {
-		this.passport = passport;
-	}
+  }
 
-	public String getFirstName() {
-		return firstName;
-	}
+  public ClientDTO(Client client) {
+    this.passport = client.getPassport();
+    this.firstName = client.getFirstName();
+    this.secondName = client.getSecondName();
+    this.dateOfBirth = client.getDateOfBirth();
+    this.products = client.getProducts();
+  }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+  public String getPassport() {
+    return passport;
+  }
 
-	public String getSecondName() {
-		return secondName;
-	}
+  public void setPassport(String passport) {
+    this.passport = passport;
+  }
 
-	public void setSecondName(String secondName) {
-		this.secondName = secondName;
-	}
+  public String getFirstName() {
+    return firstName;
+  }
 
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+  public String getSecondName() {
+    return secondName;
+  }
 
-	public List<Account> getProducts() {
-		return products;
-	}
+  public void setSecondName(String secondName) {
+    this.secondName = secondName;
+  }
 
-	public void setProducts(List<Account> products) {
-		this.products = products;
-	}
+  public String getDateOfBirth() {
+    return dateOfBirth;
+  }
+
+  public void setDateOfBirth(String dateOfBirth) {
+    this.dateOfBirth = dateOfBirth;
+  }
+
+  public List<Account> getProducts() {
+    return products;
+  }
+
+  public void setProducts(List<Account> products) {
+    this.products = products;
+  }
 
 }
