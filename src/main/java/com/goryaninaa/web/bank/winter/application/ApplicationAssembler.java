@@ -13,7 +13,7 @@ public class ApplicationAssembler {
         CacheLayer cacheLayer = new CacheLayer(daoLayer, properties);
         RepositoryLayer repositoryLayer = new RepositoryLayer(cacheLayer, daoLayer);
         ServiceLayer serviceLayer = new ServiceLayer(repositoryLayer);
-        ControllerLayer controllerLayer = new ControllerLayer(serviceLayer, properties);
+        ControllerLayer controllerLayer = new ControllerLayer(serviceLayer);
         controllers = controllerLayer.getControllers();
     }
 

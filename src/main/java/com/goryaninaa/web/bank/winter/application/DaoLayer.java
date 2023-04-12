@@ -39,7 +39,8 @@ public class DaoLayer {
     }
 
     /* default */ DaoLayer() {
-        DataAccessStrategy accountDataAccessByNumber = new AccountDataAccessByNumberStrategy(accountDAO);
+        DataAccessStrategy<Account> accountDataAccessByNumber =
+                new AccountDataAccessByNumberStrategy(accountDAO);
         Map<String, DataAccessStrategy<Account>> accountDataAccesses =
                 new ConcurrentHashMap<>();
         accountDataAccesses.put(accountDataAccessByNumber.getStrategyType(),

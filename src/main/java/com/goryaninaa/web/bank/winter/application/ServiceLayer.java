@@ -6,6 +6,7 @@ import com.goryaninaa.web.bank.service.operation.OperationService;
 import com.goryaninaa.web.bank.service.operation.OperationServicePojo;
 import com.goryaninaa.web.bank.service.requisite.RequisiteServicePojo;
 
+@SuppressWarnings("unused")
 public class ServiceLayer {
     private final AccountService accountService;
     private final OperationService operationService;
