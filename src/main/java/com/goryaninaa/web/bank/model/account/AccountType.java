@@ -1,5 +1,6 @@
 package com.goryaninaa.web.bank.model.account;
 
+@SuppressWarnings("unused")
 public enum AccountType {
 	
 	VKLAD100(100),
@@ -7,7 +8,7 @@ public enum AccountType {
 	
 	private final int rate;
 	
-	private AccountType(int rate) {
+	AccountType(int rate) {
 		this.rate = rate;
 	}
 

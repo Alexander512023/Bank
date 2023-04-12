@@ -2,6 +2,7 @@ package com.goryaninaa.web.bank.model.account;
 
 import com.goryaninaa.web.bank.model.operation.OperationRequisites;
 
+@SuppressWarnings("unused")
 public class AccountOpenRequisites {
 	private OperationRequisites operationRequisites;
 	private AccountType accountType;

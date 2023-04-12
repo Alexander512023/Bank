@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import com.goryaninaa.web.bank.exception.AccountWithdrawException;
 import com.goryaninaa.web.bank.model.client.Client;
 import com.goryaninaa.web.bank.model.operation.Operation;
 
-//TODO add unit test
+@SuppressWarnings("unused")
 public class Account implements Comparable<Account> {
 
 	private int id;
@@ -49,25 +50,28 @@ public class Account implements Comparable<Account> {
 		lastOperationNumber++;
 	}
 
-	public void withdraw(int amount) {
+	public void withdraw(int amount) throws AccountWithdrawException {
 		if (balance - Math.abs(amount) > 0) {
 			balance -= Math.abs(amount);
 			lastOperationNumber++;
 		} else {
-			throw new RuntimeException("Insufficient funds");
+			throw new AccountWithdrawException("Insufficient funds");
 		}
 	}
 	
 	@Override
 	public int compareTo(Account that) {
-		if (
-				(this.state.equals(that.state) && this.openedAt.compareTo(that.openedAt) > 0)
+		int result;
+		if (this.equals(that)) {
+			result = 0;
+		} else if ((this.state.equals(that.state) && this.openedAt.isAfter(that.openedAt))
 				|| (this.state.equals(State.OPENED) && that.state.equals(State.CLOSED))
-				) {
-			return 1;
+		) {
+			result = 1;
 		} else {
-			return -1;
+			result = -1;
 		}
+		return result;
 	}
 	
 	public int getId() {
@@ -172,8 +176,25 @@ public class Account implements Comparable<Account> {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Account account = (Account) o;
+		if (number != account.number) return false;
+		return openedAt.equals(account.openedAt);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = number;
+		result = 31 * result + openedAt.hashCode();
+		return result;
+	}
+
+	@Override
 	public String toString() {
-		return "Product [id=" + id + ", transactionNumber=" + lastOperationNumber + ", balance=" + balance + ", number="
+		return "Product [id=" + id + ", transactionNumber=" + lastOperationNumber
+				+ ", balance=" + balance + ", number="
 				+ number + ", state=" + state + ", openedAt=" + openedAt + ", closedAt=" + closedAt
 				+ ", client=" + owner;
 	}
