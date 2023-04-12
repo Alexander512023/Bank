@@ -2,14 +2,16 @@ package com.goryaninaa.web.bank.winter.dao.concurrent.stub;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import com.goryaninaa.web.bank.model.operation.Operation;
 import com.goryaninaa.web.bank.winter.repository.transaction.TransactionDAO;
+import com.sun.jdi.request.DuplicateRequestException;
 
 public class TransactionDAOConcurrentStub implements TransactionDAO {
 	
-	private static int idCounter = 1;
+	private static final AtomicInteger idCounter = new AtomicInteger(1);
 	private final List<Operation> transactions;
 
 	public TransactionDAOConcurrentStub() {
@@ -20,11 +22,11 @@ public class TransactionDAOConcurrentStub implements TransactionDAO {
 	public void save(Operation transaction) {
 		for (Operation savedEarlierTransaction : transactions) {
 			if (savedEarlierTransaction.equals(transaction)) {
-				throw new RuntimeException("This transaction already exists");
+				throw new DuplicateRequestException("This transaction already exists");
 			}
 		}
 		
-		transaction.setId(idCounter++);
+		transaction.setId(idCounter.getAndIncrement());
 		
 		transactions.add(transaction);
 	}

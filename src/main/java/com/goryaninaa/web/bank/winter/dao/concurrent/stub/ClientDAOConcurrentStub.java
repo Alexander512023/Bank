@@ -3,13 +3,15 @@ package com.goryaninaa.web.bank.winter.dao.concurrent.stub;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.goryaninaa.web.bank.model.client.Client;
 import com.goryaninaa.web.bank.winter.repository.client.ClientDAO;
+import com.sun.jdi.request.DuplicateRequestException;
 
 public class ClientDAOConcurrentStub implements ClientDAO {
 
-	private static int idCounter = 1;
+	private static final AtomicInteger idCounter = new AtomicInteger(1);
 	private final List<Client> clients;
 
 	public ClientDAOConcurrentStub() {
@@ -21,10 +23,10 @@ public class ClientDAOConcurrentStub implements ClientDAO {
 	public void save(Client client) {
 		for (Client savedEarlierClient : clients) {
 			if (savedEarlierClient.equals(client)) {
-				throw new RuntimeException("This client already exists");
+				throw new DuplicateRequestException("This client already exists");
 			}
 		}
-		client.setId(idCounter++);
+		client.setId(idCounter.getAndIncrement());
 		clients.add(client);
 	}
 
@@ -34,7 +36,7 @@ public class ClientDAOConcurrentStub implements ClientDAO {
 
 		for (Client client : clients) {
 			if (client.getPassport().equals(passport)) {
-				desiredClient = Optional.ofNullable(client);
+				desiredClient = Optional.of(client);
 				break;
 			}
 		}

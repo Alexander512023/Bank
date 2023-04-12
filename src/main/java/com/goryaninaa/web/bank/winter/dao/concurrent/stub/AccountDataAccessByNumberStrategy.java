@@ -6,6 +6,7 @@ import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.winter.repository.account.AccountAccessStrategyType;
 import com.goryaninaa.winter.cache.DataAccessStrategy;
 
+@SuppressWarnings("SameParameterValue")
 public class AccountDataAccessByNumberStrategy implements DataAccessStrategy<Account> {
 
 	private final AccountDAOConcurrentStub accountDAO;
@@ -21,11 +22,12 @@ public class AccountDataAccessByNumberStrategy implements DataAccessStrategy<Acc
 		return account;
 	}
 
-	private void sleep(int miliseconds) {
+	private void sleep(int milliseconds) {
 		try {
-			Thread.sleep(miliseconds);
+			Thread.sleep(milliseconds);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			Thread.currentThread().interrupt();
 		}
 	}
 
