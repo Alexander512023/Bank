@@ -15,7 +15,7 @@ public class Operation implements Comparable<Operation> {
 	private LocalDateTime performedAt;
 	private Account account;
 	private Account accountFrom;
-	private Account accountRecepient;
+	private Account accountRecipient;
 	private Client client;
 	private ServiceInitiator service;
 	private OperationType operationType;
@@ -51,15 +51,16 @@ public class Operation implements Comparable<Operation> {
 
 	@Override
 	public int compareTo(Operation that) {
-		if (this.historyNumber < that.historyNumber) {
+		if (this.historyNumber > that.historyNumber) {
 			return 1;
-		} else if (this.historyNumber == that.historyNumber) {
+		} else if (this.equals(that)) {
 			return 0;
 		} else {
 			return -1;
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public int getId() {
 		return id;
 	}
@@ -116,12 +117,12 @@ public class Operation implements Comparable<Operation> {
 		this.accountFrom = accountFrom;
 	}
 
-	public Account getAccountRecepient() {
-		return accountRecepient;
+	public Account getAccountRecipient() {
+		return accountRecipient;
 	}
 
-	public void setAccountRecepient(Account accountRecepient) {
-		this.accountRecepient = accountRecepient;
+	public void setAccountRecipient(Account accountRecipient) {
+		this.accountRecipient = accountRecipient;
 	}
 
 	public Client getClient() {
@@ -177,14 +178,14 @@ public class Operation implements Comparable<Operation> {
 		setAccount(requisites.getAccount());
 		switch (operationType) {
 		case DEPOSIT:
-			setAccountRecepient(requisites.getAccountRecepient());
+			setAccountRecipient(requisites.getAccountRecipient());
 			break;
 		case WITHDRAW:
 			setAccountFrom(requisites.getAccountFrom());
 			break;
 		case TRANSFER:
 			setAccountFrom(requisites.getAccountFrom());
-			setAccountRecepient(requisites.getAccountRecepient());
+			setAccountRecipient(requisites.getAccountRecipient());
 			break;
 		default:
 			break;

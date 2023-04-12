@@ -10,7 +10,7 @@ public class OperationRequisites {
 	private int balanceAfter;
 	private Account account;
 	private Account accountFrom;
-	private Account accountRecepient;
+	private Account accountRecipient;
 	private Client client;
 	private ServiceInitiator service;
 	private OperationType operationType;
@@ -28,25 +28,12 @@ public class OperationRequisites {
 
 	public void enrich(Account account, Client client, OperationType operationType) {
 		this.setAccount(account);
-		this.setAccountRecepient(account);
+		this.setAccountRecipient(account);
 		this.setClient(client);
 		this.setBalanceAfter(account.getBalance());
 		this.setHistoryNumber(account.getLastOperationNumber());
 		this.setOperationType(operationType);
 		defineBalanceBefore(operationType, amount, balanceAfter);
-	}
-	
-	private void defineBalanceBefore(OperationType operationType, int amount, int balanceAfter) {
-		switch (operationType) {
-		case DEPOSIT:
-			this.setBalanceBefore(balanceAfter - amount);
-			break;
-		case WITHDRAW:
-			this.setBalanceBefore(balanceAfter + Math.abs(amount));
-			break;
-		default:
-			break;
-		}
 	}
 
 	public int getAmount() {
@@ -89,12 +76,12 @@ public class OperationRequisites {
 		this.accountFrom = accountFrom;
 	}
 
-	public Account getAccountRecepient() {
-		return accountRecepient;
+	public Account getAccountRecipient() {
+		return accountRecipient;
 	}
 
-	public void setAccountRecepient(Account accountRecepient) {
-		this.accountRecepient = accountRecepient;
+	public void setAccountRecipient(Account accountRecipient) {
+		this.accountRecipient = accountRecipient;
 	}
 
 	public Client getClient() {
@@ -128,5 +115,17 @@ public class OperationRequisites {
 	public void setHistoryNumber(int historyNumber) {
 		this.historyNumber = historyNumber;
 	}
-	
+
+	private void defineBalanceBefore(OperationType operationType, int amount, int balanceAfter) {
+		switch (operationType) {
+			case DEPOSIT:
+				this.setBalanceBefore(balanceAfter - amount);
+				break;
+			case WITHDRAW:
+				this.setBalanceBefore(balanceAfter + Math.abs(amount));
+				break;
+			default:
+				break;
+		}
+	}
 }
