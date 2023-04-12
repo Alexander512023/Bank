@@ -2,7 +2,7 @@ package com.goryaninaa.web.bank;
 
 import com.goryaninaa.web.bank.winter.application.ApplicationAssembler;
 import com.goryaninaa.winter.logger.mech.LoggingMech;
-import com.goryaninaa.winter.web.http.server.constructor.HttpServer;
+import com.goryaninaa.winter.web.http.server.assembler.HttpServer;
 import java.io.IOException;
 import java.util.Properties;
 
