@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import com.goryaninaa.web.bank.model.account.Account;
 
+@SuppressWarnings("unused")
 public class Client {
 	
 	private int id;
@@ -80,7 +81,7 @@ public class Client {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateOfBirth, firstName, passport, secondName);
+		return Objects.hash(passport);
 	}
 
 	@Override
@@ -92,8 +93,7 @@ public class Client {
 		if (getClass() != obj.getClass())
 			return false;
 		Client other = (Client) obj;
-		return Objects.equals(dateOfBirth, other.dateOfBirth) && Objects.equals(firstName, other.firstName)
-				&& Objects.equals(passport, other.passport) && Objects.equals(secondName, other.secondName);
+		return Objects.equals(passport, other.passport);
 	}
 	
 	
