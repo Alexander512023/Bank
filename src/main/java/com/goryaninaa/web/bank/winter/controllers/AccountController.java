@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 @RequestMapping("/account")
 public class AccountController implements Controller {
 
@@ -42,10 +43,9 @@ public class AccountController implements Controller {
 		try {
 			accountService.open(accountRequisites);
 			return new HttpResponse(HttpResponseCode.OK);
-		} catch (Throwable t) {
-			t.printStackTrace();
-			HttpResponse httpResponse = prepareResponseOnException(t);
-			return httpResponse;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return prepareResponseOnException(e);
 		}
 	}
 
@@ -57,10 +57,9 @@ public class AccountController implements Controller {
 				accountService.deposit(requisites);
 				return new HttpResponse(HttpResponseCode.OK);
 			}
-		} catch (Throwable t) {
-			t.printStackTrace();
-			HttpResponse httpResponse = prepareResponseOnException(t);
-			return httpResponse;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return prepareResponseOnException(e);
 		}
 	}
 	
@@ -72,10 +71,9 @@ public class AccountController implements Controller {
 				accountService.withdraw(requisites);
 				return new HttpResponse(HttpResponseCode.OK);
 			}
-		} catch (Throwable t) {
-			t.printStackTrace();
-			HttpResponse httpResponse = prepareResponseOnException(t);
-			return httpResponse;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return prepareResponseOnException(e);
 		}
 	}
 	
@@ -87,10 +85,9 @@ public class AccountController implements Controller {
 				accountService.transfer(requisites);
 				return new HttpResponse(HttpResponseCode.OK);
 			}
-		} catch (Throwable t) {
-			t.printStackTrace();
-			HttpResponse httpResponse = prepareResponseOnException(t);
-			return httpResponse;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return prepareResponseOnException(e);
 		}
 	}
 	
@@ -108,10 +105,9 @@ public class AccountController implements Controller {
 			} else {
 				throw new NoSuchElementException("Request format for account incorrect");
 			}
-		} catch (Throwable t) {
-			t.printStackTrace();
-			HttpResponse httpResponse = prepareResponseOnException(t);
-			return httpResponse;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return prepareResponseOnException(e);
 		}
 	}
 	
@@ -119,12 +115,10 @@ public class AccountController implements Controller {
 		Throwable cause = t.getCause();
 		if (cause instanceof IllegalArgumentException) {
 			ErrorDTO errorDTO = new ErrorDTO(404, t.getMessage());
-			HttpResponse httpResponse = new HttpResponse(HttpResponseCode.NOTFOUND, errorDTO);
-			return httpResponse;
+			return new HttpResponse(HttpResponseCode.NOTFOUND, errorDTO);
 		} else {
 			ErrorDTO errorDTO = new ErrorDTO(500, t.getMessage());
-			HttpResponse httpResponse = new HttpResponse(HttpResponseCode.INTERNALSERVERERROR, errorDTO);
-			return httpResponse;
+			return new HttpResponse(HttpResponseCode.INTERNALSERVERERROR, errorDTO);
 		}
 	}
 	
