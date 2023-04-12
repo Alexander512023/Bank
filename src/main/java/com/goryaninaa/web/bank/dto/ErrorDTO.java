@@ -1,21 +1,22 @@
 package com.goryaninaa.web.bank.dto;
 
+@SuppressWarnings("unused")
 public class ErrorDTO {
 	
-	private final int CODE;
-	private final String MESSAGE;
+	private final int code;
+	private final String message;
 	
-	public ErrorDTO(int cODE, String mESSAGE) {
+	public ErrorDTO(int cODE, String message) {
 		super();
-		CODE = cODE;
-		MESSAGE = mESSAGE;
+		code = cODE;
+		this.message = message;
 	}
 
-	public int getCODE() {
-		return CODE;
+	public int getCode() {
+		return code;
 	}
 
-	public String getMESSAGE() {
-		return MESSAGE;
+	public String getMessage() {
+		return message;
 	}
 }

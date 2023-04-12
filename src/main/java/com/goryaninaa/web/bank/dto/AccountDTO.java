@@ -8,6 +8,7 @@ import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.account.AccountType;
 import com.goryaninaa.web.bank.model.account.State;
 
+@SuppressWarnings("unused")
 public class AccountDTO {
 
 	private int lastTransactionNumber;

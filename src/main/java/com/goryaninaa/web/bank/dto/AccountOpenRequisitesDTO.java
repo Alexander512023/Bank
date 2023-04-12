@@ -6,6 +6,7 @@ import com.goryaninaa.web.bank.model.client.Client;
 import com.goryaninaa.web.bank.model.operation.OperationRequisites;
 import com.goryaninaa.web.bank.model.operation.ServiceInitiator;
 
+@SuppressWarnings("unused")
 public class AccountOpenRequisitesDTO {
 	
 	private int amount;
@@ -13,9 +14,9 @@ public class AccountOpenRequisitesDTO {
 	private AccountType accountType;
 	private ServiceInitiator service;
 	private int term;
-	
+
 	public AccountOpenRequisitesDTO() {
-		
+		// Default constructor
 	}
 	
 	public AccountOpenRequisites extractAccountRequisites() {

@@ -5,6 +5,7 @@ import java.util.List;
 import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.client.Client;
 
+@SuppressWarnings("unused")
 public class ClientDTO {
 
 	private String passport;
