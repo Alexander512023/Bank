@@ -16,6 +16,7 @@ import com.goryaninaa.web.bank.service.operation.RequisiteServiceOperation;
 public class RequisiteServicePojo implements RequisiteServiceAccount, RequisiteServiceOperation {
 
 	private final ClientRepositoryRequisite clientRepository;
+	private static final String MESSAGE = "There is no such client";
 	
 	public RequisiteServicePojo(ClientRepositoryRequisite clientRepository) {
 		this.clientRepository = clientRepository;
@@ -24,29 +25,25 @@ public class RequisiteServicePojo implements RequisiteServiceAccount, RequisiteS
 	@Override
 	public AccountOpenRequisites prepareAccountOpenRequisites(AccountOpenRequisites requisites)
 			throws AccountOpenException {
-		AccountOpenRequisites enrichedAccountOpenRequisites = enrichOpenAccountRequisites(requisites);
-		return enrichedAccountOpenRequisites;
+		return enrichOpenAccountRequisites(requisites);
 	}
 	
 	@Override
 	public OperationRequisites prepareAccountOpenOperationRequisites(Account account, AccountOpenRequisites requisites)
 			throws AccountOpenException {
-		OperationRequisites firstOperationRequisites = prepareFirstOperationRequisites(requisites, account);
-		return firstOperationRequisites;
+		return prepareFirstOperationRequisites(requisites, account);
 	}
 
 	@Override
 	public OperationRequisites prepareDepositOperationRequisites(Account account, OperationRequisites requisites)
 			throws AccountDepositException {
-		OperationRequisites enrichedDepositRequisites = enrichDepositRequisites(requisites, account);
-		return enrichedDepositRequisites;
+		return enrichDepositRequisites(requisites, account);
 	}
 
 	@Override
 	public OperationRequisites prepareWithdrawOperationRequisites(Account account, OperationRequisites requisites)
 			throws AccountWithdrawException {
-		OperationRequisites enrichedWithdrawRequisites = enrichWithdrawRequisites(requisites, account);
-		return enrichedWithdrawRequisites;
+		return enrichWithdrawRequisites(requisites, account);
 	}
 
 	private AccountOpenRequisites enrichOpenAccountRequisites(AccountOpenRequisites requisites) throws AccountOpenException {
@@ -55,7 +52,7 @@ public class RequisiteServicePojo implements RequisiteServiceAccount, RequisiteS
 			requisites.getOperationRequisites().setClient(initiator.get());
 			return requisites;
 		} else {
-			throw new AccountOpenException("There is no such client", new IllegalArgumentException());
+			throw new AccountOpenException(MESSAGE, new IllegalArgumentException());
 		}
 	}
 	
@@ -64,7 +61,7 @@ public class RequisiteServicePojo implements RequisiteServiceAccount, RequisiteS
 		AccountOpenRequisites enrichedRequisites = enrichOpenAccountRequisites(requisites);
 		OperationRequisites firstOperationRequisites = enrichedRequisites.getOperationRequisites();
 		firstOperationRequisites.setAccount(account);
-		firstOperationRequisites.setAccountRecepient(account);
+		firstOperationRequisites.setAccountRecipient(account);
 		firstOperationRequisites.setOperationType(OperationType.DEPOSIT);
 		firstOperationRequisites.setHistoryNumber(1);
 		return firstOperationRequisites;
@@ -77,7 +74,7 @@ public class RequisiteServicePojo implements RequisiteServiceAccount, RequisiteS
 			requisites.enrich(account, client.get(), OperationType.DEPOSIT);
 			return requisites;
 		} else {
-			throw new AccountDepositException("There is no such client", new IllegalArgumentException());
+			throw new AccountDepositException(MESSAGE, new IllegalArgumentException());
 		}
 	}
 
@@ -88,7 +85,8 @@ public class RequisiteServicePojo implements RequisiteServiceAccount, RequisiteS
 			requisites.enrich(account, client.get(), OperationType.WITHDRAW);
 			return requisites;
 		} else {
-			throw new AccountWithdrawException("There is no such client", new IllegalArgumentException());
+			throw new AccountWithdrawException(MESSAGE, new IllegalArgumentException());
 		}
 	}
+
 }
