@@ -17,7 +17,6 @@ public class AccountServicePojo implements AccountService {
 	private final NumberCapacityRepository numberCapacityRepository;
 	private final RequisiteServiceAccount requisiteService;
 
-	//TODO add unit test
 	public AccountServicePojo(AccountRepository accountRepository, OperationServiceAccount operationService,
 							  NumberCapacityRepository numberCapacityRepository, RequisiteServiceAccount requisiteService) {
 		this.accountRepository = accountRepository;
@@ -35,7 +34,7 @@ public class AccountServicePojo implements AccountService {
 	
 	@Override
 	public void deposit(OperationRequisites requisites) throws AccountFindException, AccountDepositException {
-		Account account = findByNumber(requisites.getAccountRecepient().getNumber());
+		Account account = findByNumber(requisites.getAccountRecipient().getNumber());
 		account.deposit(requisites.getAmount());
 		accountRepository.update(account);
 		operationService.processDeposit(account, requisites);
@@ -58,8 +57,7 @@ public class AccountServicePojo implements AccountService {
 	
 	@Override
 	public Account findByNumber(int number) throws AccountFindException {
-		Account desiredAccount = findAccount(number);
-		return desiredAccount;
+		return findAccount(number);
 	}
 
 	private Account openAccount(AccountOpenRequisites requisites) throws AccountOpenException {
@@ -76,17 +74,4 @@ public class AccountServicePojo implements AccountService {
 			throw new AccountFindException("There is no account with such number", new IllegalArgumentException());
 		}
 	}
-//	//TODO
-//	public void prolongate(Prolongation prolongation) {
-//		Optional<Account> account = accountRepository.findByNumber(prolongation.getProduct().getNumber());
-//		
-//		if (account.isPresent()) {
-//			account.get().prolongate();
-//			
-//			OperationRepository.save(prolongation);
-//			accountRepository.save(account.get());
-//		} else {
-//			//TODO
-//		}
-//	}
 }
