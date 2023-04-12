@@ -1,4 +1,4 @@
-package com.goryaninaa.web.bank.winter.repository;
+package com.goryaninaa.web.bank.winter.repository.account;
 
 import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.winter.cache.KeyExtractStrategy;

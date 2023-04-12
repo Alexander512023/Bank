@@ -1,12 +1,12 @@
 package com.goryaninaa.web.bank.winter.application;
 
-import com.goryaninaa.web.bank.service.account.AccountRepository;
-import com.goryaninaa.web.bank.winter.repository.AccountNumberExtractStrategy;
-import com.goryaninaa.web.bank.winter.repository.AccountRepositoryCached;
-import com.goryaninaa.web.bank.winter.repository.ClientRepositoryPOJO;
-import com.goryaninaa.web.bank.winter.repository.NumberCapacityRepositoryPOJO;
-import com.goryaninaa.web.bank.winter.repository.TransactionRepositoryPOJO;
+import com.goryaninaa.web.bank.winter.repository.account.AccountNumberExtractStrategy;
+import com.goryaninaa.web.bank.winter.repository.account.AccountRepositoryCached;
+import com.goryaninaa.web.bank.winter.repository.client.ClientRepositoryPOJO;
+import com.goryaninaa.web.bank.winter.repository.number.capacity.NumberCapacityRepositoryPOJO;
+import com.goryaninaa.web.bank.winter.repository.transaction.TransactionRepositoryPOJO;
 import com.goryaninaa.winter.cache.CacheKeyFactory;
+import com.goryaninaa.winter.cache.CacheKeyFactoryStandard;
 import com.goryaninaa.winter.cache.KeyExtractStrategy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,7 +23,7 @@ public class RepositoryLayer {
         Map<String, KeyExtractStrategy> accountKeyExtractStrategies = new ConcurrentHashMap<>();
         accountKeyExtractStrategies.
                 put(accountNumberExtractStrategy.getStrategyType(), accountNumberExtractStrategy);
-        CacheKeyFactory accountCacheKeyFactory = new CacheKeyFactory(accountKeyExtractStrategies);
+        CacheKeyFactory accountCacheKeyFactory = new CacheKeyFactoryStandard(accountKeyExtractStrategies);
         accountRep = new AccountRepositoryCached(cacheLayer.getAccountCache(), daoLayer.getAccountDAO(),
                 transactRep, accountCacheKeyFactory);
 

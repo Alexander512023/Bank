@@ -1,8 +1,8 @@
-package com.goryaninaa.web.bank.winter.repository;
+package com.goryaninaa.web.bank.winter.repository.transaction;
 
 import java.util.List;
 
-import com.goryaninaa.web.bank.winter.dao.concurrent.stub.TransactionDAO;
+import com.goryaninaa.web.bank.winter.dao.concurrent.stub.TransactionDAOConcurrentStub;
 import com.goryaninaa.web.bank.model.operation.Operation;
 import com.goryaninaa.web.bank.service.operation.OperationRepository;
 

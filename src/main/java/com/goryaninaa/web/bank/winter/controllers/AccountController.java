@@ -53,7 +53,7 @@ public class AccountController implements Controller {
 	public Response deposit(HttpRequest request, OperationDTO operationDTO) {
 		OperationRequisites requisites = operationDTO.extractOperationRequisites();
 		try {
-			synchronized (accountSynchronizer.getLock(requisites.getAccountRecepient().getNumber())) {
+			synchronized (accountSynchronizer.getLock(requisites.getAccountRecipient().getNumber())) {
 				accountService.deposit(requisites);
 				return new HttpResponse(HttpResponseCode.OK);
 			}

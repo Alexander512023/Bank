@@ -1,24 +1,24 @@
 package com.goryaninaa.web.bank.winter.application;
 
 import com.goryaninaa.web.bank.model.account.Account;
-import com.goryaninaa.web.bank.winter.dao.concurrent.stub.AccountDAO;
+import com.goryaninaa.web.bank.winter.dao.concurrent.stub.AccountDAOConcurrentStub;
 import com.goryaninaa.web.bank.winter.dao.concurrent.stub.AccountDataAccessByNumberStrategy;
 import com.goryaninaa.web.bank.winter.dao.concurrent.stub.AccountDataMediator;
-import com.goryaninaa.web.bank.winter.dao.concurrent.stub.ClientDAO;
+import com.goryaninaa.web.bank.winter.dao.concurrent.stub.ClientDAOConcurrentStub;
 import com.goryaninaa.web.bank.winter.dao.concurrent.stub.NumberCapacity;
-import com.goryaninaa.web.bank.winter.dao.concurrent.stub.TransactionDAO;
+import com.goryaninaa.web.bank.winter.dao.concurrent.stub.TransactionDAOConcurrentStub;
 import com.goryaninaa.winter.cache.DataAccessStrategy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DaoLayer {
-    private final AccountDAO accountDAO = new AccountDAO();
+    private final AccountDAOConcurrentStub accountDAO = new AccountDAOConcurrentStub();
     private final AccountDataMediator accountDataMediator;
-    private final ClientDAO clientDAO = new ClientDAO();
+    private final ClientDAOConcurrentStub clientDAO = new ClientDAOConcurrentStub();
     private final NumberCapacity numberCapacity = new NumberCapacity();
-    private final TransactionDAO transactionDAO = new TransactionDAO();
+    private final TransactionDAOConcurrentStub transactionDAO = new TransactionDAOConcurrentStub();
 
-    /* default */ AccountDAO getAccountDAO() {
+    /* default */ AccountDAOConcurrentStub getAccountDAO() {
         return accountDAO;
     }
 
@@ -26,7 +26,7 @@ public class DaoLayer {
         return accountDataMediator;
     }
 
-    /* default */ ClientDAO getClientDAO() {
+    /* default */ ClientDAOConcurrentStub getClientDAO() {
         return clientDAO;
     }
 
@@ -34,7 +34,7 @@ public class DaoLayer {
         return numberCapacity;
     }
 
-    /* default */ TransactionDAO getTransactionDAO() {
+    /* default */ TransactionDAOConcurrentStub getTransactionDAO() {
         return transactionDAO;
     }
 

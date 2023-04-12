@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import com.goryaninaa.web.bank.model.client.Client;
+import com.goryaninaa.web.bank.winter.repository.client.ClientDAO;
 
-public class ClientDAO {
+public class ClientDAOConcurrentStub implements ClientDAO {
 
 	private static int idCounter = 1;
 	private final List<Client> clients;
 
-	public ClientDAO() {
+	public ClientDAOConcurrentStub() {
 		this.clients = new ArrayList<>();
 		Client client = new Client(1, "36 10 000001", "Alex", "Goryanin", "30.10.1989");
 		this.save(client);
@@ -23,12 +24,11 @@ public class ClientDAO {
 				throw new RuntimeException("This client already exists");
 			}
 		}
-		
 		client.setId(idCounter++);
-		
 		clients.add(client);
 	}
 
+	@Override
 	public Optional<Client> findByPassport(String passport) {
 		Optional<Client> desiredClient = Optional.empty();
 
@@ -38,7 +38,6 @@ public class ClientDAO {
 				break;
 			}
 		}
-
 		return desiredClient;
 	}
 

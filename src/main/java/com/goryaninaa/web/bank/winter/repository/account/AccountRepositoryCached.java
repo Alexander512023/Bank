@@ -1,10 +1,9 @@
-package com.goryaninaa.web.bank.winter.repository;
+package com.goryaninaa.web.bank.winter.repository.account;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import com.goryaninaa.web.bank.winter.dao.concurrent.stub.AccountDAO;
 import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.operation.Operation;
 import com.goryaninaa.web.bank.service.account.AccountRepository;
@@ -18,14 +17,14 @@ public class AccountRepositoryCached implements AccountRepository {
 	private final Cache<Account> cache;
 	private final CacheKeyFactory cacheKeyFactory;
 	private final AccountDAO accountDAO;
-	private final OperationRepository transactionRepository;
+	private final OperationRepository operationRepository;
 	
 	public AccountRepositoryCached(Cache<Account> cache, AccountDAO accountDAO,
-			OperationRepository transactionRepository, CacheKeyFactory cacheKeyFactory) {
+			OperationRepository operationRepository, CacheKeyFactory cacheKeyFactory) {
 		this.cache = cache;
 		this.cacheKeyFactory = cacheKeyFactory;
 		this.accountDAO = accountDAO;
-		this.transactionRepository = transactionRepository;
+		this.operationRepository = operationRepository;
 	}
 
 	@Override
@@ -40,7 +39,7 @@ public class AccountRepositoryCached implements AccountRepository {
 		CacheKey cacheKey = cacheKeyFactory.generateCacheKey(number, AccountAccessStrategyType.NUMBER);
 		Optional<Account> account = cache.getData(cacheKey);
 		if (account.isPresent()) {
-			List<Operation> transactions = transactionRepository.findOperationsOfAccount(account.get().getId());
+			List<Operation> transactions = operationRepository.findOperationsOfAccount(account.get().getId());
 			transactions.sort(Comparator.comparing(Operation::getHistoryNumber));
 			account.get().setHistory(transactions);
 		}

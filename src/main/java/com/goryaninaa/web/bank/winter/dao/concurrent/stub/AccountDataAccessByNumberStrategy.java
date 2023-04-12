@@ -3,14 +3,14 @@ package com.goryaninaa.web.bank.winter.dao.concurrent.stub;
 import java.util.Optional;
 
 import com.goryaninaa.web.bank.model.account.Account;
-import com.goryaninaa.web.bank.winter.repository.AccountAccessStrategyType;
+import com.goryaninaa.web.bank.winter.repository.account.AccountAccessStrategyType;
 import com.goryaninaa.winter.cache.DataAccessStrategy;
 
 public class AccountDataAccessByNumberStrategy implements DataAccessStrategy<Account> {
 
-	private final AccountDAO accountDAO;
+	private final AccountDAOConcurrentStub accountDAO;
 
-	public AccountDataAccessByNumberStrategy(AccountDAO accountDAO) {
+	public AccountDataAccessByNumberStrategy(AccountDAOConcurrentStub accountDAO) {
 		this.accountDAO = accountDAO;
 	}
 

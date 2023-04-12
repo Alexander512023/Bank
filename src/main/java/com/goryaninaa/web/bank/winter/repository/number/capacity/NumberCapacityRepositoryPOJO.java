@@ -1,4 +1,4 @@
-package com.goryaninaa.web.bank.winter.repository;
+package com.goryaninaa.web.bank.winter.repository.number.capacity;
 
 import com.goryaninaa.web.bank.winter.dao.concurrent.stub.NumberCapacity;
 import com.goryaninaa.web.bank.service.account.NumberCapacityRepository;

@@ -1,4 +1,4 @@
-package com.goryaninaa.web.bank.winter.repository;
+package com.goryaninaa.web.bank.winter.repository.account;
 
 public class AccountAccessStrategyType {
 	
