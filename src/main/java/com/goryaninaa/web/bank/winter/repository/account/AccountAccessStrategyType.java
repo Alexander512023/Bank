@@ -4,4 +4,8 @@ public class AccountAccessStrategyType {
 	
 	public static final String NUMBER = "Number";
 
+	private AccountAccessStrategyType() {
+
+	}
+
 }

@@ -1,10 +1,8 @@
 package com.goryaninaa.web.bank.winter.repository.client;
 
-import java.util.Optional;
-
-import com.goryaninaa.web.bank.winter.dao.concurrent.stub.ClientDAOConcurrentStub;
 import com.goryaninaa.web.bank.model.client.Client;
 import com.goryaninaa.web.bank.service.requisite.ClientRepositoryRequisite;
+import java.util.Optional;
 
 public class ClientRepositoryPOJO implements ClientRepositoryRequisite {
 
@@ -16,8 +14,7 @@ public class ClientRepositoryPOJO implements ClientRepositoryRequisite {
 	
 	@Override
 	public Optional<Client> findByPassport(String passport) {
-		Optional<Client> client = clientDAO.findByPassport(passport);
-		return client;
+		return clientDAO.findByPassport(passport);
 	}
 
 }
