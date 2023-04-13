@@ -31,7 +31,7 @@ public class OperationRequisites {
     this.setAccountRecipient(account);
     this.setClient(client);
     this.setBalanceAfter(account.getBalance());
-    this.setHistoryNumber(account.getLastOperationNumber());
+    this.setHistoryNumber(account.getLastOperNumber());
     this.setOperationType(operationType);
     defineBalanceBefore(operationType, amount, balanceAfter);
   }

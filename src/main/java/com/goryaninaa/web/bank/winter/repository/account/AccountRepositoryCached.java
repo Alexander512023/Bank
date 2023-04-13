@@ -40,7 +40,7 @@ public class AccountRepositoryCached implements AccountRepository {
     Optional<Account> account = cache.getData(cacheKey);
     if (account.isPresent()) {
       List<Operation> transactions =
-          operationRepository.findOperationsOfAccount(account.get().getId());
+          operationRepository.findOperationsOfAccount(account.get().getAccountId());
       transactions.sort(Comparator.comparing(Operation::getHistoryNumber));
       account.get().setHistory(transactions);
     }

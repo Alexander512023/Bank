@@ -9,11 +9,16 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * This is Account model class. It encapsulates corresponding fields and logic - deposit and
+ * withdraw methods.
+ */
 @SuppressWarnings("unused")
-public class Account implements Comparable<Account> {
+public class Account implements Comparable<Account> { //NOPMD - suppressed DataClass - it's not
+  // DataClass - it's model class! =)
 
-  private int id;
-  private int lastOperationNumber;
+  private int accountId;
+  private int lastOperNumber;
   private int balance;
   private int number;
   private State state;
@@ -26,13 +31,26 @@ public class Account implements Comparable<Account> {
   private LocalDate prolongationDate;
 
   public Account() {
+    // Default constructor
   }
 
-  public Account(int number) {
+  /**
+   * Constructor, which should be used when creating Account class instance when number is known.
+   *
+   * @param number - account number
+   */
+  public Account(final int number) {
     this.number = number;
   }
 
-  public Account(AccountOpenRequisites requisites, int number) {
+  /**
+   * Constructor, which should be used when creating Account class instance when requisites and
+   * number are known.
+   *
+   * @param requisites - see {@link AccountOpenRequisites} for details
+   * @param number - account number
+   */
+  public Account(final AccountOpenRequisites requisites, final int number) {
     setLastTransactionNumber(1);
     setBalance(requisites.getOperationRequisites().getAmount());
     setNumber(number);
@@ -44,27 +62,38 @@ public class Account implements Comparable<Account> {
     setProlongationDate(openedAt.toLocalDate().plusMonths(term));
   }
 
-  public void deposit(int amount) {
+  /**
+   * Use this method if you need to perform deposit operation on this account object.
+   *
+   * @param amount - how many funds you want to deposit on this account
+   */
+  public void deposit(final int amount) {
     balance += Math.abs(amount);
-    lastOperationNumber++;
+    lastOperNumber++;
   }
 
-  public void withdraw(int amount) throws AccountWithdrawException {
+  /**
+   * Use this method if you need to perform withdraw operation on this account object.
+   *
+   * @param amount - how many funds you want to withdraw from this account
+   * @throws AccountWithdrawException - thrown in case of insufficient funds
+   */
+  public void withdraw(final int amount) throws AccountWithdrawException {
     if (balance - Math.abs(amount) > 0) {
       balance -= Math.abs(amount);
-      lastOperationNumber++;
+      lastOperNumber++;
     } else {
       throw new AccountWithdrawException("Insufficient funds");
     }
   }
 
   @Override
-  public int compareTo(Account that) {
+  public int compareTo(final Account that) {
     int result;
     if (this.equals(that)) {
       result = 0;
-    } else if ((this.state.equals(that.state) && this.openedAt.isAfter(that.openedAt))
-        || (this.state.equals(State.OPENED) && that.state.equals(State.CLOSED))
+    } else if (this.state.equals(that.state) && this.openedAt.isAfter(that.openedAt)
+        || this.state.equals(State.OPENED) && that.state.equals(State.CLOSED)
     ) {
       result = 1;
     } else {
@@ -73,27 +102,27 @@ public class Account implements Comparable<Account> {
     return result;
   }
 
-  public int getId() {
-    return id;
+  public int getAccountId() {
+    return accountId;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setAccountId(final int accountId) {
+    this.accountId = accountId;
   }
 
-  public int getLastOperationNumber() {
-    return lastOperationNumber;
+  public int getLastOperNumber() {
+    return lastOperNumber;
   }
 
-  public void setLastTransactionNumber(int lastTransactionNumber) {
-    this.lastOperationNumber = lastTransactionNumber;
+  public final void setLastTransactionNumber(final int lastTranNum) {
+    this.lastOperNumber = lastTranNum;
   }
 
   public int getBalance() {
     return balance;
   }
 
-  public void setBalance(int balance) {
+  public final void setBalance(final int balance) {
     this.balance = balance;
   }
 
@@ -101,7 +130,7 @@ public class Account implements Comparable<Account> {
     return number;
   }
 
-  public void setNumber(int number) {
+  public final void setNumber(final int number) {
     this.number = number;
   }
 
@@ -109,7 +138,7 @@ public class Account implements Comparable<Account> {
     return state;
   }
 
-  public void setState(State state) {
+  public final void setState(final State state) {
     this.state = state;
   }
 
@@ -117,7 +146,7 @@ public class Account implements Comparable<Account> {
     return openedAt;
   }
 
-  public void setOpenedAt(LocalDateTime openedAt) {
+  public final void setOpenedAt(final LocalDateTime openedAt) {
     this.openedAt = openedAt;
   }
 
@@ -125,7 +154,7 @@ public class Account implements Comparable<Account> {
     return closedAt;
   }
 
-  public void setClosedAt(LocalDateTime closedAt) {
+  public void setClosedAt(final LocalDateTime closedAt) {
     this.closedAt = closedAt;
   }
 
@@ -133,7 +162,7 @@ public class Account implements Comparable<Account> {
     return owner;
   }
 
-  public void setOwner(Client owner) {
+  public final void setOwner(final Client owner) {
     this.owner = owner;
   }
 
@@ -141,7 +170,7 @@ public class Account implements Comparable<Account> {
     return history;
   }
 
-  public void setHistory(List<Operation> history) {
+  public void setHistory(final List<Operation> history) {
     this.history = history;
   }
 
@@ -149,7 +178,7 @@ public class Account implements Comparable<Account> {
     return type;
   }
 
-  public void setType(AccountType type) {
+  public final void setType(final AccountType type) {
     this.type = type;
   }
 
@@ -157,7 +186,7 @@ public class Account implements Comparable<Account> {
     return term;
   }
 
-  public void setTerm(int term) {
+  public final void setTerm(final int term) {
     this.term = term;
   }
 
@@ -165,28 +194,27 @@ public class Account implements Comparable<Account> {
     return prolongationDate;
   }
 
-  public void setProlongationDate(LocalDate prolongationDate) {
+  public final void setProlongationDate(final LocalDate prolongationDate) {
     this.prolongationDate = prolongationDate;
   }
 
-  public void addTransaction(Operation transaction) {
+  public void addTransaction(final Operation transaction) {
     history.add(transaction);
     history.sort(Comparator.comparing(Operation::getHistoryNumber));
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+  public boolean equals(final Object that) {
+    boolean result;
+    if (this == that) {
+      result = true;
+    } else if (that == null || getClass() != that.getClass()) {
+      result = false;
+    } else {
+      final Account account = (Account) that;
+      result = number == account.number && openedAt.equals(account.openedAt);
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Account account = (Account) o;
-    if (number != account.number) {
-      return false;
-    }
-    return openedAt.equals(account.openedAt);
+    return result;
   }
 
   @Override
@@ -198,7 +226,7 @@ public class Account implements Comparable<Account> {
 
   @Override
   public String toString() {
-    return "Product [id=" + id + ", transactionNumber=" + lastOperationNumber
+    return "Product [id=" + accountId + ", transactionNumber=" + lastOperNumber
         + ", balance=" + balance + ", number="
         + number + ", state=" + state + ", openedAt=" + openedAt + ", closedAt=" + closedAt
         + ", client=" + owner;

@@ -32,7 +32,7 @@ public class TransactionDAOConcurrentStub implements TransactionDAO {
 
   @Override
   public List<Operation> findTransactionsOfAccount(int accountId) {
-    return transactions.stream().filter(t -> t.getAccount().getId() == accountId)
+    return transactions.stream().filter(t -> t.getAccount().getAccountId() == accountId)
         .collect(Collectors.toList());
   }
 }

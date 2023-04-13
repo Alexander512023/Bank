@@ -20,7 +20,7 @@ public class AccountDAOConcurrentStub implements AccountDAO {
         throw new DuplicateRequestException("This account already exists");
       }
     }
-    account.setId(idCounter.addAndGet(1));
+    account.setAccountId(idCounter.addAndGet(1));
     accounts.add(account);
   }
 

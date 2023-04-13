@@ -30,7 +30,7 @@ public class AccountDTO {
   }
 
   public AccountDTO(Account account, List<OperationDTO> historyDTO, ClientDTO owner) {
-    this.lastTransactionNumber = account.getLastOperationNumber();
+    this.lastTransactionNumber = account.getLastOperNumber();
     this.balance = account.getBalance();
     this.number = account.getNumber();
     this.state = account.getState();
