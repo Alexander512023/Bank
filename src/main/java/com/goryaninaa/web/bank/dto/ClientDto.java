@@ -4,8 +4,12 @@ import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.client.Client;
 import java.util.List;
 
+/**
+ * AccountDto is data transfer object for Account entity.
+ *
+ */
 @SuppressWarnings("unused")
-public class ClientDto {
+public class ClientDto { //NOPMD - suppressed DataClass - data transfer object
 
   private String passport;
   private String firstName;
@@ -14,10 +18,15 @@ public class ClientDto {
   private List<Account> products;
 
   public ClientDto() {
-
+    // Default constructor
   }
 
-  public ClientDto(Client client) {
+  /**
+   * Use this constructor to create ClientDTO object from Client object.
+   *
+   * @param client - client object from which corresponding DTO object should be created
+   */
+  public ClientDto(final Client client) {
     this.passport = client.getPassport();
     this.firstName = client.getFirstName();
     this.secondName = client.getSecondName();
@@ -29,7 +38,7 @@ public class ClientDto {
     return passport;
   }
 
-  public void setPassport(String passport) {
+  public void setPassport(final String passport) {
     this.passport = passport;
   }
 
@@ -37,7 +46,7 @@ public class ClientDto {
     return firstName;
   }
 
-  public void setFirstName(String firstName) {
+  public void setFirstName(final String firstName) {
     this.firstName = firstName;
   }
 
@@ -45,7 +54,7 @@ public class ClientDto {
     return secondName;
   }
 
-  public void setSecondName(String secondName) {
+  public void setSecondName(final String secondName) {
     this.secondName = secondName;
   }
 
@@ -53,7 +62,7 @@ public class ClientDto {
     return dateOfBirth;
   }
 
-  public void setDateOfBirth(String dateOfBirth) {
+  public void setDateOfBirth(final String dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 
@@ -61,7 +70,7 @@ public class ClientDto {
     return products;
   }
 
-  public void setProducts(List<Account> products) {
+  public void setProducts(final List<Account> products) {
     this.products = products;
   }
 
