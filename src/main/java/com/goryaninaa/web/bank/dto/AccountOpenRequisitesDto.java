@@ -6,22 +6,32 @@ import com.goryaninaa.web.bank.model.client.Client;
 import com.goryaninaa.web.bank.model.operation.OperationRequisites;
 import com.goryaninaa.web.bank.model.operation.ServiceInitiator;
 
+/**
+ * This is data transfer object, which should be used to get requisites from client side in case of
+ * new account opening.
+ */
 @SuppressWarnings("unused")
-public class AccountOpenRequisitesDTO {
+public class AccountOpenRequisitesDto { //NOPMD - suppressed DataClass - this is data transfer
+  // object
 
   private int amount;
-  private ClientDTO clientDTO;
+  private ClientDto clientDto;
   private AccountType accountType;
   private ServiceInitiator service;
   private int term;
 
-  public AccountOpenRequisitesDTO() {
+  public AccountOpenRequisitesDto() {
     // Default constructor
   }
 
+  /**
+   * Method that converts dto to corresponding entity.
+   *
+   * @return - corresponding entity {@link  AccountOpenRequisites}
+   */
   public AccountOpenRequisites extractAccountRequisites() {
-    Client client = new Client(clientDTO.getPassport());
-    OperationRequisites transaction = new OperationRequisites(amount, service, client);
+    final Client client = new Client(clientDto.getPassport());
+    final OperationRequisites transaction = new OperationRequisites(amount, service, client);
 
     return new AccountOpenRequisites(transaction, accountType, term);
   }
@@ -30,23 +40,23 @@ public class AccountOpenRequisitesDTO {
     return amount;
   }
 
-  public void setAmount(int amount) {
+  public void setAmount(final int amount) {
     this.amount = amount;
   }
 
-  public ClientDTO getClientDTO() {
-    return clientDTO;
+  public ClientDto getClientDto() {
+    return clientDto;
   }
 
-  public void setClientDTO(ClientDTO clientDTO) {
-    this.clientDTO = clientDTO;
+  public void setClientDto(final ClientDto clientDto) {
+    this.clientDto = clientDto;
   }
 
   public AccountType getAccountType() {
     return accountType;
   }
 
-  public void setAccountType(AccountType accountType) {
+  public void setAccountType(final AccountType accountType) {
     this.accountType = accountType;
   }
 
@@ -54,7 +64,7 @@ public class AccountOpenRequisitesDTO {
     return service;
   }
 
-  public void setService(ServiceInitiator service) {
+  public void setService(final ServiceInitiator service) {
     this.service = service;
   }
 
@@ -62,7 +72,7 @@ public class AccountOpenRequisitesDTO {
     return term;
   }
 
-  public void setTerm(int term) {
+  public void setTerm(final int term) {
     this.term = term;
   }
 
