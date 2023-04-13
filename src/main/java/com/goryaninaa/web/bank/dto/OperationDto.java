@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * OperationDto is data transfer object for Operation entity.
+ */
 @SuppressWarnings("unused")
 public class OperationDto implements Comparable<OperationDto> {
 
@@ -19,7 +22,7 @@ public class OperationDto implements Comparable<OperationDto> {
   private LocalDateTime performedAt;
   private Integer accountFromNumber;
   private Integer accountRecipientNumber;
-  private ClientDto clientDTO;
+  private ClientDto clientDto;
   private ServiceInitiator service;
   private OperationType operationType;
   private int historyNumber;
@@ -27,12 +30,19 @@ public class OperationDto implements Comparable<OperationDto> {
   public OperationDto() {
   }
 
-  public OperationDto(Operation operation, ClientDto clientDTO) {
+  /**
+   * Constructor which should be used to create OperationDTO from {@link Operation} and
+   * {@link ClientDto} objects.
+   *
+   * @param operation - operation which will be included in DTO
+   * @param clientDto - clientDto which Will be included in DTO
+   */
+  public OperationDto(Operation operation, ClientDto clientDto) {
     this.amount = operation.getAmount();
     this.performedAt = operation.getPerformedAt();
     this.historyNumber = operation.getHistoryNumber();
     this.operationType = operation.getOperationType();
-    this.clientDTO = clientDTO;
+    this.clientDto = clientDto;
     this.service = operation.getService();
     this.balanceBefore = operation.getBalanceBefore();
     this.balanceAfter = operation.getBalanceAfter();
@@ -46,6 +56,12 @@ public class OperationDto implements Comparable<OperationDto> {
     }
   }
 
+  /**
+   * Method which could be used to extract corresponding {@link OperationRequisites} from the
+   * instance of this class.
+   *
+   * @return - returns corresponding {@link OperationRequisites}
+   */
   public OperationRequisites extractOperationRequisites() {
     OperationRequisites requisites = new OperationRequisites();
     requisites.setAmount(amount);
@@ -53,7 +69,7 @@ public class OperationDto implements Comparable<OperationDto> {
     accountFrom.ifPresent(integer -> requisites.setAccountFrom(new Account(integer)));
     Optional<Integer> accountRecipient = Optional.ofNullable(accountRecipientNumber);
     accountRecipient.ifPresent(integer -> requisites.setAccountRecipient(new Account(integer)));
-    requisites.setClient(new Client(clientDTO.getPassport()));
+    requisites.setClient(new Client(clientDto.getPassport()));
     requisites.setService(service);
     requisites.setOperationType(operationType);
     requisites.setHistoryNumber(historyNumber);
@@ -140,12 +156,12 @@ public class OperationDto implements Comparable<OperationDto> {
     this.accountRecipientNumber = accountRecipientNumber;
   }
 
-  public ClientDto getClientDTO() {
-    return clientDTO;
+  public ClientDto getClientDto() {
+    return clientDto;
   }
 
-  public void setClientDTO(ClientDto clientDTO) {
-    this.clientDTO = clientDTO;
+  public void setClientDto(ClientDto clientDto) {
+    this.clientDto = clientDto;
   }
 
   public ServiceInitiator getService() {
