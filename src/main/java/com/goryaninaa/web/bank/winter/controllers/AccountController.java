@@ -3,7 +3,7 @@ package com.goryaninaa.web.bank.winter.controllers;
 import com.goryaninaa.web.bank.dto.AccountDto;
 import com.goryaninaa.web.bank.dto.AccountOpenRequisitesDto;
 import com.goryaninaa.web.bank.dto.ClientDto;
-import com.goryaninaa.web.bank.dto.ErrorDTO;
+import com.goryaninaa.web.bank.dto.ErrorDto;
 import com.goryaninaa.web.bank.dto.OperationDto;
 import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.account.AccountOpenRequisites;
@@ -115,10 +115,10 @@ public class AccountController implements Controller {
   private HttpResponse prepareResponseOnException(Throwable t) {
     Throwable cause = t.getCause();
     if (cause instanceof IllegalArgumentException) {
-      ErrorDTO errorDTO = new ErrorDTO(404, t.getMessage());
+      ErrorDto errorDTO = new ErrorDto(404, t.getMessage());
       return new HttpResponse(HttpResponseCode.NOTFOUND, errorDTO);
     } else {
-      ErrorDTO errorDTO = new ErrorDTO(500, t.getMessage());
+      ErrorDto errorDTO = new ErrorDto(500, t.getMessage());
       return new HttpResponse(HttpResponseCode.INTERNALSERVERERROR, errorDTO);
     }
   }
