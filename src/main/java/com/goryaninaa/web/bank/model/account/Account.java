@@ -52,11 +52,11 @@ public class Account implements Comparable<Account> { //NOPMD - suppressed DataC
    */
   public Account(final AccountOpenRequisites requisites, final int number) {
     setLastTransactionNumber(1);
-    setBalance(requisites.getOperationRequisites().getAmount());
+    setBalance(requisites.getOperRequisites().getAmount());
     setNumber(number);
     setState(State.OPENED);
     setOpenedAt(LocalDateTime.now());
-    setOwner(requisites.getOperationRequisites().getClient());
+    setOwner(requisites.getOperRequisites().getClient());
     setType(requisites.getAccountType());
     setTerm(requisites.getTerm());
     setProlongationDate(openedAt.toLocalDate().plusMonths(term));

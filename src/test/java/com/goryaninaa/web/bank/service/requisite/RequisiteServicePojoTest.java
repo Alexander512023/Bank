@@ -32,7 +32,7 @@ class RequisiteServicePojoTest {
     ((ClientRepositoryRequisiteStub) clientRepositoryRequisite).setClient(expected);
     AccountOpenRequisites enrichedRequisites =
         requisiteService.prepareAccountOpenRequisites(RequisitesGenerator.defineOpenRequisites());
-    Client actual = enrichedRequisites.getOperationRequisites().getClient();
+    Client actual = enrichedRequisites.getOperRequisites().getClient();
     assertEquals(expected, actual);
   }
 

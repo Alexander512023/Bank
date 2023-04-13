@@ -51,9 +51,9 @@ public class RequisiteServicePojo implements RequisiteServiceAccount, RequisiteS
   private AccountOpenRequisites enrichOpenAccountRequisites(AccountOpenRequisites requisites)
       throws AccountOpenException {
     Optional<Client> initiator = clientRepository.findByPassport(
-        requisites.getOperationRequisites().getClient().getPassport());
+        requisites.getOperRequisites().getClient().getPassport());
     if (initiator.isPresent()) {
-      requisites.getOperationRequisites().setClient(initiator.get());
+      requisites.getOperRequisites().setClient(initiator.get());
       return requisites;
     } else {
       throw new AccountOpenException(MESSAGE, new IllegalArgumentException());
@@ -64,7 +64,7 @@ public class RequisiteServicePojo implements RequisiteServiceAccount, RequisiteS
                                                               Account account)
       throws AccountOpenException {
     AccountOpenRequisites enrichedRequisites = enrichOpenAccountRequisites(requisites);
-    OperationRequisites firstOperationRequisites = enrichedRequisites.getOperationRequisites();
+    OperationRequisites firstOperationRequisites = enrichedRequisites.getOperRequisites();
     firstOperationRequisites.setAccount(account);
     firstOperationRequisites.setAccountRecipient(account);
     firstOperationRequisites.setOperationType(OperationType.DEPOSIT);

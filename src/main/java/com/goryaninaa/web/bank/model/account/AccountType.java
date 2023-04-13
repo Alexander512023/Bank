@@ -1,5 +1,8 @@
 package com.goryaninaa.web.bank.model.account;
 
+/**
+ * Enumeration of available account types.
+ */
 @SuppressWarnings("unused")
 public enum AccountType {
 
@@ -8,7 +11,7 @@ public enum AccountType {
 
   private final int rate;
 
-  AccountType(int rate) {
+  AccountType(final int rate) {
     this.rate = rate;
   }
 

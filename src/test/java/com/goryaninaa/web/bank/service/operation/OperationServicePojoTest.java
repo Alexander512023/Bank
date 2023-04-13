@@ -29,7 +29,7 @@ class OperationServicePojoTest {
   @Test
   void processAccountOpenShouldPrepareAndSave() throws AccountOpenException {
     AccountOpenRequisites requisites = RequisitesGenerator.defineOpenRequisites();
-    requisites.getOperationRequisites().setOperationType(OperationType.DEPOSIT);
+    requisites.getOperRequisites().setOperationType(OperationType.DEPOSIT);
     operationService.processAccountOpen(new Account(), requisites);
     final boolean testPassed =
         ((RequisiteServiceOperationStub) requisiteServiceOperation).isOpenInvoked()
