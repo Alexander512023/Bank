@@ -4,10 +4,13 @@ import com.goryaninaa.web.bank.model.account.Account;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Bank client entity class.
+ */
 @SuppressWarnings("unused")
-public class Client {
+public class Client { //NOPMD - suppressed DataClass - entity class
 
-  private int id;
+  private int clientId;
   private String passport;
   private String firstName;
   private String secondName;
@@ -15,34 +18,45 @@ public class Client {
   private List<Account> products;
 
   public Client() {
+    // Default constructor
   }
 
-  public Client(String passport) {
+  public Client(final String passport) {
     this.passport = passport;
   }
 
-  public Client(int id, String passport, String firstName, String secondName, String dateOfBirth) {
+  /**
+   * Constructor which receives values for all client fields.
+   *
+   * @param clientId - unique identifier
+   * @param passport - client's passport requisites
+   * @param firstName - client's first name
+   * @param secondName - client's second name
+   * @param dateOfBirth - client's date of birth
+   */
+  public Client(final int clientId, final String passport, final String firstName,
+                final String secondName, final String dateOfBirth) {
     super();
-    this.id = id;
+    this.clientId = clientId;
     this.passport = passport;
     this.firstName = firstName;
     this.secondName = secondName;
     this.dateOfBirth = dateOfBirth;
   }
 
-  public int getId() {
-    return id;
+  public int getClientId() {
+    return clientId;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setClientId(final int clientId) {
+    this.clientId = clientId;
   }
 
   public String getPassport() {
     return passport;
   }
 
-  public void setPassport(String passport) {
+  public void setPassport(final String passport) {
     this.passport = passport;
   }
 
@@ -50,7 +64,7 @@ public class Client {
     return firstName;
   }
 
-  public void setFirstName(String firstName) {
+  public void setFirstName(final String firstName) {
     this.firstName = firstName;
   }
 
@@ -58,7 +72,7 @@ public class Client {
     return secondName;
   }
 
-  public void setSecondName(String secondName) {
+  public void setSecondName(final String secondName) {
     this.secondName = secondName;
   }
 
@@ -66,7 +80,7 @@ public class Client {
     return products;
   }
 
-  public void setProducts(List<Account> products) {
+  public void setProducts(final List<Account> products) {
     this.products = products;
   }
 
@@ -74,7 +88,7 @@ public class Client {
     return dateOfBirth;
   }
 
-  public void setDateOfBirth(String dateOfBirth) {
+  public void setDateOfBirth(final String dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 
@@ -84,19 +98,20 @@ public class Client {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
+    boolean isEqual;
     if (this == obj) {
-      return true;
+      isEqual = true;
+    } else if (obj == null) {
+      isEqual = false; //NOPMD - suppressed ConfusingTernary - not applicable for equals case
+    } else if (getClass() != obj.getClass()) { //NOPMD - suppressed ConfusingTernary -
+      // not applicable for equals case
+      isEqual = false;
+    } else {
+      final Client other = (Client) obj;
+      isEqual = Objects.equals(passport, other.passport);
     }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    Client other = (Client) obj;
-    return Objects.equals(passport, other.passport);
+    return isEqual;
   }
-
 
 }

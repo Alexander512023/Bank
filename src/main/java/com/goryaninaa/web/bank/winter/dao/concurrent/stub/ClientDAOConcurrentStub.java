@@ -25,7 +25,7 @@ public class ClientDAOConcurrentStub implements ClientDAO {
         throw new DuplicateRequestException("This client already exists");
       }
     }
-    client.setId(idCounter.getAndIncrement());
+    client.setClientId(idCounter.getAndIncrement());
     clients.add(client);
   }
 
