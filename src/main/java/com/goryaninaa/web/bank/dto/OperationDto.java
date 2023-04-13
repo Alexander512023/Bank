@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @SuppressWarnings("unused")
-public class OperationDTO implements Comparable<OperationDTO> {
+public class OperationDto implements Comparable<OperationDto> {
 
   private int amount;
   private int balanceBefore;
@@ -19,15 +19,15 @@ public class OperationDTO implements Comparable<OperationDTO> {
   private LocalDateTime performedAt;
   private Integer accountFromNumber;
   private Integer accountRecipientNumber;
-  private ClientDTO clientDTO;
+  private ClientDto clientDTO;
   private ServiceInitiator service;
   private OperationType operationType;
   private int historyNumber;
 
-  public OperationDTO() {
+  public OperationDto() {
   }
 
-  public OperationDTO(Operation operation, ClientDTO clientDTO) {
+  public OperationDto(Operation operation, ClientDto clientDTO) {
     this.amount = operation.getAmount();
     this.performedAt = operation.getPerformedAt();
     this.historyNumber = operation.getHistoryNumber();
@@ -61,7 +61,7 @@ public class OperationDTO implements Comparable<OperationDTO> {
   }
 
   @Override
-  public int compareTo(OperationDTO that) {
+  public int compareTo(OperationDto that) {
     return Integer.compare(that.historyNumber, this.historyNumber);
   }
 
@@ -73,7 +73,7 @@ public class OperationDTO implements Comparable<OperationDTO> {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OperationDTO that = (OperationDTO) o;
+    OperationDto that = (OperationDto) o;
     if (amount != that.amount) {
       return false;
     }
@@ -140,11 +140,11 @@ public class OperationDTO implements Comparable<OperationDTO> {
     this.accountRecipientNumber = accountRecipientNumber;
   }
 
-  public ClientDTO getClientDTO() {
+  public ClientDto getClientDTO() {
     return clientDTO;
   }
 
-  public void setClientDTO(ClientDTO clientDTO) {
+  public void setClientDTO(ClientDto clientDTO) {
     this.clientDTO = clientDTO;
   }
 

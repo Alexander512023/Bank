@@ -1,10 +1,10 @@
 package com.goryaninaa.web.bank.winter.controllers;
 
-import com.goryaninaa.web.bank.dto.AccountDTO;
-import com.goryaninaa.web.bank.dto.AccountOpenRequisitesDTO;
-import com.goryaninaa.web.bank.dto.ClientDTO;
+import com.goryaninaa.web.bank.dto.AccountDto;
+import com.goryaninaa.web.bank.dto.AccountOpenRequisitesDto;
+import com.goryaninaa.web.bank.dto.ClientDto;
 import com.goryaninaa.web.bank.dto.ErrorDTO;
-import com.goryaninaa.web.bank.dto.OperationDTO;
+import com.goryaninaa.web.bank.dto.OperationDto;
 import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.account.AccountOpenRequisites;
 import com.goryaninaa.web.bank.model.operation.Operation;
@@ -39,7 +39,7 @@ public class AccountController implements Controller {
   }
 
   @Mapping(value = "/open", httpMethod = HttpMethod.POST)
-  public Response open(HttpRequest request, AccountOpenRequisitesDTO requisitesDTO) {
+  public Response open(HttpRequest request, AccountOpenRequisitesDto requisitesDTO) {
     AccountOpenRequisites accountRequisites = requisitesDTO.extractAccountRequisites();
     try {
       accountService.open(accountRequisites);
@@ -51,7 +51,7 @@ public class AccountController implements Controller {
   }
 
   @Mapping(value = "/deposit", httpMethod = HttpMethod.POST)
-  public Response deposit(HttpRequest request, OperationDTO operationDTO) {
+  public Response deposit(HttpRequest request, OperationDto operationDTO) {
     OperationRequisites requisites = operationDTO.extractOperationRequisites();
     try {
       synchronized (accountSynchronizer.getLock(requisites.getAccountRecipient().getNumber())) {
@@ -65,7 +65,7 @@ public class AccountController implements Controller {
   }
 
   @Mapping(value = "/withdraw", httpMethod = HttpMethod.POST)
-  public Response withdraw(HttpRequest request, OperationDTO operationDTO) {
+  public Response withdraw(HttpRequest request, OperationDto operationDTO) {
     OperationRequisites requisites = operationDTO.extractOperationRequisites();
     try {
       synchronized (accountSynchronizer.getLock(requisites.getAccountFrom().getNumber())) {
@@ -79,7 +79,7 @@ public class AccountController implements Controller {
   }
 
   @Mapping(value = "/transfer", httpMethod = HttpMethod.POST)
-  public Response transfer(HttpRequest request, OperationDTO operationDTO) {
+  public Response transfer(HttpRequest request, OperationDto operationDTO) {
     OperationRequisites requisites = operationDTO.extractOperationRequisites();
     try {
       synchronized (accountSynchronizer.getLock(requisites.getAccountFrom().getNumber())) {
@@ -100,8 +100,8 @@ public class AccountController implements Controller {
         synchronized (accountSynchronizer.getLock(Integer.parseInt(accountNumberString.get()))) {
           Account account =
               accountService.findByNumber(Integer.parseInt(accountNumberString.get()));
-          AccountDTO responseAccountDTO = prepareAccountDTO(account);
-          return new HttpResponse(HttpResponseCode.OK, responseAccountDTO);
+          AccountDto responseAccountDto = prepareAccountDTO(account);
+          return new HttpResponse(HttpResponseCode.OK, responseAccountDto);
         }
       } else {
         throw new NoSuchElementException("Request format for account incorrect");
@@ -123,14 +123,14 @@ public class AccountController implements Controller {
     }
   }
 
-  private AccountDTO prepareAccountDTO(Account account) {
+  private AccountDto prepareAccountDTO(Account account) {
     List<Operation> operations = account.getHistory();
-    List<OperationDTO> operationsDTO = new ArrayList<>();
-    ClientDTO clientDTO = new ClientDTO(account.getOwner());
+    List<OperationDto> operationsDTO = new ArrayList<>();
+    ClientDto clientDTO = new ClientDto(account.getOwner());
     for (Operation operation : operations) {
-      operationsDTO.add(new OperationDTO(operation, clientDTO));
+      operationsDTO.add(new OperationDto(operation, clientDTO));
     }
-    operationsDTO.sort(Comparator.comparing(OperationDTO::getHistoryNumber).reversed());
-    return new AccountDTO(account, operationsDTO, clientDTO);
+    operationsDTO.sort(Comparator.comparing(OperationDto::getHistoryNumber).reversed());
+    return new AccountDto(account, operationsDTO, clientDTO);
   }
 }

@@ -5,7 +5,7 @@ import com.goryaninaa.web.bank.model.client.Client;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class ClientDTO {
+public class ClientDto {
 
   private String passport;
   private String firstName;
@@ -13,11 +13,11 @@ public class ClientDTO {
   private String dateOfBirth;
   private List<Account> products;
 
-  public ClientDTO() {
+  public ClientDto() {
 
   }
 
-  public ClientDTO(Client client) {
+  public ClientDto(Client client) {
     this.passport = client.getPassport();
     this.firstName = client.getFirstName();
     this.secondName = client.getSecondName();
