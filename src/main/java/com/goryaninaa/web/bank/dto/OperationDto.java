@@ -14,20 +14,22 @@ import java.util.Optional;
  * OperationDto is data transfer object for Operation entity.
  */
 @SuppressWarnings("unused")
-public class OperationDto implements Comparable<OperationDto> {
+public class OperationDto implements Comparable<OperationDto> { //NOPMD - suppressed DataClass -
+  // data transfer object
 
   private int amount;
   private int balanceBefore;
   private int balanceAfter;
   private LocalDateTime performedAt;
-  private Integer accountFromNumber;
-  private Integer accountRecipientNumber;
+  private Integer accFromNum;
+  private Integer accRecipientNum;
   private ClientDto clientDto;
   private ServiceInitiator service;
   private OperationType operationType;
   private int historyNumber;
 
   public OperationDto() {
+    // Default constructor
   }
 
   /**
@@ -37,7 +39,7 @@ public class OperationDto implements Comparable<OperationDto> {
    * @param operation - operation which will be included in DTO
    * @param clientDto - clientDto which Will be included in DTO
    */
-  public OperationDto(Operation operation, ClientDto clientDto) {
+  public OperationDto(final Operation operation, final ClientDto clientDto) {
     this.amount = operation.getAmount();
     this.performedAt = operation.getPerformedAt();
     this.historyNumber = operation.getHistoryNumber();
@@ -46,13 +48,13 @@ public class OperationDto implements Comparable<OperationDto> {
     this.service = operation.getService();
     this.balanceBefore = operation.getBalanceBefore();
     this.balanceAfter = operation.getBalanceAfter();
-    Optional<Account> accountFrom = Optional.ofNullable(operation.getAccountFrom());
+    final Optional<Account> accountFrom = Optional.ofNullable(operation.getAccountFrom());
     if (accountFrom.isPresent()) {
-      this.accountFromNumber = operation.getAccountFrom().getNumber();
+      this.accFromNum = operation.getAccountFrom().getNumber();
     }
-    Optional<Account> accountRecipient = Optional.ofNullable(operation.getAccountRecipient());
+    final Optional<Account> accountRecipient = Optional.ofNullable(operation.getAccountRecipient());
     if (accountRecipient.isPresent()) {
-      this.accountRecipientNumber = operation.getAccountRecipient().getNumber();
+      this.accRecipientNum = operation.getAccountRecipient().getNumber();
     }
   }
 
@@ -63,11 +65,11 @@ public class OperationDto implements Comparable<OperationDto> {
    * @return - returns corresponding {@link OperationRequisites}
    */
   public OperationRequisites extractOperationRequisites() {
-    OperationRequisites requisites = new OperationRequisites();
+    final OperationRequisites requisites = new OperationRequisites();
     requisites.setAmount(amount);
-    Optional<Integer> accountFrom = Optional.ofNullable(accountFromNumber);
+    final Optional<Integer> accountFrom = Optional.ofNullable(accFromNum);
     accountFrom.ifPresent(integer -> requisites.setAccountFrom(new Account(integer)));
-    Optional<Integer> accountRecipient = Optional.ofNullable(accountRecipientNumber);
+    final Optional<Integer> accountRecipient = Optional.ofNullable(accRecipientNum);
     accountRecipient.ifPresent(integer -> requisites.setAccountRecipient(new Account(integer)));
     requisites.setClient(new Client(clientDto.getPassport()));
     requisites.setService(service);
@@ -77,49 +79,31 @@ public class OperationDto implements Comparable<OperationDto> {
   }
 
   @Override
-  public int compareTo(OperationDto that) {
+  public int compareTo(final OperationDto that) {
     return Integer.compare(that.historyNumber, this.historyNumber);
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+  public boolean equals(final Object that) {
+    boolean result;
+    if (this == that) {
+      result = true;
+    } else if (that == null || getClass() != that.getClass()) {
+      result = false;
+    } else {
+      final OperationDto operationDto = (OperationDto) that;
+      result = performedAt.equals(operationDto.performedAt)
+          && Objects.equals(accFromNum, operationDto.accFromNum)
+          && Objects.equals(accRecipientNum, operationDto.accRecipientNum);
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    OperationDto that = (OperationDto) o;
-    if (amount != that.amount) {
-      return false;
-    }
-    if (balanceBefore != that.balanceBefore) {
-      return false;
-    }
-    if (balanceAfter != that.balanceAfter) {
-      return false;
-    }
-    if (historyNumber != that.historyNumber) {
-      return false;
-    }
-    if (!performedAt.equals(that.performedAt)) {
-      return false;
-    }
-    if (!Objects.equals(accountFromNumber, that.accountFromNumber)) {
-      return false;
-    }
-    return Objects.equals(accountRecipientNumber, that.accountRecipientNumber);
+    return result;
   }
 
   @Override
   public int hashCode() {
-    int result = amount;
-    result = 31 * result + balanceBefore;
-    result = 31 * result + balanceAfter;
-    result = 31 * result + performedAt.hashCode();
-    result = 31 * result + (accountFromNumber != null ? accountFromNumber.hashCode() : 0);
-    result = 31 * result + (accountRecipientNumber != null ? accountRecipientNumber.hashCode() : 0);
-    result = 31 * result + historyNumber;
+    int result = performedAt.hashCode();
+    result = 31 * result + (accFromNum != null ? accFromNum.hashCode() : 0);
+    result = 31 * result + (accRecipientNum != null ? accRecipientNum.hashCode() : 0);
     return result;
   }
 
@@ -127,7 +111,7 @@ public class OperationDto implements Comparable<OperationDto> {
     return amount;
   }
 
-  public void setAmount(int amount) {
+  public void setAmount(final int amount) {
     this.amount = amount;
   }
 
@@ -135,32 +119,32 @@ public class OperationDto implements Comparable<OperationDto> {
     return performedAt;
   }
 
-  public void setPerformedAt(LocalDateTime performedAt) {
+  public void setPerformedAt(final LocalDateTime performedAt) {
     this.performedAt = performedAt;
   }
 
 
-  public Integer getAccountFromNumber() {
-    return accountFromNumber;
+  public Integer getAccFromNum() {
+    return accFromNum;
   }
 
-  public void setAccountFromNumber(Integer accountFromNumber) {
-    this.accountFromNumber = accountFromNumber;
+  public void setAccFromNum(final Integer accFromNum) {
+    this.accFromNum = accFromNum;
   }
 
-  public Integer getAccountRecipientNumber() {
-    return accountRecipientNumber;
+  public Integer getAccRecipientNum() {
+    return accRecipientNum;
   }
 
-  public void setAccountRecipientNumber(Integer accountRecipientNumber) {
-    this.accountRecipientNumber = accountRecipientNumber;
+  public void setAccRecipientNum(final Integer accRecipientNum) {
+    this.accRecipientNum = accRecipientNum;
   }
 
   public ClientDto getClientDto() {
     return clientDto;
   }
 
-  public void setClientDto(ClientDto clientDto) {
+  public void setClientDto(final ClientDto clientDto) {
     this.clientDto = clientDto;
   }
 
@@ -168,7 +152,7 @@ public class OperationDto implements Comparable<OperationDto> {
     return service;
   }
 
-  public void setService(ServiceInitiator service) {
+  public void setService(final ServiceInitiator service) {
     this.service = service;
   }
 
@@ -176,7 +160,7 @@ public class OperationDto implements Comparable<OperationDto> {
     return operationType;
   }
 
-  public void setOperationType(OperationType operationType) {
+  public void setOperationType(final OperationType operationType) {
     this.operationType = operationType;
   }
 
