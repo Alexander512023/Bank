@@ -8,6 +8,11 @@ import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.account.AccountOpenRequisites;
 import com.goryaninaa.web.bank.model.operation.OperationRequisites;
 
+/**
+ * This interface is important part of domain logic. It declares main actions, which can be
+ * performed on {@link Account} type objects. This interface should be used by corresponding
+ * controller.
+ */
 public interface AccountService {
   void open(AccountOpenRequisites requisites) throws AccountOpenException;
 
