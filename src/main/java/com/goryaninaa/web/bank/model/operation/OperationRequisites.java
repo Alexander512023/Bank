@@ -3,7 +3,12 @@ package com.goryaninaa.web.bank.model.operation;
 import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.client.Client;
 
-public class OperationRequisites {
+/**
+ * Class with main goal of encapsulating operation fields. Instances of this class should be passed
+ * through constructors of {@link Operation} class.
+ */
+public class OperationRequisites { //NOPMD - suppressed DataClass - this class was created to
+  // reduce the number of arguments passed through constructor of Operation.class
 
   private int amount;
   private int balanceBefore;
@@ -17,16 +22,32 @@ public class OperationRequisites {
   private int historyNumber;
 
   public OperationRequisites() {
-
+    // Default constructor
   }
 
-  public OperationRequisites(int amount, ServiceInitiator service, Client client) {
+  /**
+   * Constructor for primary identification with parameters.
+   *
+   * @param amount - amount of funds
+   * @param service - source of operation
+   * @param client - initiator
+   */
+  public OperationRequisites(final int amount, final ServiceInitiator service,
+                             final Client client) {
     this.amount = amount;
     this.service = service;
     this.client = client;
   }
 
-  public void enrich(Account account, Client client, OperationType operationType) {
+  /**
+   * Use this method to enrich this instance with corresponding requisites.
+   *
+   * @param account - account on which operation should be performed
+   * @param client - initiator
+   * @param operationType - type of operation
+   */
+  public void enrich(final Account account, final Client client,
+                     final OperationType operationType) {
     this.setAccount(account);
     this.setAccountRecipient(account);
     this.setClient(client);
@@ -40,7 +61,7 @@ public class OperationRequisites {
     return amount;
   }
 
-  public void setAmount(int amount) {
+  public void setAmount(final int amount) {
     this.amount = amount;
   }
 
@@ -48,7 +69,7 @@ public class OperationRequisites {
     return balanceBefore;
   }
 
-  public void setBalanceBefore(int balanceBefore) {
+  public void setBalanceBefore(final int balanceBefore) {
     this.balanceBefore = balanceBefore;
   }
 
@@ -56,7 +77,7 @@ public class OperationRequisites {
     return balanceAfter;
   }
 
-  public void setBalanceAfter(int balanceAfter) {
+  public void setBalanceAfter(final int balanceAfter) {
     this.balanceAfter = balanceAfter;
   }
 
@@ -64,7 +85,7 @@ public class OperationRequisites {
     return account;
   }
 
-  public void setAccount(Account account) {
+  public void setAccount(final Account account) {
     this.account = account;
   }
 
@@ -72,7 +93,7 @@ public class OperationRequisites {
     return accountFrom;
   }
 
-  public void setAccountFrom(Account accountFrom) {
+  public void setAccountFrom(final Account accountFrom) {
     this.accountFrom = accountFrom;
   }
 
@@ -80,7 +101,7 @@ public class OperationRequisites {
     return accountRecipient;
   }
 
-  public void setAccountRecipient(Account accountRecipient) {
+  public void setAccountRecipient(final Account accountRecipient) {
     this.accountRecipient = accountRecipient;
   }
 
@@ -88,7 +109,7 @@ public class OperationRequisites {
     return client;
   }
 
-  public void setClient(Client client) {
+  public void setClient(final Client client) {
     this.client = client;
   }
 
@@ -96,7 +117,7 @@ public class OperationRequisites {
     return service;
   }
 
-  public void setService(ServiceInitiator service) {
+  public void setService(final ServiceInitiator service) {
     this.service = service;
   }
 
@@ -104,7 +125,7 @@ public class OperationRequisites {
     return operationType;
   }
 
-  public void setOperationType(OperationType operationType) {
+  public void setOperationType(final OperationType operationType) {
     this.operationType = operationType;
   }
 
@@ -112,11 +133,12 @@ public class OperationRequisites {
     return historyNumber;
   }
 
-  public void setHistoryNumber(int historyNumber) {
+  public void setHistoryNumber(final int historyNumber) {
     this.historyNumber = historyNumber;
   }
 
-  private void defineBalanceBefore(OperationType operationType, int amount, int balanceAfter) {
+  private void defineBalanceBefore(final OperationType operationType,
+                                   final int amount, final int balanceAfter) {
     switch (operationType) {
       case DEPOSIT:
         this.setBalanceBefore(balanceAfter - amount);

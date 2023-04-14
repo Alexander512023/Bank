@@ -25,7 +25,7 @@ public class TransactionDAOConcurrentStub implements TransactionDAO {
       }
     }
 
-    transaction.setId(idCounter.getAndIncrement());
+    transaction.setOperationId(idCounter.getAndIncrement());
 
     transactions.add(transaction);
   }

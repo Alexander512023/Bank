@@ -64,7 +64,7 @@ class OperationTest {
     account.setNumber(1);
     account.setOpenedAt(LocalDateTime.now());
     Operation operation = new Operation();
-    operation.setId(id);
+    operation.setOperationId(id);
     operation.setAmount(amount);
     operation.setHistoryNumber(historyNumber);
     operation.setAccount(account);
@@ -82,12 +82,12 @@ class OperationTest {
     account.setNumber(1);
     account.setOpenedAt(LocalDateTime.now());
     Operation operation1 = new Operation();
-    operation1.setId(id);
+    operation1.setOperationId(id);
     operation1.setAmount(amount);
     operation1.setHistoryNumber(historyNumber);
     operation1.setAccount(account);
     Operation operation2 = new Operation();
-    operation2.setId(id);
+    operation2.setOperationId(id);
     operation2.setAmount(amount);
     operation2.setHistoryNumber(historyNumber);
     operation2.setAccount(account);

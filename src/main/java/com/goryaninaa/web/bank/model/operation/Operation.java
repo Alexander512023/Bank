@@ -5,9 +5,13 @@ import com.goryaninaa.web.bank.model.client.Client;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Operation implements Comparable<Operation> {
+/**
+ * Bank account operation entity class.
+ */
+@SuppressWarnings("unused")
+public class Operation implements Comparable<Operation> { //NOPMD - suppressed DataClass - entity
 
-  private int id;
+  private int operationId;
   private int amount;
   private int balanceBefore;
   private int balanceAfter;
@@ -21,58 +25,71 @@ public class Operation implements Comparable<Operation> {
   private int historyNumber;
 
   public Operation() {
+    // Default constructor
   }
 
-  //Open account with this constructor
-  public Operation(int amount, Client client, ServiceInitiator service) {
-    setAmount(amount);
-    setBalanceBefore(0);
-    setBalanceAfter(amount);
-    setPerformedAt(LocalDateTime.now());
-    setClient(client);
-    setService(service);
-    setOperationType(OperationType.DEPOSIT);
-    setHistoryNumber(1);
+  /**
+   * Constructor, that should be used to perform account open operation.
+   *
+   * @param amount - amount of funds
+   * @param client - initiator
+   * @param service - source of operation
+   */
+  public Operation(final int amount, final Client client, final ServiceInitiator service) {
+    this.amount = amount;
+    this.balanceBefore = 0;
+    this.balanceAfter = amount;
+    this.performedAt = LocalDateTime.now();
+    this.client = client;
+    this.service = service;
+    this.operationType = OperationType.DEPOSIT;
+    this.historyNumber = 1;
   }
 
-  //Standard operation constructor
-  public Operation(OperationRequisites requisites) {
-    setAmount(requisites.getAmount());
-    setBalanceBefore(requisites.getBalanceBefore());
-    setBalanceAfter(requisites.getBalanceAfter());
-    setPerformedAt(LocalDateTime.now());
-    setClient(requisites.getClient());
-    setService(requisites.getService());
-    setOperationType(requisites.getOperationType());
-    setHistoryNumber(requisites.getHistoryNumber());
+  /**
+   * Standard operation constructor, that should be used to create enriched instance of this class.
+   *
+   * @param requisites - operation requisites, see {@link OperationRequisites} for details
+   */
+  public Operation(final OperationRequisites requisites) {
+    this.amount = requisites.getAmount();
+    this.balanceBefore = requisites.getBalanceBefore();
+    this.balanceAfter = requisites.getBalanceAfter();
+    this.performedAt = LocalDateTime.now();
+    this.client = requisites.getClient();
+    this.service = requisites.getService();
+    this.operationType = requisites.getOperationType();
+    this.historyNumber = requisites.getHistoryNumber();
     defineAccounts(requisites);
   }
 
   @Override
-  public int compareTo(Operation that) {
+  public int compareTo(final Operation that) {
+    int result;
     if (this.historyNumber > that.historyNumber) {
-      return 1;
+      result = 1;
     } else if (this.equals(that)) {
-      return 0;
+      result = 0;
     } else {
-      return -1;
+      result = -1;
     }
+    return result;
   }
 
   @SuppressWarnings("unused")
-  public int getId() {
-    return id;
+  public int getOperationId() {
+    return operationId;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setOperationId(final int operationId) {
+    this.operationId = operationId;
   }
 
   public int getAmount() {
     return amount;
   }
 
-  public void setAmount(int amount) {
+  public void setAmount(final int amount) {
     this.amount = amount;
   }
 
@@ -80,7 +97,7 @@ public class Operation implements Comparable<Operation> {
     return balanceBefore;
   }
 
-  public void setBalanceBefore(int balanceBefore) {
+  public void setBalanceBefore(final int balanceBefore) {
     this.balanceBefore = balanceBefore;
   }
 
@@ -88,7 +105,7 @@ public class Operation implements Comparable<Operation> {
     return balanceAfter;
   }
 
-  public void setBalanceAfter(int balanceAfter) {
+  public void setBalanceAfter(final int balanceAfter) {
     this.balanceAfter = balanceAfter;
   }
 
@@ -96,7 +113,7 @@ public class Operation implements Comparable<Operation> {
     return performedAt;
   }
 
-  public void setPerformedAt(LocalDateTime performedAt) {
+  public void setPerformedAt(final LocalDateTime performedAt) {
     this.performedAt = performedAt;
   }
 
@@ -104,7 +121,7 @@ public class Operation implements Comparable<Operation> {
     return account;
   }
 
-  public void setAccount(Account account) {
+  public void setAccount(final Account account) {
     this.account = account;
   }
 
@@ -112,7 +129,7 @@ public class Operation implements Comparable<Operation> {
     return accountFrom;
   }
 
-  public void setAccountFrom(Account accountFrom) {
+  public void setAccountFrom(final Account accountFrom) {
     this.accountFrom = accountFrom;
   }
 
@@ -120,7 +137,7 @@ public class Operation implements Comparable<Operation> {
     return accountRecipient;
   }
 
-  public void setAccountRecipient(Account accountRecipient) {
+  public void setAccountRecipient(final Account accountRecipient) {
     this.accountRecipient = accountRecipient;
   }
 
@@ -128,7 +145,7 @@ public class Operation implements Comparable<Operation> {
     return client;
   }
 
-  public void setClient(Client client) {
+  public void setClient(final Client client) {
     this.client = client;
   }
 
@@ -136,7 +153,7 @@ public class Operation implements Comparable<Operation> {
     return service;
   }
 
-  public void setService(ServiceInitiator service) {
+  public void setService(final ServiceInitiator service) {
     this.service = service;
   }
 
@@ -144,7 +161,7 @@ public class Operation implements Comparable<Operation> {
     return operationType;
   }
 
-  public void setOperationType(OperationType operationType) {
+  public void setOperationType(final OperationType operationType) {
     this.operationType = operationType;
   }
 
@@ -152,43 +169,44 @@ public class Operation implements Comparable<Operation> {
     return historyNumber;
   }
 
-  public void setHistoryNumber(int historyNumber) {
+  public void setHistoryNumber(final int historyNumber) {
     this.historyNumber = historyNumber;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, amount, historyNumber, account);
+    return Objects.hash(operationId, amount, historyNumber, account);
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
+    boolean result;
     if (this == obj) {
-      return true;
+      result = true;
+    } else if (obj == null) {
+      result = false;
+    } else if (getClass() != obj.getClass()) {
+      result = false;
+    } else {
+      final Operation other = (Operation) obj;
+      result = operationId == other.operationId && amount == other.amount && historyNumber == other.historyNumber
+          && Objects.equals(account, other.account);
     }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    Operation other = (Operation) obj;
-    return id == other.id && amount == other.amount && historyNumber == other.historyNumber &&
-        Objects.equals(account, other.account);
+    return result;
   }
 
-  private void defineAccounts(OperationRequisites requisites) {
-    setAccount(requisites.getAccount());
+  private void defineAccounts(final OperationRequisites requisites) {
+    this.account = requisites.getAccount();
     switch (operationType) {
       case DEPOSIT:
-        setAccountRecipient(requisites.getAccountRecipient());
+        this.accountRecipient = requisites.getAccountRecipient();
         break;
       case WITHDRAW:
-        setAccountFrom(requisites.getAccountFrom());
+        this.accountFrom = requisites.getAccountFrom();
         break;
       case TRANSFER:
-        setAccountFrom(requisites.getAccountFrom());
-        setAccountRecipient(requisites.getAccountRecipient());
+        this.accountFrom = requisites.getAccountFrom();
+        this.accountRecipient = requisites.getAccountRecipient();
         break;
       default:
         break;
