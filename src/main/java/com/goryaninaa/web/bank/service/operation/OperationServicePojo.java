@@ -7,42 +7,48 @@ import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.account.AccountOpenRequisites;
 import com.goryaninaa.web.bank.model.operation.Operation;
 import com.goryaninaa.web.bank.model.operation.OperationRequisites;
+import com.goryaninaa.web.bank.service.account.RequisiteServiceAccount;
 
+/**
+ * This is simple implementation of {@link OperationService} interface. It operates
+ * {@link RequisiteServiceAccount} in order to decouple corresponding domain logic. Results of
+ * performed operations are stored in the {@link OperationRepository}.
+ */
 public class OperationServicePojo implements OperationService {
 
   private final RequisiteServiceOperation requisiteService;
-  private final OperationRepository operationRepository;
+  private final OperationRepository operationRepo;
 
-  public OperationServicePojo(RequisiteServiceOperation requisiteService,
-                              OperationRepository operationRepository) {
+  public OperationServicePojo(final RequisiteServiceOperation requisiteService,
+                              final OperationRepository operationRepo) {
     this.requisiteService = requisiteService;
-    this.operationRepository = operationRepository;
+    this.operationRepo = operationRepo;
   }
 
   @Override
-  public void processAccountOpen(Account account, AccountOpenRequisites requisites)
+  public void processAccountOpen(final Account account, final AccountOpenRequisites requisites)
       throws AccountOpenException {
-    OperationRequisites completedRequisites =
+    final OperationRequisites completedReq =
         requisiteService.prepareAccountOpenOperationRequisites(account, requisites);
-    Operation open = new Operation(completedRequisites);
-    operationRepository.save(open);
+    final Operation open = new Operation(completedReq);
+    operationRepo.save(open);
   }
 
   @Override
-  public void processDeposit(Account account, OperationRequisites requisites)
+  public void processDeposit(final Account account, final OperationRequisites requisites)
       throws AccountDepositException {
-    OperationRequisites completedRequisites =
+    final OperationRequisites completedReq =
         requisiteService.prepareDepositOperationRequisites(account, requisites);
-    Operation deposit = new Operation(completedRequisites);
-    operationRepository.save(deposit);
+    final Operation deposit = new Operation(completedReq);
+    operationRepo.save(deposit);
   }
 
   @Override
-  public void processWithdraw(Account account, OperationRequisites requisites)
+  public void processWithdraw(final Account account, final OperationRequisites requisites)
       throws AccountWithdrawException {
-    OperationRequisites completedRequisites =
+    final OperationRequisites completedReq =
         requisiteService.prepareWithdrawOperationRequisites(account, requisites);
-    Operation withdraw = new Operation(completedRequisites);
-    operationRepository.save(withdraw);
+    final Operation withdraw = new Operation(completedReq);
+    operationRepo.save(withdraw);
   }
 }

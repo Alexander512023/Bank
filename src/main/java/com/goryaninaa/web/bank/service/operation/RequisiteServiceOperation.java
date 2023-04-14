@@ -7,6 +7,10 @@ import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.account.AccountOpenRequisites;
 import com.goryaninaa.web.bank.model.operation.OperationRequisites;
 
+/**
+ * This interface provides functionality which is needed by {@link OperationServicePojo} to
+ * perform different operations on accounts.
+ */
 public interface RequisiteServiceOperation {
 
   OperationRequisites prepareAccountOpenOperationRequisites(Account account,
