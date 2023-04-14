@@ -9,6 +9,13 @@ import com.goryaninaa.web.bank.model.account.AccountOpenRequisites;
 import com.goryaninaa.web.bank.model.operation.OperationRequisites;
 import java.util.Optional;
 
+/**
+ * This is simple implementation of {@link AccountService} interface. It operates
+ * {@link RequisiteServiceAccount} and {@link OperationServiceAccount} in order to decouple
+ * corresponding domain logic. Results of performed operations are stored in the
+ * {@link AccountRepository}. New account numbers are being taken from
+ * {@link NumberCapacityRepository}.
+ */
 public class AccountServicePojo implements AccountService {
 
   private final AccountRepository accountRepository;
@@ -16,10 +23,18 @@ public class AccountServicePojo implements AccountService {
   private final NumberCapacityRepository numberCapacityRepository;
   private final RequisiteServiceAccount requisiteService;
 
-  public AccountServicePojo(AccountRepository accountRepository,
-                            OperationServiceAccount operationService,
-                            NumberCapacityRepository numberCapacityRepository,
-                            RequisiteServiceAccount requisiteService) {
+  /**
+   * This class has only one constructor, that receives all fields of this class.
+   *
+   * @param accountRepository - to store results of performed operations
+   * @param operationService - provide functionality to process corresponding operations
+   * @param numberCapacityRepository - provide functionality to request new account numbers
+   * @param requisiteService - provide functionality to complete and enrich corresponding requisites
+   */
+  public AccountServicePojo(final AccountRepository accountRepository,
+                            final OperationServiceAccount operationService,
+                            final NumberCapacityRepository numberCapacityRepository,
+                            final RequisiteServiceAccount requisiteService) {
     this.accountRepository = accountRepository;
     this.operationService = operationService;
     this.numberCapacityRepository = numberCapacityRepository;
@@ -27,51 +42,51 @@ public class AccountServicePojo implements AccountService {
   }
 
   @Override
-  public void open(AccountOpenRequisites requisites) throws AccountOpenException {
-    Account account = openAccount(requisites);
+  public void open(final AccountOpenRequisites requisites) throws AccountOpenException {
+    final Account account = openAccount(requisites);
     accountRepository.save(account);
     operationService.processAccountOpen(account, requisites);
   }
 
   @Override
-  public void deposit(OperationRequisites requisites)
+  public void deposit(final OperationRequisites requisites)
       throws AccountFindException, AccountDepositException {
-    Account account = findByNumber(requisites.getAccountRecipient().getNumber());
+    final Account account = findByNumber(requisites.getAccountRecipient().getNumber());
     account.deposit(requisites.getAmount());
     accountRepository.update(account);
     operationService.processDeposit(account, requisites);
   }
 
   @Override
-  public void withdraw(OperationRequisites requisites)
+  public void withdraw(final OperationRequisites requisites)
       throws AccountFindException, AccountWithdrawException {
-    Account account = findByNumber(requisites.getAccountFrom().getNumber());
+    final Account account = findByNumber(requisites.getAccountFrom().getNumber());
     account.withdraw(requisites.getAmount());
     accountRepository.update(account);
     operationService.processWithdraw(account, requisites);
   }
 
   @Override
-  public void transfer(OperationRequisites requisites)
+  public void transfer(final OperationRequisites requisites)
       throws AccountFindException, AccountDepositException, AccountWithdrawException {
     deposit(requisites);
     withdraw(requisites);
   }
 
   @Override
-  public Account findByNumber(int number) throws AccountFindException {
+  public Account findByNumber(final int number) throws AccountFindException {
     return findAccount(number);
   }
 
   private Account openAccount(AccountOpenRequisites requisites) throws AccountOpenException {
-    AccountOpenRequisites completedRequisites =
+    final AccountOpenRequisites completedRequisites =
         requisiteService.prepareAccountOpenRequisites(requisites);
-    int accountNumber = numberCapacityRepository.getNumber();
+    final int accountNumber = numberCapacityRepository.getNumber();
     return new Account(completedRequisites, accountNumber);
   }
 
   private Account findAccount(int number) throws AccountFindException {
-    Optional<Account> account = accountRepository.findByNumber(number);
+    final Optional<Account> account = accountRepository.findByNumber(number);
     if (account.isPresent()) {
       return account.get();
     } else {
