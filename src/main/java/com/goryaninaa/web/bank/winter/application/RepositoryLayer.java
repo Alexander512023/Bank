@@ -11,25 +11,27 @@ import com.goryaninaa.winter.cache.KeyExtractStrategy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Repository layer is responsible to join service and data access layers. It also plugs in
+ * caching functionality.
+ */
 public class RepositoryLayer {
   private final AccountRepositoryCached accountRep;
   private final ClientRepositoryPOJO clientRep;
   private final NumberCapacityRepositoryPOJO numberCapacityRep;
   private final TransactionRepositoryPOJO transactRep;
 
-  /* default */ RepositoryLayer(CacheLayer cacheLayer, DaoLayer daoLayer) {
-    transactRep = new TransactionRepositoryPOJO(daoLayer.getTransactionDAO());
-    KeyExtractStrategy accountNumberExtractStrategy = new AccountNumberExtractStrategy();
-    Map<String, KeyExtractStrategy> accountKeyExtractStrategies = new ConcurrentHashMap<>();
-    accountKeyExtractStrategies.
-        put(accountNumberExtractStrategy.getStrategyType(), accountNumberExtractStrategy);
-    CacheKeyFactory accountCacheKeyFactory =
-        new CacheKeyFactoryStandard(accountKeyExtractStrategies);
-    accountRep = new AccountRepositoryCached(cacheLayer.getAccountCache(), daoLayer.getAccountDAO(),
-        transactRep, accountCacheKeyFactory);
-
-    clientRep = new ClientRepositoryPOJO(daoLayer.getClientDAO());
-    numberCapacityRep = new NumberCapacityRepositoryPOJO(daoLayer.getNumberCapacity());
+  /* default */ RepositoryLayer(
+      final CacheLayer cacheLayer, final DataAccessLayer dataAccessLayer) {
+    transactRep = new TransactionRepositoryPOJO(dataAccessLayer.getTransactionDao());
+    final KeyExtractStrategy accNumExtract = new AccountNumberExtractStrategy();
+    final Map<String, KeyExtractStrategy> accKeyExtracts = new ConcurrentHashMap<>();
+    accKeyExtracts.put(accNumExtract.getStrategyType(), accNumExtract);
+    final CacheKeyFactory accCacheKeyFact = new CacheKeyFactoryStandard(accKeyExtracts);
+    accountRep = new AccountRepositoryCached(cacheLayer.getAccountCache(),
+        dataAccessLayer.getAccountDao(), transactRep, accCacheKeyFact);
+    clientRep = new ClientRepositoryPOJO(dataAccessLayer.getClientDao());
+    numberCapacityRep = new NumberCapacityRepositoryPOJO(dataAccessLayer.getNumberCapacity());
   }
 
   /* default */ AccountRepositoryCached getAccountRep() {
