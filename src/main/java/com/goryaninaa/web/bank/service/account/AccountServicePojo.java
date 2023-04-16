@@ -20,7 +20,7 @@ public class AccountServicePojo implements AccountService {
 
   private final AccountRepository accountRepository;
   private final OperationServiceAccount operationService;
-  private final NumberCapacityRepository numberCapacityRepository;
+  private final NumberCapacityRepository numCapacityRep;
   private final RequisiteServiceAccount requisiteService;
 
   /**
@@ -28,16 +28,16 @@ public class AccountServicePojo implements AccountService {
    *
    * @param accountRepository - to store results of performed operations
    * @param operationService - provide functionality to process corresponding operations
-   * @param numberCapacityRepository - provide functionality to request new account numbers
+   * @param numCapacityRep - provide functionality to request new account numbers
    * @param requisiteService - provide functionality to complete and enrich corresponding requisites
    */
   public AccountServicePojo(final AccountRepository accountRepository,
                             final OperationServiceAccount operationService,
-                            final NumberCapacityRepository numberCapacityRepository,
+                            final NumberCapacityRepository numCapacityRep,
                             final RequisiteServiceAccount requisiteService) {
     this.accountRepository = accountRepository;
     this.operationService = operationService;
-    this.numberCapacityRepository = numberCapacityRepository;
+    this.numCapacityRep = numCapacityRep;
     this.requisiteService = requisiteService;
   }
 
@@ -78,14 +78,14 @@ public class AccountServicePojo implements AccountService {
     return findAccount(number);
   }
 
-  private Account openAccount(AccountOpenRequisites requisites) throws AccountOpenException {
-    final AccountOpenRequisites completedRequisites =
+  private Account openAccount(final AccountOpenRequisites requisites) throws AccountOpenException {
+    final AccountOpenRequisites completedReq =
         requisiteService.prepareAccountOpenRequisites(requisites);
-    final int accountNumber = numberCapacityRepository.getNumber();
-    return new Account(completedRequisites, accountNumber);
+    final int accountNumber = numCapacityRep.getNumber();
+    return new Account(completedReq, accountNumber);
   }
 
-  private Account findAccount(int number) throws AccountFindException {
+  private Account findAccount(final int number) throws AccountFindException {
     final Optional<Account> account = accountRepository.findByNumber(number);
     if (account.isPresent()) {
       return account.get();
