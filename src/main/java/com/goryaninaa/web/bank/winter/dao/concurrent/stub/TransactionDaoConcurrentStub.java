@@ -1,19 +1,19 @@
 package com.goryaninaa.web.bank.winter.dao.concurrent.stub;
 
 import com.goryaninaa.web.bank.model.operation.Operation;
-import com.goryaninaa.web.bank.winter.repository.transaction.TransactionDAO;
+import com.goryaninaa.web.bank.winter.repository.transaction.TransactionDao;
 import com.sun.jdi.request.DuplicateRequestException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class TransactionDAOConcurrentStub implements TransactionDAO {
+public class TransactionDaoConcurrentStub implements TransactionDao {
 
   private static final AtomicInteger idCounter = new AtomicInteger(1);
   private final List<Operation> transactions;
 
-  public TransactionDAOConcurrentStub() {
+  public TransactionDaoConcurrentStub() {
     this.transactions = new ArrayList<>();
   }
 

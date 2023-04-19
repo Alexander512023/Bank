@@ -6,26 +6,26 @@ import com.goryaninaa.web.bank.model.operation.Operation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TransactionRepositoryPOJOTest {
+class TransactionRepositoryPojoTest {
 
-  private static TransactionRepositoryPOJO transactionRepository;
-  private static TransactionDAO transactionDAO;
+  private static TransactionRepositoryPojo transactionRepository;
+  private static TransactionDao transactionDAO;
 
   @BeforeEach
   void init() {
-    transactionDAO = new TransactionDAOStub();
-    transactionRepository = new TransactionRepositoryPOJO(transactionDAO);
+    transactionDAO = new TransactionDaoStub();
+    transactionRepository = new TransactionRepositoryPojo(transactionDAO);
   }
 
   @Test
   void saveShouldSaveToDAO() {
     transactionRepository.save(new Operation());
-    assertTrue(((TransactionDAOStub) transactionDAO).isSaveInvoked());
+    assertTrue(((TransactionDaoStub) transactionDAO).isSaveInvoked());
   }
 
   @Test
   void findOperationsOfAccountShouldFindInDAO() {
     transactionRepository.findOperationsOfAccount(1);
-    assertTrue(((TransactionDAOStub) transactionDAO).isFindInvoked());
+    assertTrue(((TransactionDaoStub) transactionDAO).isFindInvoked());
   }
 }

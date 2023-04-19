@@ -3,7 +3,7 @@ package com.goryaninaa.web.bank.winter.repository.transaction;
 import com.goryaninaa.web.bank.model.operation.Operation;
 import java.util.List;
 
-public class TransactionDAOStub implements TransactionDAO {
+public class TransactionDaoStub implements TransactionDao {
 
   private boolean saveInvoked;
   private boolean findInvoked;
