@@ -8,9 +8,9 @@ import java.util.Optional;
 @SuppressWarnings("SameParameterValue")
 public class AccountDataAccessByNumberStrategy implements DataAccessStrategy<Account> {
 
-  private final AccountDAOConcurrentStub accountDAO;
+  private final AccountDaoConcurrentStub accountDAO;
 
-  public AccountDataAccessByNumberStrategy(AccountDAOConcurrentStub accountDAO) {
+  public AccountDataAccessByNumberStrategy(AccountDaoConcurrentStub accountDAO) {
     this.accountDAO = accountDAO;
   }
 

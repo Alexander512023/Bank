@@ -1,7 +1,7 @@
 package com.goryaninaa.web.bank.winter.application;
 
 import com.goryaninaa.web.bank.model.account.Account;
-import com.goryaninaa.web.bank.winter.dao.concurrent.stub.AccountDAOConcurrentStub;
+import com.goryaninaa.web.bank.winter.dao.concurrent.stub.AccountDaoConcurrentStub;
 import com.goryaninaa.web.bank.winter.dao.concurrent.stub.AccountDataAccessByNumberStrategy;
 import com.goryaninaa.web.bank.winter.dao.concurrent.stub.AccountDataMediator;
 import com.goryaninaa.web.bank.winter.dao.concurrent.stub.ClientDAOConcurrentStub;
@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * all the functionality that is needed to complete layer.
  */
 public class DataAccessLayer {
-  private final AccountDAOConcurrentStub accountDao = new AccountDAOConcurrentStub();
+  private final AccountDaoConcurrentStub accountDao = new AccountDaoConcurrentStub();
   private final AccountDataMediator accDataMediator;
   private final ClientDAOConcurrentStub clientDao = new ClientDAOConcurrentStub();
   private final NumberCapacity numberCapacity = new NumberCapacity();
@@ -32,7 +32,7 @@ public class DataAccessLayer {
     accDataMediator = new AccountDataMediator(accDataAccesses);
   }
 
-  /* default */ AccountDAOConcurrentStub getAccountDao() {
+  /* default */ AccountDaoConcurrentStub getAccountDao() {
     return accountDao;
   }
 

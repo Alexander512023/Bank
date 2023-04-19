@@ -10,6 +10,9 @@ import com.goryaninaa.web.bank.model.account.AccountOpenRequisites;
 import com.goryaninaa.web.bank.model.operation.Operation;
 import com.goryaninaa.web.bank.model.operation.OperationRequisites;
 import com.goryaninaa.web.bank.service.account.AccountService;
+import com.goryaninaa.winter.logger.mech.Logger;
+import com.goryaninaa.winter.logger.mech.LoggingMech;
+import com.goryaninaa.winter.logger.mech.StackTraceString;
 import com.goryaninaa.winter.web.http.server.Controller;
 import com.goryaninaa.winter.web.http.server.HttpResponseCode;
 import com.goryaninaa.winter.web.http.server.Response;
@@ -25,112 +28,186 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+/**
+ * Implementation of Winter framework controller. Works somehow similar to Spring framework
+ * controllers. Point your mapping, get incoming JSON objects and send HTTP responses. You should
+ * pass service class, that will handle requests from the point of view of domain logic. Also, this
+ * implementation is responsible for synchronization duties. Objects-locks are taken from
+ * special {@link Synchronizer} class, that you should also correctly configure to ensure
+ * operability.
+ */
 @SuppressWarnings("unused")
 @RequestMapping("/account")
 public class AccountController implements Controller {
 
   private final AccountService accountService;
-  private final Synchronizer<Integer> accountSynchronizer;
+  private final Synchronizer<Integer> accSynchronizer;
+  private static final Logger LOG =
+      LoggingMech.getLogger(AccountController.class.getCanonicalName());
 
-  public AccountController(AccountService accountService,
-                           Synchronizer<Integer> accountSynchronizer) {
+  public AccountController(
+      final AccountService accountService, final Synchronizer<Integer> accSynchronizer) {
     this.accountService = accountService;
-    this.accountSynchronizer = accountSynchronizer;
+    this.accSynchronizer = accSynchronizer;
   }
 
+  /**
+   * This method is responsible for handling /account/open mapping with HTTP POST method. So it
+   * get account open requisites DTO from client's side and should return appropriate HTTP response
+   * after further handling. If handling fails for some reason, response with code 404 or 500 and
+   * error text in it will be sent.
+   *
+   * @param request - {@link HttpRequest} is an object representation of incoming request
+   * @param requisitesDto - requisites object that was sent by client's side and deserialized from
+   *                      JSON
+   * @return - HTTP response that will be sent to client's side
+   */
   @Mapping(value = "/open", httpMethod = HttpMethod.POST)
-  public Response open(HttpRequest request, AccountOpenRequisitesDto requisitesDTO) {
-    AccountOpenRequisites accountRequisites = requisitesDTO.extractAccountRequisites();
+  public Response open(final HttpRequest request, final AccountOpenRequisitesDto requisitesDto) {
+    final AccountOpenRequisites accountRequisites = requisitesDto.extractAccountRequisites();
     try {
       accountService.open(accountRequisites);
-      return new HttpResponse(HttpResponseCode.OK);
-    } catch (Exception e) {
-      e.printStackTrace();
+      return new HttpResponse(HttpResponseCode.OK); //NOPMD - suppressed OnlyOneReturn - errors
+      // turned to objects on this level
+    } catch (Exception e) { //NOPMD - suppressed AvoidCatchingGenericException - top level, correct
+      LOG.error(StackTraceString.get(e)); //NOPMD - suppressed GuardLogStatement - no concatenation
+      // - no need in check
       return prepareResponseOnException(e);
     }
   }
 
+  /**
+   * This method is responsible for handling /account/deposit mapping with HTTP POST method. So it
+   * get operation requisites DTO from client's side and should return appropriate HTTP response
+   * after further handling. If handling fails for some reason, response with code 404 or 500 and
+   * error text in it will be sent.
+   *
+   * @param request - {@link HttpRequest} is an object representation of incoming request
+   * @param operationDto - requisites object that was sent by client's side and deserialized from
+   *                     JSON
+   * @return - HTTP response that will be sent to client's side
+   */
   @Mapping(value = "/deposit", httpMethod = HttpMethod.POST)
-  public Response deposit(HttpRequest request, OperationDto operationDTO) {
-    OperationRequisites requisites = operationDTO.extractOperationRequisites();
+  public Response deposit(final HttpRequest request, final OperationDto operationDto) {
+    final OperationRequisites requisites = operationDto.extractOperationRequisites();
     try {
-      synchronized (accountSynchronizer.getLock(requisites.getAccountRecipient().getNumber())) {
+      synchronized (accSynchronizer.getLock(requisites.getAccountRecipient().getNumber())) {
         accountService.deposit(requisites);
-        return new HttpResponse(HttpResponseCode.OK);
+        return new HttpResponse(HttpResponseCode.OK); //NOPMD - suppressed OnlyOneReturn - errors
+        // turned to objects on this level
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (Exception e) { //NOPMD - suppressed AvoidCatchingGenericException - top level, correct
+      LOG.error(StackTraceString.get(e)); //NOPMD - suppressed GuardLogStatement - no concatenation
+      // - no need in check
       return prepareResponseOnException(e);
     }
   }
 
+  /**
+   * This method is responsible for handling /account/withdraw mapping with HTTP POST method. So it
+   * get operation requisites DTO from client's side and should return appropriate HTTP response
+   * after further handling. If handling fails for some reason, response with code 404 or 500 and
+   * error text in it will be sent.
+   *
+   * @param request - {@link HttpRequest} is an object representation of incoming request
+   * @param operationDto - requisites object that was sent by client's side and deserialized from
+   *                     JSON
+   * @return - HTTP response that will be sent to client's side
+   */
   @Mapping(value = "/withdraw", httpMethod = HttpMethod.POST)
-  public Response withdraw(HttpRequest request, OperationDto operationDTO) {
-    OperationRequisites requisites = operationDTO.extractOperationRequisites();
+  public Response withdraw(final HttpRequest request, final OperationDto operationDto) {
+    final OperationRequisites requisites = operationDto.extractOperationRequisites();
     try {
-      synchronized (accountSynchronizer.getLock(requisites.getAccountFrom().getNumber())) {
+      synchronized (accSynchronizer.getLock(requisites.getAccountFrom().getNumber())) {
         accountService.withdraw(requisites);
-        return new HttpResponse(HttpResponseCode.OK);
+        return new HttpResponse(HttpResponseCode.OK); //NOPMD - suppressed OnlyOneReturn - errors
+        // turned to objects on this level
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (Exception e) { //NOPMD - suppressed AvoidCatchingGenericException - top level, correct
+      LOG.error(StackTraceString.get(e)); //NOPMD - suppressed GuardLogStatement - no concatenation
+      // - no need in check
       return prepareResponseOnException(e);
     }
   }
 
+  /**
+   * This method is responsible for handling /account/transfer mapping with HTTP POST method. So it
+   * get operation requisites DTO from client's side and should return appropriate HTTP response
+   * after further handling. If handling fails for some reason, response with code 404 or 500 and
+   * error text in it will be sent.
+   *
+   * @param request - {@link HttpRequest} is an object representation of incoming request
+   * @param operationDto - requisites object that was sent by client's side and deserialized from
+   *                     JSON
+   * @return - HTTP response that will be sent to client's side
+   */
   @Mapping(value = "/transfer", httpMethod = HttpMethod.POST)
-  public Response transfer(HttpRequest request, OperationDto operationDTO) {
-    OperationRequisites requisites = operationDTO.extractOperationRequisites();
+  public Response transfer(final HttpRequest request, final OperationDto operationDto) {
+    final OperationRequisites requisites = operationDto.extractOperationRequisites();
     try {
-      synchronized (accountSynchronizer.getLock(requisites.getAccountFrom().getNumber())) {
+      synchronized (accSynchronizer.getLock(requisites.getAccountFrom().getNumber())) {
         accountService.transfer(requisites);
-        return new HttpResponse(HttpResponseCode.OK);
+        return new HttpResponse(HttpResponseCode.OK); //NOPMD - suppressed OnlyOneReturn - errors
+        // turned to objects on this level
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (Exception e) { //NOPMD - suppressed AvoidCatchingGenericException - top level, correct
+      LOG.error(StackTraceString.get(e)); //NOPMD - suppressed GuardLogStatement - no concatenation
+      // - no need in check
       return prepareResponseOnException(e);
     }
   }
 
+  /**
+   * This method is responsible for handling /account/view mapping with HTTP GET method. So it
+   * get parametrized request from client's side and should return appropriate HTTP response
+   * after further handling. If handling fails for some reason, response with code 404 or 500 and
+   * error text in it will be sent.
+   *
+   * @param request - {@link HttpRequest} is an object representation of incoming request
+   * @return - HTTP response that will be sent to client's side
+   */
   @Mapping(value = "/view", httpMethod = HttpMethod.GET)
-  public Response view(HttpRequest request) {
-    Optional<String> accountNumberString = request.getParameterByName("number");
+  public Response view(final HttpRequest request) {
+    final Optional<String> accNumString = request.getParameterByName("number");
     try {
-      if (accountNumberString.isPresent()) {
-        synchronized (accountSynchronizer.getLock(Integer.parseInt(accountNumberString.get()))) {
-          Account account =
-              accountService.findByNumber(Integer.parseInt(accountNumberString.get()));
-          AccountDto responseAccountDto = prepareAccountDTO(account);
-          return new HttpResponse(HttpResponseCode.OK, responseAccountDto);
+      if (accNumString.isPresent()) {
+        synchronized (accSynchronizer.getLock(Integer.parseInt(accNumString.get()))) {
+          final Account account =
+              accountService.findByNumber(Integer.parseInt(accNumString.get()));
+          final AccountDto responseAccDto = prepareAccountDto(account);
+          return new HttpResponse(HttpResponseCode.OK, responseAccDto); //NOPMD - suppressed
+          // OnlyOneReturn - errors turned to objects on this level
         }
       } else {
         throw new NoSuchElementException("Request format for account incorrect");
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (Exception e) { //NOPMD - suppressed AvoidCatchingGenericException - top level, correct
+      LOG.error(StackTraceString.get(e)); //NOPMD - suppressed GuardLogStatement - no concatenation
+      // - no need in check
       return prepareResponseOnException(e);
     }
   }
 
-  private HttpResponse prepareResponseOnException(Throwable t) {
-    Throwable cause = t.getCause();
+  private HttpResponse prepareResponseOnException(final Throwable throwable) {
+    final Throwable cause = throwable.getCause();
     if (cause instanceof IllegalArgumentException) {
-      ErrorDto errorDTO = new ErrorDto(404, t.getMessage());
-      return new HttpResponse(HttpResponseCode.NOTFOUND, errorDTO);
+      final ErrorDto errorDto = new ErrorDto(404, throwable.getMessage());
+      return new HttpResponse(HttpResponseCode.NOTFOUND, errorDto); //NOPMD - suppressed
+      // OnlyOneReturn - errors turned to objects on this level
     } else {
-      ErrorDto errorDTO = new ErrorDto(500, t.getMessage());
-      return new HttpResponse(HttpResponseCode.INTERNALSERVERERROR, errorDTO);
+      final ErrorDto errorDto = new ErrorDto(500, throwable.getMessage());
+      return new HttpResponse(HttpResponseCode.INTERNALSERVERERROR, errorDto);
     }
   }
 
-  private AccountDto prepareAccountDTO(Account account) {
-    List<Operation> operations = account.getHistory();
-    List<OperationDto> operationsDTO = new ArrayList<>();
-    ClientDto clientDTO = new ClientDto(account.getOwner());
-    for (Operation operation : operations) {
-      operationsDTO.add(new OperationDto(operation, clientDTO));
+  private AccountDto prepareAccountDto(final Account account) {
+    final List<Operation> operations = account.getHistory();
+    final List<OperationDto> operationsDto = new ArrayList<>();
+    final ClientDto clientDto = new ClientDto(account.getOwner());
+    for (final Operation operation : operations) {
+      operationsDto.add(new OperationDto(operation, clientDto));
     }
-    operationsDTO.sort(Comparator.comparing(OperationDto::getHistoryNumber).reversed());
-    return new AccountDto(account, operationsDTO, clientDTO);
+    operationsDto.sort(Comparator.comparing(OperationDto::getHistoryNumber).reversed());
+    return new AccountDto(account, operationsDto, clientDto);
   }
 }

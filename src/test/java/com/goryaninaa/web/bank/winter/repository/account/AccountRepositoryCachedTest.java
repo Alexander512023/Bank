@@ -17,14 +17,14 @@ class AccountRepositoryCachedTest {
   private static AccountRepositoryCached accountRepository;
   private static CacheKeyFactory cacheKeyFactory;
   private static Cache<Account> accountCache;
-  private static AccountDAO accountDAO;
+  private static AccountDao accountDAO;
   private static OperationRepository operationRepository;
 
   @BeforeEach
   void init() {
     cacheKeyFactory = new AccountCacheKeyFactoryStub();
     accountCache = new AccountCacheStub();
-    accountDAO = new AccountDAOStub();
+    accountDAO = new AccountDaoStub();
     operationRepository = new OperationRepositoryStub();
     accountRepository = new AccountRepositoryCached(accountCache, accountDAO,
         operationRepository, cacheKeyFactory);
@@ -36,7 +36,7 @@ class AccountRepositoryCachedTest {
     final boolean testPassed =
         ((AccountCacheKeyFactoryStub) cacheKeyFactory).isGenerateAllInvoked()
             && ((AccountCacheStub) accountCache).isRemoveInvoked()
-            && ((AccountDAOStub) accountDAO).isSaveInvoked();
+            && ((AccountDaoStub) accountDAO).isSaveInvoked();
     assertTrue(testPassed);
   }
 
@@ -59,7 +59,7 @@ class AccountRepositoryCachedTest {
     final boolean testPassed =
         ((AccountCacheKeyFactoryStub) cacheKeyFactory).isGenerateAllInvoked()
             && ((AccountCacheStub) accountCache).isRemoveInvoked()
-            && ((AccountDAOStub) accountDAO).isUpdateInvoked();
+            && ((AccountDaoStub) accountDAO).isUpdateInvoked();
     assertTrue(testPassed);
   }
 }

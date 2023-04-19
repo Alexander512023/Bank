@@ -2,7 +2,7 @@ package com.goryaninaa.web.bank.winter.repository.account;
 
 import com.goryaninaa.web.bank.model.account.Account;
 
-public class AccountDAOStub implements AccountDAO {
+public class AccountDaoStub implements AccountDao {
 
   private boolean saveInvoked;
   private boolean updateInvoked;
