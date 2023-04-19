@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.goryaninaa.web.bank.model.client.Client;
 import org.junit.jupiter.api.Test;
 
-class ClientRepositoryPOJOTest {
+class ClientRepositoryPojoTest {
 
   @Test
   void findByPassportShouldCorrectlyReturnClient() {
-    final ClientDAOStub clientDAO = new ClientDAOStub();
-    final ClientRepositoryPOJO clientRepositoryPOJO = new ClientRepositoryPOJO(clientDAO);
+    final ClientDaoStub clientDAO = new ClientDaoStub();
+    final ClientRepositoryPojo clientRepositoryPOJO = new ClientRepositoryPojo(clientDAO);
     final Client expected = new Client();
     clientDAO.setClient(expected);
     final Client actual = clientRepositoryPOJO.findByPassport("1").orElseThrow();

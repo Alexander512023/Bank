@@ -3,7 +3,7 @@ package com.goryaninaa.web.bank.winter.repository.client;
 import com.goryaninaa.web.bank.model.client.Client;
 import java.util.Optional;
 
-public class ClientDAOStub implements ClientDAO {
+public class ClientDaoStub implements ClientDao {
 
   private Client client;
 

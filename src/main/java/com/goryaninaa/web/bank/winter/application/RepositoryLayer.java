@@ -2,7 +2,7 @@ package com.goryaninaa.web.bank.winter.application;
 
 import com.goryaninaa.web.bank.winter.repository.account.AccountNumberExtractStrategy;
 import com.goryaninaa.web.bank.winter.repository.account.AccountRepositoryCached;
-import com.goryaninaa.web.bank.winter.repository.client.ClientRepositoryPOJO;
+import com.goryaninaa.web.bank.winter.repository.client.ClientRepositoryPojo;
 import com.goryaninaa.web.bank.winter.repository.number.capacity.NumberCapacityRepositoryPOJO;
 import com.goryaninaa.web.bank.winter.repository.transaction.TransactionRepositoryPOJO;
 import com.goryaninaa.winter.cache.CacheKeyFactory;
@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RepositoryLayer {
   private final AccountRepositoryCached accountRep;
-  private final ClientRepositoryPOJO clientRep;
+  private final ClientRepositoryPojo clientRep;
   private final NumberCapacityRepositoryPOJO numberCapacityRep;
   private final TransactionRepositoryPOJO transactRep;
 
@@ -30,7 +30,7 @@ public class RepositoryLayer {
     final CacheKeyFactory accCacheKeyFact = new CacheKeyFactoryStandard(accKeyExtracts);
     accountRep = new AccountRepositoryCached(cacheLayer.getAccountCache(),
         dataAccessLayer.getAccountDao(), transactRep, accCacheKeyFact);
-    clientRep = new ClientRepositoryPOJO(dataAccessLayer.getClientDao());
+    clientRep = new ClientRepositoryPojo(dataAccessLayer.getClientDao());
     numberCapacityRep = new NumberCapacityRepositoryPOJO(dataAccessLayer.getNumberCapacity());
   }
 
@@ -38,7 +38,7 @@ public class RepositoryLayer {
     return accountRep;
   }
 
-  /* default */ ClientRepositoryPOJO getClientRep() {
+  /* default */ ClientRepositoryPojo getClientRep() {
     return clientRep;
   }
 

@@ -3,7 +3,11 @@ package com.goryaninaa.web.bank.winter.repository.client;
 import com.goryaninaa.web.bank.model.client.Client;
 import java.util.Optional;
 
-public interface ClientDAO {
+/**
+ * This interface should be implemented in the data access layer to ensure correct direction of
+ * dependencies.
+ */
+public interface ClientDao {
 
   Optional<Client> findByPassport(String passport);
 }

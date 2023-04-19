@@ -1,19 +1,19 @@
 package com.goryaninaa.web.bank.winter.dao.concurrent.stub;
 
 import com.goryaninaa.web.bank.model.client.Client;
-import com.goryaninaa.web.bank.winter.repository.client.ClientDAO;
+import com.goryaninaa.web.bank.winter.repository.client.ClientDao;
 import com.sun.jdi.request.DuplicateRequestException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ClientDAOConcurrentStub implements ClientDAO {
+public class ClientDaoConcurrentStub implements ClientDao {
 
   private static final AtomicInteger idCounter = new AtomicInteger(1);
   private final List<Client> clients;
 
-  public ClientDAOConcurrentStub() {
+  public ClientDaoConcurrentStub() {
     this.clients = new ArrayList<>();
     Client client = new Client(1, "36 10 000001", "Alex", "Goryanin", "30.10.1989");
     this.save(client);
