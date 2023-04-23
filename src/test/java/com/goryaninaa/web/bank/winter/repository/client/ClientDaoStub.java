@@ -1,5 +1,6 @@
 package com.goryaninaa.web.bank.winter.repository.client;
 
+import com.goryaninaa.web.bank.education.winter.repository.client.ClientDao;
 import com.goryaninaa.web.bank.model.client.Client;
 import java.util.Optional;
 

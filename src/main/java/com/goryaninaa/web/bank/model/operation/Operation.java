@@ -189,8 +189,8 @@ public class Operation implements Comparable<Operation> { //NOPMD - suppressed D
       result = false;
     } else {
       final Operation other = (Operation) obj;
-      result = operationId == other.operationId && amount == other.amount && historyNumber == other.historyNumber
-          && Objects.equals(account, other.account);
+      result = operationId == other.operationId && amount == other.amount
+          && historyNumber == other.historyNumber && Objects.equals(account, other.account);
     }
     return result;
   }
