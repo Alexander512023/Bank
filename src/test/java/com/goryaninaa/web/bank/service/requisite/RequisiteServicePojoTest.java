@@ -23,7 +23,8 @@ class RequisiteServicePojoTest {
   @BeforeEach
   void init() {
     clientRepositoryRequisite = new ClientRepositoryRequisiteStub();
-    requisiteService = new RequisiteServicePojo(clientRepositoryRequisite);
+    requisiteService = new RequisiteServicePojo(clientRepositoryRequisite,
+        new OperationRepositoryRequisiteStub());
   }
 
   @Test
