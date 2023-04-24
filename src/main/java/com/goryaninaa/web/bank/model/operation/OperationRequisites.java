@@ -47,12 +47,12 @@ public class OperationRequisites { //NOPMD - suppressed DataClass - this class w
    * @param operationType - type of operation
    */
   public void enrich(final Account account, final Client client,
-                     final OperationType operationType) {
+                     final OperationType operationType, final int historyNumber) {
     this.setAccount(account);
     this.setAccountRecipient(account);
     this.setClient(client);
     this.setBalanceAfter(account.getBalance());
-    this.setHistoryNumber(account.getLastOperNumber());
+    this.setHistoryNumber(historyNumber);
     this.setOperationType(operationType);
     defineBalanceBefore(operationType, amount, balanceAfter);
   }

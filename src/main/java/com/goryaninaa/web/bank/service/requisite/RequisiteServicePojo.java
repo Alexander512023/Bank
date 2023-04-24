@@ -6,6 +6,7 @@ import com.goryaninaa.web.bank.exception.AccountWithdrawException;
 import com.goryaninaa.web.bank.model.account.Account;
 import com.goryaninaa.web.bank.model.account.AccountOpenRequisites;
 import com.goryaninaa.web.bank.model.client.Client;
+import com.goryaninaa.web.bank.model.operation.Operation;
 import com.goryaninaa.web.bank.model.operation.OperationRequisites;
 import com.goryaninaa.web.bank.model.operation.OperationType;
 import com.goryaninaa.web.bank.service.account.RequisiteServiceAccount;
@@ -21,9 +22,13 @@ public class RequisiteServicePojo implements RequisiteServiceAccount, RequisiteS
 
   private static final String MESSAGE = "There is no such client";
   private final ClientRepositoryRequisite clientRepository;
+  private final OperationRepositoryRequisite operRepository;
 
-  public RequisiteServicePojo(final ClientRepositoryRequisite clientRepository) {
+  public RequisiteServicePojo(
+      final ClientRepositoryRequisite clientRepository,
+      final OperationRepositoryRequisite operRepository) {
     this.clientRepository = clientRepository;
+    this.operRepository = operRepository;
   }
 
   @Override
@@ -74,27 +79,35 @@ public class RequisiteServicePojo implements RequisiteServiceAccount, RequisiteS
   }
 
   private OperationRequisites enrichDepositRequisites(
-      final OperationRequisites requisites, final Account account) throws AccountDepositException {
+      OperationRequisites requisites, final Account account) throws AccountDepositException {
     final Optional<Client> client = clientRepository
         .findByPassport(requisites.getClient().getPassport());
-    if (client.isPresent()) {
-      requisites.enrich(account, client.get(), OperationType.DEPOSIT);
-      return requisites;
+    final Optional<Operation> currLastOp = operRepository.getTopOp(account);
+    if (client.isPresent() && currLastOp.isPresent()) {
+      final int historyNum = currLastOp.get().getHistoryNumber() + 1;
+      requisites.enrich(account, client.get(), OperationType.DEPOSIT, historyNum);
+    } else if (client.isPresent()) {
+      requisites.enrich(account, client.get(), OperationType.DEPOSIT, 1);
     } else {
       throw new AccountDepositException(MESSAGE, new IllegalArgumentException());
     }
+    return requisites;
   }
 
   private OperationRequisites enrichWithdrawRequisites(
-      final OperationRequisites requisites, final Account account) throws AccountWithdrawException {
+      OperationRequisites requisites, final Account account) throws AccountWithdrawException {
     final Optional<Client> client = clientRepository
         .findByPassport(requisites.getClient().getPassport());
-    if (client.isPresent()) {
-      requisites.enrich(account, client.get(), OperationType.WITHDRAW);
-      return requisites;
+    final Optional<Operation> currLastOp = operRepository.getTopOp(account);
+    if (client.isPresent() && currLastOp.isPresent()) {
+      final int historyNum = currLastOp.get().getHistoryNumber() + 1;
+      requisites.enrich(account, client.get(), OperationType.WITHDRAW, historyNum);
+    } else if (client.isPresent()) {
+      throw new AccountWithdrawException("Zero operation on this account", new IllegalArgumentException());
     } else {
       throw new AccountWithdrawException(MESSAGE, new IllegalArgumentException());
     }
+    return requisites;
   }
 
 }

@@ -19,17 +19,17 @@ public class RepositoryLayer {
   private final AccountRepositoryCached accountRep;
   private final ClientRepositoryPojo clientRep;
   private final NumberCapacityRepositoryPojo numberCapacityRep;
-  private final OperationRepositoryPojo transactRep;
+  private final OperationRepositoryPojo operationRep;
 
   /* default */ RepositoryLayer(
       final CacheLayer cacheLayer, final DataAccessLayer dataAccessLayer) {
-    transactRep = new OperationRepositoryPojo(dataAccessLayer.getTransactionDao());
+    operationRep = new OperationRepositoryPojo(dataAccessLayer.getTransactionDao());
     final KeyExtractStrategy accNumExtract = new AccountNumberExtractStrategy();
     final Map<String, KeyExtractStrategy> accKeyExtracts = new ConcurrentHashMap<>();
     accKeyExtracts.put(accNumExtract.getStrategyType(), accNumExtract);
     final CacheKeyFactory accCacheKeyFact = new CacheKeyFactoryStandard(accKeyExtracts);
     accountRep = new AccountRepositoryCached(cacheLayer.getAccountCache(),
-        dataAccessLayer.getAccountDao(), transactRep, accCacheKeyFact);
+        dataAccessLayer.getAccountDao(), operationRep, accCacheKeyFact);
     clientRep = new ClientRepositoryPojo(dataAccessLayer.getClientDao());
     numberCapacityRep = new NumberCapacityRepositoryPojo(dataAccessLayer.getNumberCapacity());
   }
@@ -46,7 +46,7 @@ public class RepositoryLayer {
     return numberCapacityRep;
   }
 
-  /* default */ OperationRepositoryPojo getTransactRep() {
-    return transactRep;
+  /* default */ OperationRepositoryPojo getOperationRep() {
+    return operationRep;
   }
 }

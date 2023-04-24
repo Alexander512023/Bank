@@ -15,7 +15,6 @@ import java.util.List;
 public class AccountDto { //NOPMD - suppressed DataClass - this is data transfer object for Account
   // entity
 
-  private int lastTranNum;
   private int balance;
   private int number;
   private State state;
@@ -44,7 +43,6 @@ public class AccountDto { //NOPMD - suppressed DataClass - this is data transfer
    */
   public AccountDto(final Account account, final List<OperationDto> historyDto,
                     final ClientDto owner) {
-    this.lastTranNum = account.getLastOperNumber();
     this.balance = account.getBalance();
     this.number = account.getNumber();
     this.state = account.getState();
@@ -55,14 +53,6 @@ public class AccountDto { //NOPMD - suppressed DataClass - this is data transfer
     this.type = account.getType();
     this.term = account.getTerm();
     this.prolongationDate = account.getProlongationDate();
-  }
-
-  public int getLastTranNum() {
-    return lastTranNum;
-  }
-
-  public void setLastTranNum(final int lastTranNum) {
-    this.lastTranNum = lastTranNum;
   }
 
   public int getBalance() {

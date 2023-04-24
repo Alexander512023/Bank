@@ -1,5 +1,6 @@
 package com.goryaninaa.web.bank.education.winter.application;
 
+import com.goryaninaa.web.bank.education.winter.repository.operation.OperationRepositoryPojo;
 import com.goryaninaa.web.bank.service.account.AccountService;
 import com.goryaninaa.web.bank.service.account.AccountServicePojo;
 import com.goryaninaa.web.bank.service.operation.OperationService;
@@ -16,8 +17,9 @@ public class ServiceLayer {
   private final RequisiteServicePojo requisiteService;
 
   /* default */ ServiceLayer(final RepositoryLayer repLayer) {
-    requisiteService = new RequisiteServicePojo(repLayer.getClientRep());
-    operationService = new OperationServicePojo(requisiteService, repLayer.getTransactRep());
+    OperationRepositoryPojo operRep = repLayer.getOperationRep();
+    requisiteService = new RequisiteServicePojo(repLayer.getClientRep(), operRep);
+    operationService = new OperationServicePojo(requisiteService, operRep);
     accountService = new AccountServicePojo(repLayer.getAccountRep(), operationService,
         repLayer.getNumberCapacityRep(), requisiteService);
   }

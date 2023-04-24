@@ -18,7 +18,6 @@ public class Account implements Comparable<Account> { //NOPMD - suppressed DataC
   // DataClass - it's model class! =)
 
   private int accountId;
-  private int lastOperNumber;
   private int balance;
   private int number;
   private State state;
@@ -51,7 +50,6 @@ public class Account implements Comparable<Account> { //NOPMD - suppressed DataC
    * @param number - account number
    */
   public Account(final AccountOpenRequisites requisites, final int number) {
-    setLastTransactionNumber(1);
     setBalance(requisites.getOperRequisites().getAmount());
     setNumber(number);
     setState(State.OPENED);
@@ -69,7 +67,6 @@ public class Account implements Comparable<Account> { //NOPMD - suppressed DataC
    */
   public void deposit(final int amount) {
     balance += Math.abs(amount);
-    lastOperNumber++;
   }
 
   /**
@@ -81,7 +78,6 @@ public class Account implements Comparable<Account> { //NOPMD - suppressed DataC
   public void withdraw(final int amount) throws AccountWithdrawException {
     if (balance - Math.abs(amount) > 0) {
       balance -= Math.abs(amount);
-      lastOperNumber++;
     } else {
       throw new AccountWithdrawException("Insufficient funds");
     }
@@ -108,14 +104,6 @@ public class Account implements Comparable<Account> { //NOPMD - suppressed DataC
 
   public void setAccountId(final int accountId) {
     this.accountId = accountId;
-  }
-
-  public int getLastOperNumber() {
-    return lastOperNumber;
-  }
-
-  public final void setLastTransactionNumber(final int lastTranNum) {
-    this.lastOperNumber = lastTranNum;
   }
 
   public int getBalance() {
@@ -226,9 +214,8 @@ public class Account implements Comparable<Account> { //NOPMD - suppressed DataC
 
   @Override
   public String toString() {
-    return "Product [id=" + accountId + ", transactionNumber=" + lastOperNumber
-        + ", balance=" + balance + ", number="
-        + number + ", state=" + state + ", openedAt=" + openedAt + ", closedAt=" + closedAt
-        + ", client=" + owner;
+    return "Product [id=" + accountId + ", transactionNumber=" + ", balance=" + balance
+        + ", number=" + number + ", state=" + state + ", openedAt=" + openedAt
+        + ", closedAt=" + closedAt + ", client=" + owner;
   }
 }
