@@ -48,6 +48,11 @@ public class NumberCapacityApplication implements NumberCapacity {
     while (!inQueue.isEmpty()) {
       response = inQueue.poll();
     }
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
     assert response != null;
     numStorage.put(
         response.keySet().stream().findFirst().orElseThrow(),
