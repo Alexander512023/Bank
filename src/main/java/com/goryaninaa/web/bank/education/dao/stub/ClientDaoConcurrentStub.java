@@ -1,7 +1,7 @@
 package com.goryaninaa.web.bank.education.dao.stub;
 
 import com.goryaninaa.web.bank.education.winter.repository.client.ClientDao;
-import com.goryaninaa.web.bank.model.client.Client;
+import com.goryaninaa.web.bank.domain.model.client.Client;
 import com.sun.jdi.request.DuplicateRequestException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +32,20 @@ public class ClientDaoConcurrentStub implements ClientDao {
   @Override
   public Optional<Client> findByPassport(String passport) {
     Optional<Client> desiredClient = Optional.empty();
-
     for (Client client : clients) {
       if (client.getPassport().equals(passport)) {
+        desiredClient = Optional.of(client);
+        break;
+      }
+    }
+    return desiredClient;
+  }
+
+  @Override
+  public Optional<Client> findById(int clientId) {
+    Optional<Client> desiredClient = Optional.empty();
+    for (Client client : clients) {
+      if (client.getClientId() ==  clientId) {
         desiredClient = Optional.of(client);
         break;
       }

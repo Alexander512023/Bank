@@ -1,7 +1,7 @@
 package com.goryaninaa.web.bank.education.winter.repository.client;
 
-import com.goryaninaa.web.bank.model.client.Client;
-import com.goryaninaa.web.bank.service.requisite.ClientRepositoryRequisite;
+import com.goryaninaa.web.bank.domain.model.client.Client;
+import com.goryaninaa.web.bank.domain.service.requisite.ClientRepositoryRequisite;
 import java.util.Optional;
 
 /**

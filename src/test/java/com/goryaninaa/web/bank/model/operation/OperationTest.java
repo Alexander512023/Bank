@@ -3,7 +3,10 @@ package com.goryaninaa.web.bank.model.operation;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.goryaninaa.web.bank.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.operation.Operation;
+import com.goryaninaa.web.bank.domain.model.operation.OperationRequisites;
+import com.goryaninaa.web.bank.domain.model.operation.OperationType;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import org.junit.jupiter.api.Test;

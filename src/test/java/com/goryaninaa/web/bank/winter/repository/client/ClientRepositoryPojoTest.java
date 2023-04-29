@@ -3,7 +3,7 @@ package com.goryaninaa.web.bank.winter.repository.client;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.goryaninaa.web.bank.education.winter.repository.client.ClientRepositoryPojo;
-import com.goryaninaa.web.bank.model.client.Client;
+import com.goryaninaa.web.bank.domain.model.client.Client;
 import org.junit.jupiter.api.Test;
 
 class ClientRepositoryPojoTest {

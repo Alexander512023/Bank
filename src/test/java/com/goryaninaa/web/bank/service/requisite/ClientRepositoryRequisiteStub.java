@@ -1,6 +1,7 @@
 package com.goryaninaa.web.bank.service.requisite;
 
-import com.goryaninaa.web.bank.model.client.Client;
+import com.goryaninaa.web.bank.domain.model.client.Client;
+import com.goryaninaa.web.bank.domain.service.requisite.ClientRepositoryRequisite;
 import java.util.Optional;
 
 public class ClientRepositoryRequisiteStub implements ClientRepositoryRequisite {

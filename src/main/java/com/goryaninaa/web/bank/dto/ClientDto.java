@@ -1,7 +1,7 @@
 package com.goryaninaa.web.bank.dto;
 
-import com.goryaninaa.web.bank.model.account.Account;
-import com.goryaninaa.web.bank.model.client.Client;
+import com.goryaninaa.web.bank.domain.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.client.Client;
 import java.util.List;
 
 /**

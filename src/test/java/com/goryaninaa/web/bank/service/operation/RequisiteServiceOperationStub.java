@@ -1,11 +1,12 @@
 package com.goryaninaa.web.bank.service.operation;
 
-import com.goryaninaa.web.bank.model.account.Account;
-import com.goryaninaa.web.bank.model.account.AccountOpenRequisites;
-import com.goryaninaa.web.bank.model.client.Client;
-import com.goryaninaa.web.bank.model.operation.OperationRequisites;
-import com.goryaninaa.web.bank.model.operation.OperationType;
-import com.goryaninaa.web.bank.model.operation.ServiceInitiator;
+import com.goryaninaa.web.bank.domain.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.account.AccountOpenRequisites;
+import com.goryaninaa.web.bank.domain.model.client.Client;
+import com.goryaninaa.web.bank.domain.model.operation.OperationRequisites;
+import com.goryaninaa.web.bank.domain.model.operation.OperationType;
+import com.goryaninaa.web.bank.domain.model.operation.ServiceInitiator;
+import com.goryaninaa.web.bank.domain.service.operation.RequisiteServiceOperation;
 
 public class RequisiteServiceOperationStub implements RequisiteServiceOperation {
 

@@ -1,9 +1,9 @@
 package com.goryaninaa.web.bank.education.winter.repository.operation;
 
-import com.goryaninaa.web.bank.model.account.Account;
-import com.goryaninaa.web.bank.model.operation.Operation;
-import com.goryaninaa.web.bank.service.operation.OperationRepository;
-import com.goryaninaa.web.bank.service.requisite.OperationRepositoryRequisite;
+import com.goryaninaa.web.bank.domain.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.operation.Operation;
+import com.goryaninaa.web.bank.domain.service.operation.OperationRepository;
+import com.goryaninaa.web.bank.domain.service.requisite.OperationRepositoryRequisite;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,11 +22,6 @@ public class OperationRepositoryPojo implements OperationRepository, OperationRe
   @Override
   public void save(final Operation transaction) {
     operationDao.save(transaction);
-  }
-
-  @Override
-  public List<Operation> findOperationsOfAccount(final int accountId) {
-    return operationDao.findOperationsOfAccount(accountId);
   }
 
   @Override

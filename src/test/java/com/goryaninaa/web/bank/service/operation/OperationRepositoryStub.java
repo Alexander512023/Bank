@@ -1,7 +1,7 @@
 package com.goryaninaa.web.bank.service.operation;
 
-import com.goryaninaa.web.bank.model.operation.Operation;
-import java.util.List;
+import com.goryaninaa.web.bank.domain.model.operation.Operation;
+import com.goryaninaa.web.bank.domain.service.operation.OperationRepository;
 
 public class OperationRepositoryStub implements OperationRepository {
 
@@ -10,11 +10,6 @@ public class OperationRepositoryStub implements OperationRepository {
   @Override
   public void save(Operation operation) {
     saveInvoked = true;
-  }
-
-  @Override
-  public List<Operation> findOperationsOfAccount(int accountId) {
-    return null;
   }
 
   public boolean isSaveInvoked() {

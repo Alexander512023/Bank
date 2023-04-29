@@ -1,10 +1,10 @@
 package com.goryaninaa.web.bank.dto;
 
-import com.goryaninaa.web.bank.model.account.AccountOpenRequisites;
-import com.goryaninaa.web.bank.model.account.AccountType;
-import com.goryaninaa.web.bank.model.client.Client;
-import com.goryaninaa.web.bank.model.operation.OperationRequisites;
-import com.goryaninaa.web.bank.model.operation.ServiceInitiator;
+import com.goryaninaa.web.bank.domain.model.account.AccountOpenRequisites;
+import com.goryaninaa.web.bank.domain.model.account.AccountType;
+import com.goryaninaa.web.bank.domain.model.client.Client;
+import com.goryaninaa.web.bank.domain.model.operation.OperationRequisites;
+import com.goryaninaa.web.bank.domain.model.operation.ServiceInitiator;
 
 /**
  * This is data transfer object, which should be used to get requisites from client side in case of

@@ -1,6 +1,6 @@
 package com.goryaninaa.web.bank.education.winter.repository.number.capacity;
 
-import com.goryaninaa.web.bank.service.account.NumberCapacityRepository;
+import com.goryaninaa.web.bank.domain.service.account.NumberCapacityRepository;
 
 /**
  * This is simple {@link NumberCapacityRepository} implementation. The point of this class is to

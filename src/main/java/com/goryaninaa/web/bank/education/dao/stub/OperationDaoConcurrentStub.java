@@ -1,6 +1,6 @@
 package com.goryaninaa.web.bank.education.dao.stub;
 
-import com.goryaninaa.web.bank.model.operation.Operation;
+import com.goryaninaa.web.bank.domain.model.operation.Operation;
 import com.goryaninaa.web.bank.education.winter.repository.operation.OperationDao;
 import com.sun.jdi.request.DuplicateRequestException;
 import java.util.ArrayList;

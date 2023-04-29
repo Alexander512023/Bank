@@ -1,6 +1,6 @@
 package com.goryaninaa.web.bank.education.winter.repository.operation;
 
-import com.goryaninaa.web.bank.model.operation.Operation;
+import com.goryaninaa.web.bank.domain.model.operation.Operation;
 import java.util.List;
 
 /**
