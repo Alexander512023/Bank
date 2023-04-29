@@ -1,11 +1,11 @@
 package com.goryaninaa.web.bank.dto;
 
-import com.goryaninaa.web.bank.model.account.Account;
-import com.goryaninaa.web.bank.model.client.Client;
-import com.goryaninaa.web.bank.model.operation.Operation;
-import com.goryaninaa.web.bank.model.operation.OperationRequisites;
-import com.goryaninaa.web.bank.model.operation.OperationType;
-import com.goryaninaa.web.bank.model.operation.ServiceInitiator;
+import com.goryaninaa.web.bank.domain.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.client.Client;
+import com.goryaninaa.web.bank.domain.model.operation.Operation;
+import com.goryaninaa.web.bank.domain.model.operation.OperationRequisites;
+import com.goryaninaa.web.bank.domain.model.operation.OperationType;
+import com.goryaninaa.web.bank.domain.model.operation.ServiceInitiator;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;

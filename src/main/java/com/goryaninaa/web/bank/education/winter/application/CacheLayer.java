@@ -1,6 +1,6 @@
 package com.goryaninaa.web.bank.education.winter.application;
 
-import com.goryaninaa.web.bank.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.account.Account;
 import com.goryaninaa.winter.cache.Cache;
 import com.goryaninaa.winter.cache.CacheStorage;
 import java.util.Properties;

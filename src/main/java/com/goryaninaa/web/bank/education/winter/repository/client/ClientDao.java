@@ -1,6 +1,6 @@
 package com.goryaninaa.web.bank.education.winter.repository.client;
 
-import com.goryaninaa.web.bank.model.client.Client;
+import com.goryaninaa.web.bank.domain.model.client.Client;
 import java.util.Optional;
 
 /**
@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface ClientDao {
 
   Optional<Client> findByPassport(String passport);
+
+  Optional<Client> findById(int clientId);
 }

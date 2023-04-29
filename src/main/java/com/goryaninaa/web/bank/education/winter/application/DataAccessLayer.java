@@ -1,15 +1,17 @@
 package com.goryaninaa.web.bank.education.winter.application;
 
-import com.goryaninaa.web.bank.education.dao.stub.AccountDaoConcurrentStub;
-import com.goryaninaa.web.bank.education.dao.stub.AccountDataAccessByNumberStrategy;
-import com.goryaninaa.web.bank.education.dao.stub.AccountDataMediator;
+import com.goryaninaa.web.bank.education.dao.jdbc.AccountDaoJdbc;
+import com.goryaninaa.web.bank.education.dao.AccountDataAccessByNumberStrategy;
+import com.goryaninaa.web.bank.education.dao.AccountDataMediator;
 import com.goryaninaa.web.bank.education.dao.stub.ClientDaoConcurrentStub;
 import com.goryaninaa.web.bank.education.dao.stub.OperationDaoConcurrentStub;
 import com.goryaninaa.web.bank.education.third.party.NumberCapacityApplication;
+import com.goryaninaa.web.bank.education.winter.repository.account.AccountDao;
 import com.goryaninaa.web.bank.education.winter.repository.number.capacity.NumberCapacity;
-import com.goryaninaa.web.bank.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.account.Account;
 import com.goryaninaa.winter.cache.DataAccessStrategy;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -17,13 +19,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * all the functionality that is needed to complete layer.
  */
 public class DataAccessLayer {
-  private final AccountDaoConcurrentStub accountDao = new AccountDaoConcurrentStub();
+  private final AccountDao accountDao;
   private final AccountDataMediator accDataMediator;
   private final ClientDaoConcurrentStub clientDao = new ClientDaoConcurrentStub();
   private final NumberCapacity numberCapacity = new NumberCapacityApplication();
-  private final OperationDaoConcurrentStub transactionDao = new OperationDaoConcurrentStub();
+  private final OperationDaoConcurrentStub operationDao = new OperationDaoConcurrentStub();
 
-  /* default */ DataAccessLayer() {
+  /* default */ DataAccessLayer(Properties properties) {
+    accountDao = new AccountDaoJdbc(properties);
     final DataAccessStrategy<Account> accAccessByNum =
         new AccountDataAccessByNumberStrategy(accountDao);
     final Map<String, DataAccessStrategy<Account>> accDataAccesses =
@@ -33,7 +36,7 @@ public class DataAccessLayer {
     accDataMediator = new AccountDataMediator(accDataAccesses);
   }
 
-  /* default */ AccountDaoConcurrentStub getAccountDao() {
+  /* default */ AccountDao getAccountDao() {
     return accountDao;
   }
 
@@ -49,7 +52,7 @@ public class DataAccessLayer {
     return numberCapacity;
   }
 
-  /* default */ OperationDaoConcurrentStub getTransactionDao() {
-    return transactionDao;
+  /* default */ OperationDaoConcurrentStub getOperationDao() {
+    return operationDao;
   }
 }

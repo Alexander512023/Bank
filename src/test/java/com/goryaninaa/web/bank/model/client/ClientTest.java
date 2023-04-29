@@ -2,6 +2,7 @@ package com.goryaninaa.web.bank.model.client;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.goryaninaa.web.bank.domain.model.client.Client;
 import org.junit.jupiter.api.Test;
 
 class ClientTest {

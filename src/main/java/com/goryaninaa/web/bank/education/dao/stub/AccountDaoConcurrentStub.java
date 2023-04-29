@@ -1,13 +1,15 @@
 package com.goryaninaa.web.bank.education.dao.stub;
 
+import com.goryaninaa.web.bank.domain.model.account.Account;
 import com.goryaninaa.web.bank.education.winter.repository.account.AccountDao;
-import com.goryaninaa.web.bank.model.account.Account;
 import com.sun.jdi.request.DuplicateRequestException;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
+@SuppressWarnings("unused")
 public class AccountDaoConcurrentStub implements AccountDao {
 
   private static final AtomicInteger idCounter = new AtomicInteger(0);
@@ -24,9 +26,10 @@ public class AccountDaoConcurrentStub implements AccountDao {
     accounts.add(account);
   }
 
-  public Account getOneByNumber(int number) {
-    return accounts.stream()
-        .filter(acc -> acc.getNumber() == number).findFirst().orElseThrow();
+  @Override
+  public Optional<Account> getOneByNumber(int number) {
+    return Optional.of(accounts.stream()
+        .filter(acc -> acc.getNumber() == number).findFirst().orElseThrow());
   }
 
   @Override

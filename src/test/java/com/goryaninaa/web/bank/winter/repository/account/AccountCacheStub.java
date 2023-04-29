@@ -1,6 +1,6 @@
 package com.goryaninaa.web.bank.winter.repository.account;
 
-import com.goryaninaa.web.bank.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.account.Account;
 import com.goryaninaa.winter.cache.Cache;
 import com.goryaninaa.winter.cache.CacheKey;
 import java.util.List;

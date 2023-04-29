@@ -1,8 +1,9 @@
 package com.goryaninaa.web.bank.service.account;
 
-import com.goryaninaa.web.bank.model.account.Account;
-import com.goryaninaa.web.bank.model.account.AccountOpenRequisites;
-import com.goryaninaa.web.bank.model.operation.OperationRequisites;
+import com.goryaninaa.web.bank.domain.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.account.AccountOpenRequisites;
+import com.goryaninaa.web.bank.domain.model.operation.OperationRequisites;
+import com.goryaninaa.web.bank.domain.service.account.OperationServiceAccount;
 
 public class OperationServiceAccountStub implements OperationServiceAccount {
 

@@ -19,7 +19,7 @@ public class ApplicationAssembler {
    * @param properties - properties that need to be passed at the entrance of application
    */
   public ApplicationAssembler(final Properties properties) {
-    final DataAccessLayer dataAccessLayer = new DataAccessLayer();
+    final DataAccessLayer dataAccessLayer = new DataAccessLayer(properties);
     final CacheLayer cacheLayer = new CacheLayer(dataAccessLayer, properties);
     final RepositoryLayer repositoryLayer = new RepositoryLayer(cacheLayer, dataAccessLayer);
     final ServiceLayer serviceLayer = new ServiceLayer(repositoryLayer);

@@ -1,7 +1,8 @@
 package com.goryaninaa.web.bank.winter.repository.account;
 
+import com.goryaninaa.web.bank.domain.model.account.Account;
 import com.goryaninaa.web.bank.education.winter.repository.account.AccountDao;
-import com.goryaninaa.web.bank.model.account.Account;
+import java.util.Optional;
 
 public class AccountDaoStub implements AccountDao {
 
@@ -16,6 +17,12 @@ public class AccountDaoStub implements AccountDao {
   @Override
   public void update(Account account) {
     updateInvoked = true;
+  }
+
+  @SuppressWarnings("OptionalAssignedToNull")
+  @Override
+  public Optional<Account> getOneByNumber(int number) {
+    return null;
   }
 
   public boolean isSaveInvoked() {

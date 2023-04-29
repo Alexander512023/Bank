@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.goryaninaa.web.bank.education.winter.repository.operation.OperationDao;
 import com.goryaninaa.web.bank.education.winter.repository.operation.OperationRepositoryPojo;
-import com.goryaninaa.web.bank.model.operation.Operation;
+import com.goryaninaa.web.bank.domain.model.operation.Operation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +27,7 @@ class OperationRepositoryPojoTest {
 
   @Test
   void findOperationsOfAccountShouldFindInDAO() {
-    transactionRepository.findOperationsOfAccount(1);
+    operationDAO.findOperationsOfAccount(1);
     assertTrue(((OperationDaoStub) operationDAO).isFindInvoked());
   }
 }

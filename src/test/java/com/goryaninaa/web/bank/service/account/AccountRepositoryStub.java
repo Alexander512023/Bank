@@ -1,6 +1,7 @@
 package com.goryaninaa.web.bank.service.account;
 
-import com.goryaninaa.web.bank.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.account.Account;
+import com.goryaninaa.web.bank.domain.service.account.AccountRepository;
 import java.util.Optional;
 
 public class AccountRepositoryStub implements AccountRepository {
@@ -17,8 +18,9 @@ public class AccountRepositoryStub implements AccountRepository {
   }
 
   @Override
-  public void save(Account account) {
+  public Account save(Account account) {
     saveInvoked = true;
+    return account;
   }
 
   @Override

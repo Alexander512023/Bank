@@ -1,8 +1,8 @@
 package com.goryaninaa.web.bank.dto;
 
-import com.goryaninaa.web.bank.model.account.Account;
-import com.goryaninaa.web.bank.model.account.AccountType;
-import com.goryaninaa.web.bank.model.account.State;
+import com.goryaninaa.web.bank.domain.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.account.AccountType;
+import com.goryaninaa.web.bank.domain.model.account.State;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
