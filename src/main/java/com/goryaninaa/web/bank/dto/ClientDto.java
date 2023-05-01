@@ -2,6 +2,7 @@ package com.goryaninaa.web.bank.dto;
 
 import com.goryaninaa.web.bank.domain.model.account.Account;
 import com.goryaninaa.web.bank.domain.model.client.Client;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -13,8 +14,8 @@ public class ClientDto { //NOPMD - suppressed DataClass - data transfer object
 
   private String passport;
   private String firstName;
-  private String secondName;
-  private String dateOfBirth;
+  private String lastName;
+  private LocalDate dateOfBirth;
   private List<Account> products;
 
   public ClientDto() {
@@ -29,7 +30,7 @@ public class ClientDto { //NOPMD - suppressed DataClass - data transfer object
   public ClientDto(final Client client) {
     this.passport = client.getPassport();
     this.firstName = client.getFirstName();
-    this.secondName = client.getSecondName();
+    this.lastName = client.getLastName();
     this.dateOfBirth = client.getDateOfBirth();
     this.products = client.getProducts();
   }
@@ -50,19 +51,19 @@ public class ClientDto { //NOPMD - suppressed DataClass - data transfer object
     this.firstName = firstName;
   }
 
-  public String getSecondName() {
-    return secondName;
+  public String getLastName() {
+    return lastName;
   }
 
-  public void setSecondName(final String secondName) {
-    this.secondName = secondName;
+  public void setLastName(final String lastName) {
+    this.lastName = lastName;
   }
 
-  public String getDateOfBirth() {
+  public LocalDate getDateOfBirth() {
     return dateOfBirth;
   }
 
-  public void setDateOfBirth(final String dateOfBirth) {
+  public void setDateOfBirth(final LocalDate dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 

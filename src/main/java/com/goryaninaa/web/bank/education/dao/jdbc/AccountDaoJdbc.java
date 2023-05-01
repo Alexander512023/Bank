@@ -5,7 +5,7 @@ import com.goryaninaa.web.bank.domain.model.account.AccountType;
 import com.goryaninaa.web.bank.domain.model.account.State;
 import com.goryaninaa.web.bank.domain.model.client.Client;
 import com.goryaninaa.web.bank.education.winter.repository.account.AccountDao;
-import com.goryaninaa.web.bank.exception.AccountRuntimeException;
+import com.goryaninaa.web.bank.exception.BankRuntimeException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -36,7 +36,7 @@ public class AccountDaoJdbc implements AccountDao {
       assignParametersToSaveSql(acc, pstmt);
       pstmt.executeUpdate();
     } catch (SQLException e) {
-      throw new AccountRuntimeException("Failed to save account to DB", e);
+      throw new BankRuntimeException("Failed to save account to DB", e);
     }
   }
 
@@ -50,7 +50,7 @@ public class AccountDaoJdbc implements AccountDao {
       assignParametersToUpdateSQL(acc, pstmt);
       pstmt.executeUpdate();
     } catch (SQLException e) {
-      throw new AccountRuntimeException("Failed to update account in DB", e);
+      throw new BankRuntimeException("Failed to update account in DB", e);
     }
   }
 
@@ -64,7 +64,7 @@ public class AccountDaoJdbc implements AccountDao {
         acc = createAccount(resultSet);
       }
     } catch (SQLException e) {
-      throw new AccountRuntimeException("Failed to find account in DB", e);
+      throw new BankRuntimeException("Failed to find account in DB", e);
     }
     return Optional.ofNullable(acc);
   }

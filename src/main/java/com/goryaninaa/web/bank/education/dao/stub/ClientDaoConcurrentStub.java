@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@SuppressWarnings("unused")
 public class ClientDaoConcurrentStub implements ClientDao {
 
   private static final AtomicInteger idCounter = new AtomicInteger(1);
@@ -15,8 +16,6 @@ public class ClientDaoConcurrentStub implements ClientDao {
 
   public ClientDaoConcurrentStub() {
     this.clients = new ArrayList<>();
-    Client client = new Client(1, "36 10 000001", "Alex", "Goryanin", "30.10.1989");
-    this.save(client);
   }
 
   public void save(Client client) {

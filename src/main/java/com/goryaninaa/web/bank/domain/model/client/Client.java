@@ -1,6 +1,7 @@
 package com.goryaninaa.web.bank.domain.model.client;
 
 import com.goryaninaa.web.bank.domain.model.account.Account;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,8 +14,8 @@ public class Client { //NOPMD - suppressed DataClass - entity class
   private int clientId;
   private String passport;
   private String firstName;
-  private String secondName;
-  private String dateOfBirth;
+  private String lastName;
+  private LocalDate dateOfBirth;
   private List<Account> products;
 
   public Client() {
@@ -31,16 +32,16 @@ public class Client { //NOPMD - suppressed DataClass - entity class
    * @param clientId - unique identifier
    * @param passport - client's passport requisites
    * @param firstName - client's first name
-   * @param secondName - client's second name
+   * @param lastName - client's last name
    * @param dateOfBirth - client's date of birth
    */
   public Client(final int clientId, final String passport, final String firstName,
-                final String secondName, final String dateOfBirth) {
+                final String lastName, final LocalDate dateOfBirth) {
     super();
     this.clientId = clientId;
     this.passport = passport;
     this.firstName = firstName;
-    this.secondName = secondName;
+    this.lastName = lastName;
     this.dateOfBirth = dateOfBirth;
   }
 
@@ -68,12 +69,12 @@ public class Client { //NOPMD - suppressed DataClass - entity class
     this.firstName = firstName;
   }
 
-  public String getSecondName() {
-    return secondName;
+  public String getLastName() {
+    return lastName;
   }
 
-  public void setSecondName(final String secondName) {
-    this.secondName = secondName;
+  public void setLastName(final String lastName) {
+    this.lastName = lastName;
   }
 
   public List<Account> getProducts() {
@@ -84,11 +85,11 @@ public class Client { //NOPMD - suppressed DataClass - entity class
     this.products = products;
   }
 
-  public String getDateOfBirth() {
+  public LocalDate getDateOfBirth() {
     return dateOfBirth;
   }
 
-  public void setDateOfBirth(final String dateOfBirth) {
+  public void setDateOfBirth(final LocalDate dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 

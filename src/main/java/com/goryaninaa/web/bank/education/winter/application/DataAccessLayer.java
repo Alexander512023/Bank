@@ -1,14 +1,15 @@
 package com.goryaninaa.web.bank.education.winter.application;
 
-import com.goryaninaa.web.bank.education.dao.jdbc.AccountDaoJdbc;
+import com.goryaninaa.web.bank.domain.model.account.Account;
 import com.goryaninaa.web.bank.education.dao.AccountDataAccessByNumberStrategy;
 import com.goryaninaa.web.bank.education.dao.AccountDataMediator;
-import com.goryaninaa.web.bank.education.dao.stub.ClientDaoConcurrentStub;
+import com.goryaninaa.web.bank.education.dao.jdbc.AccountDaoJdbc;
+import com.goryaninaa.web.bank.education.dao.jdbc.ClientDaoJdbc;
 import com.goryaninaa.web.bank.education.dao.stub.OperationDaoConcurrentStub;
 import com.goryaninaa.web.bank.education.third.party.NumberCapacityApplication;
 import com.goryaninaa.web.bank.education.winter.repository.account.AccountDao;
+import com.goryaninaa.web.bank.education.winter.repository.client.ClientDao;
 import com.goryaninaa.web.bank.education.winter.repository.number.capacity.NumberCapacity;
-import com.goryaninaa.web.bank.domain.model.account.Account;
 import com.goryaninaa.winter.cache.DataAccessStrategy;
 import java.util.Map;
 import java.util.Properties;
@@ -21,12 +22,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DataAccessLayer {
   private final AccountDao accountDao;
   private final AccountDataMediator accDataMediator;
-  private final ClientDaoConcurrentStub clientDao = new ClientDaoConcurrentStub();
+  private final ClientDao clientDao;
   private final NumberCapacity numberCapacity = new NumberCapacityApplication();
   private final OperationDaoConcurrentStub operationDao = new OperationDaoConcurrentStub();
 
   /* default */ DataAccessLayer(Properties properties) {
     accountDao = new AccountDaoJdbc(properties);
+    clientDao = new ClientDaoJdbc(properties);
     final DataAccessStrategy<Account> accAccessByNum =
         new AccountDataAccessByNumberStrategy(accountDao);
     final Map<String, DataAccessStrategy<Account>> accDataAccesses =
@@ -44,7 +46,7 @@ public class DataAccessLayer {
     return accDataMediator;
   }
 
-  /* default */ ClientDaoConcurrentStub getClientDao() {
+  /* default */ ClientDao getClientDao() {
     return clientDao;
   }
 
