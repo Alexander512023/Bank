@@ -215,8 +215,18 @@ public class Account implements Comparable<Account> { //NOPMD - suppressed DataC
 
   @Override
   public String toString() {
-    return "Product [id=" + accountId + ", transactionNumber=" + ", balance=" + balance
-        + ", number=" + number + ", state=" + state + ", openedAt=" + openedAt
-        + ", closedAt=" + closedAt + ", client=" + owner;
+    return "Account{" +
+        "accountId=" + accountId +
+        ", balance=" + balance +
+        ", number=" + number +
+        ", state=" + state +
+        ", openedAt=" + openedAt +
+        ", closedAt=" + closedAt +
+        ", owner=" + owner +
+        ", history=" + history +
+        ", type=" + type +
+        ", term=" + term +
+        ", prolongationDate=" + prolongationDate +
+        '}';
   }
 }

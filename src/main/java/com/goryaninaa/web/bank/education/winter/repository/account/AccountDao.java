@@ -14,4 +14,6 @@ public interface AccountDao {
   void update(Account account);
   Optional<Account> getOneByNumber(int number);
 
+  Optional<Account> findById(int accountId);
+
 }

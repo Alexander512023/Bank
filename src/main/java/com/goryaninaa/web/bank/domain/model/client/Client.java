@@ -115,4 +115,15 @@ public class Client { //NOPMD - suppressed DataClass - entity class
     return isEqual;
   }
 
+  @Override
+  public String toString() {
+    return "Client{" +
+        "clientId=" + clientId +
+        ", passport='" + passport + '\'' +
+        ", firstName='" + firstName + '\'' +
+        ", lastName='" + lastName + '\'' +
+        ", dateOfBirth=" + dateOfBirth +
+        ", products=" + products +
+        '}';
+  }
 }

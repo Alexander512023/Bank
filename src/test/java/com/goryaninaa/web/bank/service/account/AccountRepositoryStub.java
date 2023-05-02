@@ -35,6 +35,11 @@ public class AccountRepositoryStub implements AccountRepository {
   }
 
   @Override
+  public Optional<Account> findById(int accountId) {
+    return Optional.empty();
+  }
+
+  @Override
   public void update(Account account) {
     if (account.getNumber() == 1) {
       this.account1 = account;

@@ -15,17 +15,17 @@ import java.util.Optional;
 
 /**
  * This is simple implementation of {@link RequisiteServiceAccount} and
- * {@link RequisiteServiceOperation} interfaces. It operates {@link ClientRepositoryRequisite} in
+ * {@link RequisiteServiceOperation} interfaces. It operates {@link ClientRepository} in
  * order to get source of client's data.
  */
 public class RequisiteServicePojo implements RequisiteServiceAccount, RequisiteServiceOperation {
 
   private static final String MESSAGE = "There is no such client";
-  private final ClientRepositoryRequisite clientRepository;
+  private final ClientRepository clientRepository;
   private final OperationRepositoryRequisite operRepository;
 
   public RequisiteServicePojo(
-      final ClientRepositoryRequisite clientRepository,
+      final ClientRepository clientRepository,
       final OperationRepositoryRequisite operRepository) {
     this.clientRepository = clientRepository;
     this.operRepository = operRepository;

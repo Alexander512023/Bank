@@ -26,6 +26,11 @@ public class AccountDaoStub implements AccountDao {
     return Optional.of(account);
   }
 
+  @Override
+  public Optional<Account> findById(int accountId) {
+    return Optional.empty();
+  }
+
   public boolean isSaveInvoked() {
     return saveInvoked;
   }

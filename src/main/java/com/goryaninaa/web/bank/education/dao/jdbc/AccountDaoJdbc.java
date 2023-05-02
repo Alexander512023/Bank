@@ -6,6 +6,9 @@ import com.goryaninaa.web.bank.domain.model.account.State;
 import com.goryaninaa.web.bank.domain.model.client.Client;
 import com.goryaninaa.web.bank.education.winter.repository.account.AccountDao;
 import com.goryaninaa.web.bank.exception.BankRuntimeException;
+import com.goryaninaa.winter.logger.mech.Logger;
+import com.goryaninaa.winter.logger.mech.LoggingMech;
+import com.goryaninaa.winter.logger.mech.StackTraceString;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -21,6 +24,9 @@ public class AccountDaoJdbc implements AccountDao {
   private final String url;
   private final String userName;
   private final String password;
+  private final Logger log
+      = LoggingMech.getLogger(AccountDaoJdbc.this.getClass().getCanonicalName());
+
   public AccountDaoJdbc(final Properties properties) {
     url = properties.getProperty("db.url");
     userName = properties.getProperty("db.username");
@@ -36,6 +42,9 @@ public class AccountDaoJdbc implements AccountDao {
       assignParametersToSaveSql(acc, pstmt);
       pstmt.executeUpdate();
     } catch (SQLException e) {
+      if (log.isErrorEnabled()) {
+        log.error(StackTraceString.get(e));
+      }
       throw new BankRuntimeException("Failed to save account to DB", e);
     }
   }
@@ -50,6 +59,9 @@ public class AccountDaoJdbc implements AccountDao {
       assignParametersToUpdateSQL(acc, pstmt);
       pstmt.executeUpdate();
     } catch (SQLException e) {
+      if (log.isErrorEnabled()) {
+        log.error(StackTraceString.get(e));
+      }
       throw new BankRuntimeException("Failed to update account in DB", e);
     }
   }
@@ -64,7 +76,28 @@ public class AccountDaoJdbc implements AccountDao {
         acc = createAccount(resultSet);
       }
     } catch (SQLException e) {
-      throw new BankRuntimeException("Failed to find account in DB", e);
+      if (log.isErrorEnabled()) {
+        log.error(StackTraceString.get(e));
+      }
+      throw new BankRuntimeException("Failed to find account with number: " + number + " in DB", e);
+    }
+    return Optional.ofNullable(acc);
+  }
+
+  @Override
+  public Optional<Account> findById(int accountId) {
+    final String sql = "SELECT * FROM Accounts WHERE account_id=" + accountId;
+    Account acc = null;
+    try (Connection con = DriverManager.getConnection(url, userName, password);
+         ResultSet resultSet = con.prepareStatement(sql).executeQuery()){
+      if (resultSet.next()) {
+        acc = createAccount(resultSet);
+      }
+    } catch (SQLException e) {
+      if (log.isErrorEnabled()) {
+        log.error(StackTraceString.get(e));
+      }
+      throw new BankRuntimeException("Failed to find account with ID: " + accountId + " in DB", e);
     }
     return Optional.ofNullable(acc);
   }

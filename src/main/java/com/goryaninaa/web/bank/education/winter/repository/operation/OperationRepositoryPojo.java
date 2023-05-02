@@ -4,6 +4,7 @@ import com.goryaninaa.web.bank.domain.model.account.Account;
 import com.goryaninaa.web.bank.domain.model.operation.Operation;
 import com.goryaninaa.web.bank.domain.service.operation.OperationRepository;
 import com.goryaninaa.web.bank.domain.service.requisite.OperationRepositoryRequisite;
+import com.goryaninaa.web.bank.education.winter.repository.account.AccountDao;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,14 +15,25 @@ import java.util.Optional;
 public class OperationRepositoryPojo implements OperationRepository, OperationRepositoryRequisite {
 
   private final OperationDao operationDao;
+  private final AccountDao accDao;
 
-  public OperationRepositoryPojo(final OperationDao operationDao) {
+
+  public OperationRepositoryPojo(final OperationDao operationDao, AccountDao accDao) {
     this.operationDao = operationDao;
+    this.accDao = accDao;
   }
 
   @Override
-  public void save(final Operation transaction) {
-    operationDao.save(transaction);
+  public void save(final Operation operation) {
+    if (operation.getAccountFrom() != null) {
+      operation.setAccountFrom(
+          accDao.getOneByNumber(operation.getAccountFrom().getNumber()).orElseThrow());
+    }
+    if (operation.getAccountRecipient() != null) {
+      operation.setAccountRecipient(
+          accDao.getOneByNumber(operation.getAccountRecipient().getNumber()).orElseThrow());
+    }
+    operationDao.save(operation);
   }
 
   @Override
