@@ -5,11 +5,12 @@ import com.goryaninaa.web.bank.education.dao.AccountDataAccessByNumberStrategy;
 import com.goryaninaa.web.bank.education.dao.AccountDataMediator;
 import com.goryaninaa.web.bank.education.dao.jdbc.AccountDaoJdbc;
 import com.goryaninaa.web.bank.education.dao.jdbc.ClientDaoJdbc;
-import com.goryaninaa.web.bank.education.dao.stub.OperationDaoConcurrentStub;
+import com.goryaninaa.web.bank.education.dao.jdbc.OperationDaoJdbc;
 import com.goryaninaa.web.bank.education.third.party.NumberCapacityApplication;
 import com.goryaninaa.web.bank.education.winter.repository.account.AccountDao;
 import com.goryaninaa.web.bank.education.winter.repository.client.ClientDao;
 import com.goryaninaa.web.bank.education.winter.repository.number.capacity.NumberCapacity;
+import com.goryaninaa.web.bank.education.winter.repository.operation.OperationDao;
 import com.goryaninaa.winter.cache.DataAccessStrategy;
 import java.util.Map;
 import java.util.Properties;
@@ -24,11 +25,12 @@ public class DataAccessLayer {
   private final AccountDataMediator accDataMediator;
   private final ClientDao clientDao;
   private final NumberCapacity numberCapacity = new NumberCapacityApplication();
-  private final OperationDaoConcurrentStub operationDao = new OperationDaoConcurrentStub();
+  private final OperationDao operationDao;
 
   /* default */ DataAccessLayer(Properties properties) {
     accountDao = new AccountDaoJdbc(properties);
     clientDao = new ClientDaoJdbc(properties);
+    operationDao = new OperationDaoJdbc(properties);
     final DataAccessStrategy<Account> accAccessByNum =
         new AccountDataAccessByNumberStrategy(accountDao);
     final Map<String, DataAccessStrategy<Account>> accDataAccesses =
@@ -54,7 +56,7 @@ public class DataAccessLayer {
     return numberCapacity;
   }
 
-  /* default */ OperationDaoConcurrentStub getOperationDao() {
+  /* default */ OperationDao getOperationDao() {
     return operationDao;
   }
 }

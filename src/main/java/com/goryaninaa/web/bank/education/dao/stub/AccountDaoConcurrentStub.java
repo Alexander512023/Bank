@@ -33,6 +33,11 @@ public class AccountDaoConcurrentStub implements AccountDao {
   }
 
   @Override
+  public Optional<Account> findById(int accountId) {
+    return Optional.empty();
+  }
+
+  @Override
   public void update(Account account) {
     accounts.remove(account);
     accounts.add(account);

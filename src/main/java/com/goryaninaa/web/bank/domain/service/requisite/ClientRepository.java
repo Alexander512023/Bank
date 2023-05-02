@@ -7,8 +7,9 @@ import java.util.Optional;
  * This interface should be implemented to provide functionality of searching clients by passport
  * in order to enrich requisites.
  */
-public interface ClientRepositoryRequisite {
+public interface ClientRepository {
 
   Optional<Client> findByPassport(String passport);
 
+  Optional<Client> findById(int clientId);
 }

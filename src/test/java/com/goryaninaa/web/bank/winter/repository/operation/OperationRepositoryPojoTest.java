@@ -16,7 +16,7 @@ class OperationRepositoryPojoTest {
   @BeforeEach
   void init() {
     operationDAO = new OperationDaoStub();
-    transactionRepository = new OperationRepositoryPojo(operationDAO);
+    transactionRepository = new OperationRepositoryPojo(operationDAO, new AccountDaoStub());
   }
 
   @Test

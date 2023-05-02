@@ -21,9 +21,11 @@ public class ClientDaoJdbc implements ClientDao {
     userName = properties.getProperty("db.username");
     password = properties.getProperty("db.password");
   }
+
   @Override
   public Optional<Client> findByPassport(String passport) {
-    final String sql = "SELECT * FROM clients WHERE passport='" + passport + "'";
+    final String sql = "SELECT client_id, passport, date_of_birth, first_name, last_name " +
+        "FROM clients WHERE passport='" + passport + "'";
     Client client = null;
     try (Connection con = DriverManager.getConnection(url, userName, password);
         ResultSet resultSet = con.createStatement().executeQuery(sql)) {
@@ -39,7 +41,8 @@ public class ClientDaoJdbc implements ClientDao {
 
   @Override
   public Optional<Client> findById(int clientId) {
-    final String sql = "SELECT * FROM clients WHERE client_id=" + clientId;
+    final String sql = "SELECT client_id, passport, date_of_birth, first_name, last_name " +
+        "FROM clients WHERE client_id=" + clientId;
     Client client = null;
     try (Connection con = DriverManager.getConnection(url, userName, password);
          ResultSet resultSet = con.createStatement().executeQuery(sql)) {

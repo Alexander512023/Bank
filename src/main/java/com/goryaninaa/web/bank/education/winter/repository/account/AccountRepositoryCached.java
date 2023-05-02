@@ -20,7 +20,7 @@ public class AccountRepositoryCached implements AccountRepository {
 
   private final Cache<Account> cache;
   private final CacheKeyFactory cacheKeyFactory;
-  private final AccountDao accountDao;
+  private final AccountDao accDao;
   private final OperationDao operDao;
   private final ClientDao clientDao;
 
@@ -28,18 +28,18 @@ public class AccountRepositoryCached implements AccountRepository {
    * Create class with this constructor, which receives all fields.
    *
    * @param cache - cache, where all demanded data can be saved in RAM.
-   * @param accountDao - is {@link Account} data access object
+   * @param accDao - is {@link Account} data access object
    * @param operDao - repository, where operations are stored
    * @param cacheKeyFactory - factory class, that allows generation of keys, by which data could
    *      be extracted from cache
    */
-  public AccountRepositoryCached(final Cache<Account> cache, final AccountDao accountDao,
+  public AccountRepositoryCached(final Cache<Account> cache, final AccountDao accDao,
                                  final OperationDao operDao,
                                  final ClientDao clientDao,
                                  final CacheKeyFactory cacheKeyFactory) {
     this.cache = cache;
     this.cacheKeyFactory = cacheKeyFactory;
-    this.accountDao = accountDao;
+    this.accDao = accDao;
     this.operDao = operDao;
     this.clientDao = clientDao;
   }
@@ -48,9 +48,9 @@ public class AccountRepositoryCached implements AccountRepository {
   public Account save(final Account account) {
     final List<CacheKey> cacheKeys = cacheKeyFactory.generateAllCacheKeys(account);
     cache.remove(cacheKeys);
-    accountDao.save(account);
+    accDao.save(account);
     final int accNum = account.getNumber();
-    return accountDao.getOneByNumber(accNum).orElseThrow();
+    return accDao.getOneByNumber(accNum).orElseThrow();
   }
 
   @Override
@@ -63,17 +63,33 @@ public class AccountRepositoryCached implements AccountRepository {
   }
 
   @Override
+  public Optional<Account> findById(int accountId) {
+    return accDao.findById(accountId);
+  }
+
+  @Override
   public void update(final Account account) {
     final List<CacheKey> cacheKeys = cacheKeyFactory.generateAllCacheKeys(account);
     cache.remove(cacheKeys);
-    accountDao.update(account);
+    accDao.update(account);
   }
 
   private void enrichAccount(Account account) {
-    final List<Operation> transactions =
+    final List<Operation> operations =
         operDao.findOperationsOfAccount(account.getAccountId());
-    transactions.sort(Comparator.comparing(Operation::getHistoryNumber));
-    account.setHistory(transactions);
+    for (Operation oper : operations) {
+      oper.setAccount(accDao.findById(oper.getAccount().getAccountId()).orElseThrow());
+      if (oper.getAccountFrom() != null) {
+        oper.setAccountFrom(accDao.findById(oper.getAccountFrom().getAccountId()).orElseThrow());
+      }
+      if (oper.getAccountRecipient() != null) {
+        oper.setAccountRecipient(
+            accDao.findById(oper.getAccountRecipient().getAccountId()).orElseThrow());
+      }
+      oper.setClient(clientDao.findById(oper.getClient().getClientId()).orElseThrow());
+    }
+    operations.sort(Comparator.comparing(Operation::getHistoryNumber));
+    account.setHistory(operations);
     final Client owner = clientDao.findById(account.getOwner().getClientId()).orElseThrow();
     account.setOwner(owner);
   }

@@ -3,7 +3,7 @@ package com.goryaninaa.web.bank.service.requisite;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.goryaninaa.web.bank.domain.service.requisite.ClientRepositoryRequisite;
+import com.goryaninaa.web.bank.domain.service.requisite.ClientRepository;
 import com.goryaninaa.web.bank.domain.service.requisite.RequisiteServicePojo;
 import com.goryaninaa.web.bank.exception.AccountDepositException;
 import com.goryaninaa.web.bank.exception.AccountOpenException;
@@ -20,19 +20,19 @@ import org.junit.jupiter.api.Test;
 class RequisiteServicePojoTest {
 
   private static RequisiteServicePojo requisiteService;
-  private static ClientRepositoryRequisite clientRepositoryRequisite;
+  private static ClientRepository clientRepository;
 
   @BeforeEach
   void init() {
-    clientRepositoryRequisite = new ClientRepositoryRequisiteStub();
-    requisiteService = new RequisiteServicePojo(clientRepositoryRequisite,
+    clientRepository = new ClientRepositoryStub();
+    requisiteService = new RequisiteServicePojo(clientRepository,
         new OperationRepositoryRequisiteStub());
   }
 
   @Test
   void prepareAccountOpenRequisitesShouldEnrichWithClient() throws AccountOpenException {
     Client expected = new Client();
-    ((ClientRepositoryRequisiteStub) clientRepositoryRequisite).setClient(expected);
+    ((ClientRepositoryStub) clientRepository).setClient(expected);
     AccountOpenRequisites enrichedRequisites =
         requisiteService.prepareAccountOpenRequisites(RequisitesGenerator.defineOpenRequisites());
     Client actual = enrichedRequisites.getOperRequisites().getClient();
@@ -42,7 +42,7 @@ class RequisiteServicePojoTest {
   @Test
   void prepareAccountOpenOperationRequisitesShouldEnrichCorrectly() throws AccountOpenException {
     Client client = new Client();
-    ((ClientRepositoryRequisiteStub) clientRepositoryRequisite).setClient(client);
+    ((ClientRepositoryStub) clientRepository).setClient(client);
     Account account = new Account();
     OperationRequisites enrichedRequisites =
         requisiteService.prepareAccountOpenOperationRequisites(
@@ -59,7 +59,7 @@ class RequisiteServicePojoTest {
   @Test
   void prepareDepositOperationRequisitesShouldEnrichCorrectly() throws AccountDepositException {
     Client client = new Client();
-    ((ClientRepositoryRequisiteStub) clientRepositoryRequisite).setClient(client);
+    ((ClientRepositoryStub) clientRepository).setClient(client);
     Account account = new Account();
     OperationRequisites enrichedRequisites =
         requisiteService.prepareDepositOperationRequisites(
@@ -74,7 +74,7 @@ class RequisiteServicePojoTest {
   @Test
   void prepareWithdrawOperationRequisites() throws AccountWithdrawException {
     Client client = new Client();
-    ((ClientRepositoryRequisiteStub) clientRepositoryRequisite).setClient(client);
+    ((ClientRepositoryStub) clientRepository).setClient(client);
     Account account = new Account();
     OperationRequisites enrichedRequisites =
         requisiteService.prepareWithdrawOperationRequisites(

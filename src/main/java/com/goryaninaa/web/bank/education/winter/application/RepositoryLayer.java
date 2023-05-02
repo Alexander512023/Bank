@@ -23,14 +23,15 @@ public class RepositoryLayer {
 
   /* default */ RepositoryLayer(
       final CacheLayer cacheLayer, final DataAccessLayer dal) {
-    operationRep = new OperationRepositoryPojo(dal.getOperationDao());
+
     final KeyExtractStrategy accNumExtract = new AccountNumberExtractStrategy();
     final Map<String, KeyExtractStrategy> accKeyExtracts = new ConcurrentHashMap<>();
     accKeyExtracts.put(accNumExtract.getStrategyType(), accNumExtract);
     final CacheKeyFactory accCacheKeyFact = new CacheKeyFactoryStandard(accKeyExtracts);
+    clientRep = new ClientRepositoryPojo(dal.getClientDao());
+    operationRep = new OperationRepositoryPojo(dal.getOperationDao(), dal.getAccountDao());
     accountRep = new AccountRepositoryCached(cacheLayer.getAccountCache(),
         dal.getAccountDao(), dal.getOperationDao(), dal.getClientDao(), accCacheKeyFact);
-    clientRep = new ClientRepositoryPojo(dal.getClientDao());
     numberCapacityRep = new NumberCapacityRepositoryPojo(dal.getNumberCapacity());
   }
 

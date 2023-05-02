@@ -15,6 +15,8 @@ public interface AccountRepository {
 
   Optional<Account> findByNumber(int number);
 
+  Optional<Account> findById(int accountId);
+
   void update(Account account);
 
 }
