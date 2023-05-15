@@ -75,23 +75,32 @@ public class AccountRepositoryCached implements AccountRepository {
   }
 
   private void enrichAccount(Account account) {
-    final List<Operation> operations =
-        operDao.findOperationsOfAccount(account.getAccountId());
-    for (Operation oper : operations) {
-      oper.setAccount(accDao.findById(oper.getAccount().getAccountId()).orElseThrow());
-      if (oper.getAccountFrom() != null) {
-        oper.setAccountFrom(accDao.findById(oper.getAccountFrom().getAccountId()).orElseThrow());
-      }
-      if (oper.getAccountRecipient() != null) {
-        oper.setAccountRecipient(
-            accDao.findById(oper.getAccountRecipient().getAccountId()).orElseThrow());
-      }
-      oper.setClient(clientDao.findById(oper.getClient().getClientId()).orElseThrow());
-    }
-    operations.sort(Comparator.comparing(Operation::getHistoryNumber));
+    final List<Operation> operations = getOperationsOfAccount(account);
     account.setHistory(operations);
     final Client owner = clientDao.findById(account.getOwner().getClientId()).orElseThrow();
     account.setOwner(owner);
+  }
+
+  private List<Operation> getOperationsOfAccount(Account account) {
+    final List<Operation> operations =
+        operDao.findOperationsOfAccount(account.getAccountId());
+    for (Operation oper : operations) {
+      enrichOperation(oper);
+    }
+    operations.sort(Comparator.comparing(Operation::getHistoryNumber));
+    return operations;
+  }
+
+  private void enrichOperation(Operation oper) {
+    oper.setAccount(accDao.findById(oper.getAccount().getAccountId()).orElseThrow());
+    if (oper.getAccountFrom() != null) {
+      oper.setAccountFrom(accDao.findById(oper.getAccountFrom().getAccountId()).orElseThrow());
+    }
+    if (oper.getAccountRecipient() != null) {
+      oper.setAccountRecipient(
+          accDao.findById(oper.getAccountRecipient().getAccountId()).orElseThrow());
+    }
+    oper.setClient(clientDao.findById(oper.getClient().getClientId()).orElseThrow());
   }
 
 }

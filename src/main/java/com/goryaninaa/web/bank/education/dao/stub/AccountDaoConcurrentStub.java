@@ -9,6 +9,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
+/**
+ * Stub.
+ */
 @SuppressWarnings("unused")
 public class AccountDaoConcurrentStub implements AccountDao {
 

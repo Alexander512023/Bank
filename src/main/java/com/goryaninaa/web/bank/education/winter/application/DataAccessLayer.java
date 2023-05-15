@@ -12,6 +12,8 @@ import com.goryaninaa.web.bank.education.winter.repository.client.ClientDao;
 import com.goryaninaa.web.bank.education.winter.repository.number.capacity.NumberCapacity;
 import com.goryaninaa.web.bank.education.winter.repository.operation.OperationDao;
 import com.goryaninaa.winter.cache.DataAccessStrategy;
+import com.goryaninaa.winter.connection.pool.BasicConnectionPool;
+import com.goryaninaa.winter.connection.pool.ConnectionPool;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,9 +30,10 @@ public class DataAccessLayer {
   private final OperationDao operationDao;
 
   /* default */ DataAccessLayer(Properties properties) {
-    accountDao = new AccountDaoJdbc(properties);
-    clientDao = new ClientDaoJdbc(properties);
-    operationDao = new OperationDaoJdbc(properties);
+    ConnectionPool connectionPool = new BasicConnectionPool(properties);
+    accountDao = new AccountDaoJdbc(connectionPool);
+    clientDao = new ClientDaoJdbc(connectionPool);
+    operationDao = new OperationDaoJdbc(connectionPool);
     final DataAccessStrategy<Account> accAccessByNum =
         new AccountDataAccessByNumberStrategy(accountDao);
     final Map<String, DataAccessStrategy<Account>> accDataAccesses =

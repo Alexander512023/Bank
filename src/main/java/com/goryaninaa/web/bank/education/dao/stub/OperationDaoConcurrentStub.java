@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+/**
+ * Stub.
+ */
+@SuppressWarnings("unused")
 public class OperationDaoConcurrentStub implements OperationDao {
 
   private static final AtomicInteger idCounter = new AtomicInteger(1);

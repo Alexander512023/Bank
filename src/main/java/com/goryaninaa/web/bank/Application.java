@@ -1,5 +1,6 @@
 package com.goryaninaa.web.bank;
 
+import com.goryaninaa.web.bank.education.db.h2.DataBase;
 import com.goryaninaa.web.bank.education.winter.application.ApplicationAssembler;
 import com.goryaninaa.winter.logger.mech.LoggingMech;
 import com.goryaninaa.winter.web.http.server.assembler.HttpServer;
@@ -17,6 +18,7 @@ public class Application { //NOPMD - suppressed UseUtilityClass - class with mai
    * @throws IOException - if there will be some problems with starting server functionality
    */
   public static void main(final String[] args) throws IOException {
+    new DataBase().initialize();
     final Properties properties = new Properties();
     properties.load(Application.class.getResourceAsStream("/config.properties"));
     LoggingMech.getInstance().apply(properties);

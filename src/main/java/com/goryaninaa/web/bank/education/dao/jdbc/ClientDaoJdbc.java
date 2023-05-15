@@ -3,60 +3,68 @@ package com.goryaninaa.web.bank.education.dao.jdbc;
 import com.goryaninaa.web.bank.domain.model.client.Client;
 import com.goryaninaa.web.bank.education.winter.repository.client.ClientDao;
 import com.goryaninaa.web.bank.exception.BankRuntimeException;
+import com.goryaninaa.winter.connection.pool.ConnectionPool;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
-import java.util.Properties;
 
+/**
+ * This is simple JDBC implementation of {@link ClientDao} interface.
+ */
 public class ClientDaoJdbc implements ClientDao {
 
-  private final String url;
-  private final String userName;
-  private final String password;
+  private final ConnectionPool connectionPool;
 
-  public ClientDaoJdbc(final Properties properties) {
-    url = properties.getProperty("db.url");
-    userName = properties.getProperty("db.username");
-    password = properties.getProperty("db.password");
+  /**
+   * Default constructor for this DAO class.
+   *
+   * @param connectionPool - source of data base connections
+   */
+  public ClientDaoJdbc(final ConnectionPool connectionPool) {
+    this.connectionPool = connectionPool;
   }
 
   @Override
-  public Optional<Client> findByPassport(String passport) {
-    final String sql = "SELECT client_id, passport, date_of_birth, first_name, last_name " +
-        "FROM clients WHERE passport='" + passport + "'";
+  public Optional<Client> findByPassport(final String passport) {
+    final String sql = "SELECT client_id, passport, date_of_birth, first_name, last_name "
+        + "FROM clients WHERE passport='" + passport + "'";
     Client client = null;
-    try (Connection con = DriverManager.getConnection(url, userName, password);
-        ResultSet resultSet = con.createStatement().executeQuery(sql)) {
+    Connection con = connectionPool.getConnection();
+    try (ResultSet resultSet = con.createStatement().executeQuery(sql)) {
       if (resultSet.next()) {
         client = createClient(resultSet);
       }
+      return Optional.ofNullable(client);
     } catch (SQLException e) {
-      throw new BankRuntimeException("Failed to find client with passport: " + passport +
-          " in DB", e);
+      throw new BankRuntimeException("Failed to find client with passport: " + passport
+          + " in DB", e);
+    } finally {
+      connectionPool.releaseConnection(con);
     }
-    return Optional.ofNullable(client);
   }
+
 
   @Override
-  public Optional<Client> findById(int clientId) {
-    final String sql = "SELECT client_id, passport, date_of_birth, first_name, last_name " +
-        "FROM clients WHERE client_id=" + clientId;
+  public Optional<Client> findById(final int clientId) {
+    final String sql = "SELECT client_id, passport, date_of_birth, first_name, last_name "
+        + "FROM clients WHERE client_id=" + clientId;
     Client client = null;
-    try (Connection con = DriverManager.getConnection(url, userName, password);
-         ResultSet resultSet = con.createStatement().executeQuery(sql)) {
+    Connection con = connectionPool.getConnection();
+    try (ResultSet resultSet = con.createStatement().executeQuery(sql)) {
       if (resultSet.next()) {
         client = createClient(resultSet);
       }
+      return Optional.ofNullable(client);
     } catch (SQLException e) {
-      throw new BankRuntimeException("Failed to find client with client_id: " + clientId +
-          " in DB", e);
+      throw new BankRuntimeException("Failed to find client with client_id: " + clientId
+          + " in DB", e);
+    } finally {
+      connectionPool.releaseConnection(con);
     }
-    return Optional.ofNullable(client);
   }
 
-  private Client createClient(ResultSet resultSet) throws SQLException {
+  private Client createClient(final ResultSet resultSet) throws SQLException {
     Client client;
     client = new Client();
     client.setClientId(resultSet.getInt("client_id"));

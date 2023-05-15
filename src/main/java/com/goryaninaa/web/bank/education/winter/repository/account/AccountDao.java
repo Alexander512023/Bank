@@ -12,6 +12,7 @@ public interface AccountDao {
   void save(Account account);
 
   void update(Account account);
+
   Optional<Account> getOneByNumber(int number);
 
   Optional<Account> findById(int accountId);
