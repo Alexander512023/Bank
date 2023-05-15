@@ -1,8 +1,8 @@
 package com.goryaninaa.web.bank.domain.model.account;
 
+import com.goryaninaa.web.bank.domain.model.client.Client;
 import com.goryaninaa.web.bank.domain.model.operation.Operation;
 import com.goryaninaa.web.bank.exception.AccountWithdrawException;
-import com.goryaninaa.web.bank.domain.model.client.Client;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -215,18 +215,18 @@ public class Account implements Comparable<Account> { //NOPMD - suppressed DataC
 
   @Override
   public String toString() {
-    return "Account{" +
-        "accountId=" + accountId +
-        ", balance=" + balance +
-        ", number=" + number +
-        ", state=" + state +
-        ", openedAt=" + openedAt +
-        ", closedAt=" + closedAt +
-        ", owner=" + owner +
-        ", history=" + history +
-        ", type=" + type +
-        ", term=" + term +
-        ", prolongationDate=" + prolongationDate +
-        '}';
+    return "Account{"
+        + "accountId=" + accountId
+        + ", balance=" + balance
+        + ", number=" + number
+        + ", state=" + state
+        + ", openedAt=" + openedAt
+        + ", closedAt=" + closedAt
+        + ", owner=" + owner
+        + ", history=" + history
+        + ", type=" + type
+        + ", term=" + term
+        + ", prolongationDate=" + prolongationDate
+        + '}';
   }
 }

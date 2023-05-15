@@ -215,19 +215,19 @@ public class Operation implements Comparable<Operation> { //NOPMD - suppressed D
 
   @Override
   public String toString() {
-    return "Operation{" +
-        "operationId=" + operationId +
-        ", amount=" + amount +
-        ", balanceBefore=" + balanceBefore +
-        ", balanceAfter=" + balanceAfter +
-        ", performedAt=" + performedAt +
-        ", account=" + account +
-        ", accountFrom=" + accountFrom +
-        ", accountRecipient=" + accountRecipient +
-        ", client=" + client +
-        ", service=" + service +
-        ", operationType=" + operationType +
-        ", historyNumber=" + historyNumber +
-        '}';
+    return "Operation{"
+        + "operationId=" + operationId
+        + ", amount=" + amount
+        + ", balanceBefore=" + balanceBefore
+        + ", balanceAfter=" + balanceAfter
+        + ", performedAt=" + performedAt
+        + ", account=" + account
+        + ", accountFrom=" + accountFrom
+        + ", accountRecipient=" + accountRecipient
+        + ", client=" + client
+        + ", service=" + service
+        + ", operationType=" + operationType
+        + ", historyNumber=" + historyNumber
+        + '}';
   }
 }
