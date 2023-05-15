@@ -1,7 +1,7 @@
 package com.goryaninaa.web.bank.domain.service.account;
 
-import com.goryaninaa.web.bank.exception.AccountOpenException;
 import com.goryaninaa.web.bank.domain.model.account.AccountOpenRequisites;
+import com.goryaninaa.web.bank.exception.AccountOpenException;
 
 /**
  * This interface provides functionality which is needed by {@link AccountServicePojo} to

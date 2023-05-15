@@ -1,12 +1,12 @@
 package com.goryaninaa.web.bank.domain.service.account;
 
 import com.goryaninaa.web.bank.domain.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.account.AccountOpenRequisites;
 import com.goryaninaa.web.bank.domain.model.operation.OperationRequisites;
 import com.goryaninaa.web.bank.exception.AccountDepositException;
 import com.goryaninaa.web.bank.exception.AccountFindException;
 import com.goryaninaa.web.bank.exception.AccountOpenException;
 import com.goryaninaa.web.bank.exception.AccountWithdrawException;
-import com.goryaninaa.web.bank.domain.model.account.AccountOpenRequisites;
 
 /**
  * This interface is important part of domain logic. It declares main actions, which can be

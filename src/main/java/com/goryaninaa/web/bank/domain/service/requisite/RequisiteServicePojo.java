@@ -1,16 +1,16 @@
 package com.goryaninaa.web.bank.domain.service.requisite;
 
 import com.goryaninaa.web.bank.domain.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.account.AccountOpenRequisites;
+import com.goryaninaa.web.bank.domain.model.client.Client;
 import com.goryaninaa.web.bank.domain.model.operation.Operation;
 import com.goryaninaa.web.bank.domain.model.operation.OperationRequisites;
 import com.goryaninaa.web.bank.domain.model.operation.OperationType;
+import com.goryaninaa.web.bank.domain.service.account.RequisiteServiceAccount;
+import com.goryaninaa.web.bank.domain.service.operation.RequisiteServiceOperation;
 import com.goryaninaa.web.bank.exception.AccountDepositException;
 import com.goryaninaa.web.bank.exception.AccountOpenException;
 import com.goryaninaa.web.bank.exception.AccountWithdrawException;
-import com.goryaninaa.web.bank.domain.model.account.AccountOpenRequisites;
-import com.goryaninaa.web.bank.domain.model.client.Client;
-import com.goryaninaa.web.bank.domain.service.account.RequisiteServiceAccount;
-import com.goryaninaa.web.bank.domain.service.operation.RequisiteServiceOperation;
 import java.util.Optional;
 
 /**
@@ -104,7 +104,8 @@ public class RequisiteServicePojo implements RequisiteServiceAccount, RequisiteS
       final int historyNum = currLastOp.get().getHistoryNumber() + 1;
       requisites.enrich(account, client.get(), OperationType.WITHDRAW, historyNum);
     } else if (client.isPresent()) {
-      throw new AccountWithdrawException("Zero operation on this account", new IllegalArgumentException());
+      throw new AccountWithdrawException("Zero operation on this account",
+          new IllegalArgumentException());
     } else {
       throw new AccountWithdrawException(MESSAGE, new IllegalArgumentException());
     }

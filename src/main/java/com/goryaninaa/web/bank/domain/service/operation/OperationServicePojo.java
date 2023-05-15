@@ -1,13 +1,13 @@
 package com.goryaninaa.web.bank.domain.service.operation;
 
 import com.goryaninaa.web.bank.domain.model.account.Account;
+import com.goryaninaa.web.bank.domain.model.account.AccountOpenRequisites;
 import com.goryaninaa.web.bank.domain.model.operation.Operation;
 import com.goryaninaa.web.bank.domain.model.operation.OperationRequisites;
+import com.goryaninaa.web.bank.domain.service.account.RequisiteServiceAccount;
 import com.goryaninaa.web.bank.exception.AccountDepositException;
 import com.goryaninaa.web.bank.exception.AccountOpenException;
 import com.goryaninaa.web.bank.exception.AccountWithdrawException;
-import com.goryaninaa.web.bank.domain.model.account.AccountOpenRequisites;
-import com.goryaninaa.web.bank.domain.service.account.RequisiteServiceAccount;
 
 /**
  * This is simple implementation of {@link OperationService} interface. It operates
