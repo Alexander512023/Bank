@@ -5,22 +5,23 @@ import com.goryaninaa.web.bank.domain.model.account.AccountOpenRequisites;
 import com.goryaninaa.web.bank.domain.model.operation.Operation;
 import com.goryaninaa.web.bank.domain.model.operation.OperationRequisites;
 import com.goryaninaa.web.bank.domain.service.account.AccountService;
+import com.goryaninaa.web.bank.domain.service.account.authorization.AccountAuthorizationService;
 import com.goryaninaa.web.bank.dto.AccountDto;
 import com.goryaninaa.web.bank.dto.AccountOpenRequisitesDto;
 import com.goryaninaa.web.bank.dto.ClientDto;
 import com.goryaninaa.web.bank.dto.ErrorDto;
 import com.goryaninaa.web.bank.dto.OperationDto;
+import com.goryaninaa.web.bank.exception.AuthorizationException;
 import com.goryaninaa.winter.logger.mech.Logger;
 import com.goryaninaa.winter.logger.mech.LoggingMech;
 import com.goryaninaa.winter.logger.mech.StackTraceString;
-import com.goryaninaa.winter.web.http.server.Controller;
-import com.goryaninaa.winter.web.http.server.HttpResponseCode;
-import com.goryaninaa.winter.web.http.server.Response;
 import com.goryaninaa.winter.web.http.server.annotation.HttpMethod;
 import com.goryaninaa.winter.web.http.server.annotation.Mapping;
 import com.goryaninaa.winter.web.http.server.annotation.RequestMapping;
-import com.goryaninaa.winter.web.http.server.entity.HttpRequest;
 import com.goryaninaa.winter.web.http.server.entity.HttpResponse;
+import com.goryaninaa.winter.web.http.server.entity.Request;
+import com.goryaninaa.winter.web.http.server.request.handler.HttpResponseCode;
+import com.goryaninaa.winter.web.http.server.request.handler.manager.Controller;
 import com.goryaninaa.winter.web.http.server.util.Synchronizer;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -42,13 +43,16 @@ public class AccountController implements Controller {
 
   private final AccountService accountService;
   private final Synchronizer<Integer> accSynchronizer;
+  private final AccountAuthorizationService accAuthorizServ;
   private static final Logger LOG =
       LoggingMech.getLogger(AccountController.class.getCanonicalName());
 
   public AccountController(
-      final AccountService accountService, final Synchronizer<Integer> accSynchronizer) {
+      final AccountService accountService, final Synchronizer<Integer> accSynchronizer,
+      AccountAuthorizationService accAuthorizServ) {
     this.accountService = accountService;
     this.accSynchronizer = accSynchronizer;
+    this.accAuthorizServ = accAuthorizServ;
   }
 
   /**
@@ -57,15 +61,16 @@ public class AccountController implements Controller {
    * after further handling. If handling fails for some reason, response with code 404 or 500 and
    * error text in it will be sent.
    *
-   * @param request - {@link HttpRequest} is an object representation of incoming request
+   * @param request - {@link Request} is an object representation of incoming request
    * @param requisitesDto - requisites object that was sent by client's side and deserialized from
    *                      JSON
    * @return - HTTP response that will be sent to client's side
    */
   @Mapping(value = "/open", httpMethod = HttpMethod.POST)
-  public Response open(final HttpRequest request, final AccountOpenRequisitesDto requisitesDto) {
+  public HttpResponse open(final Request request, final AccountOpenRequisitesDto requisitesDto) {
     final AccountOpenRequisites accountRequisites = requisitesDto.extractAccountRequisites();
     try {
+      accAuthorizServ.authorizeOpen(request.getAuth(), accountRequisites);
       accountService.open(accountRequisites);
       return new HttpResponse(HttpResponseCode.OK); //NOPMD - suppressed OnlyOneReturn - errors
       // turned to objects on this level
@@ -82,15 +87,16 @@ public class AccountController implements Controller {
    * after further handling. If handling fails for some reason, response with code 404 or 500 and
    * error text in it will be sent.
    *
-   * @param request - {@link HttpRequest} is an object representation of incoming request
+   * @param request - {@link Request} is an object representation of incoming request
    * @param operationDto - requisites object that was sent by client's side and deserialized from
    *                     JSON
    * @return - HTTP response that will be sent to client's side
    */
   @Mapping(value = "/deposit", httpMethod = HttpMethod.POST)
-  public Response deposit(final HttpRequest request, final OperationDto operationDto) {
+  public HttpResponse deposit(final Request request, final OperationDto operationDto) {
     final OperationRequisites requisites = operationDto.extractOperationRequisites();
     try {
+      accAuthorizServ.authorizeDeposit(request.getAuth(), requisites);
       synchronized (accSynchronizer.getLock(requisites.getAccountRecipient().getNumber())) {
         accountService.deposit(requisites);
         return new HttpResponse(HttpResponseCode.OK); //NOPMD - suppressed OnlyOneReturn - errors
@@ -109,15 +115,16 @@ public class AccountController implements Controller {
    * after further handling. If handling fails for some reason, response with code 404 or 500 and
    * error text in it will be sent.
    *
-   * @param request - {@link HttpRequest} is an object representation of incoming request
+   * @param request - {@link Request} is an object representation of incoming request
    * @param operationDto - requisites object that was sent by client's side and deserialized from
    *                     JSON
    * @return - HTTP response that will be sent to client's side
    */
   @Mapping(value = "/withdraw", httpMethod = HttpMethod.POST)
-  public Response withdraw(final HttpRequest request, final OperationDto operationDto) {
+  public HttpResponse withdraw(final Request request, final OperationDto operationDto) {
     final OperationRequisites requisites = operationDto.extractOperationRequisites();
     try {
+      accAuthorizServ.authorizeWithdraw(request.getAuth(), requisites);
       synchronized (accSynchronizer.getLock(requisites.getAccountFrom().getNumber())) {
         accountService.withdraw(requisites);
         return new HttpResponse(HttpResponseCode.OK); //NOPMD - suppressed OnlyOneReturn - errors
@@ -136,15 +143,16 @@ public class AccountController implements Controller {
    * after further handling. If handling fails for some reason, response with code 404 or 500 and
    * error text in it will be sent.
    *
-   * @param request - {@link HttpRequest} is an object representation of incoming request
+   * @param request - {@link Request} is an object representation of incoming request
    * @param operationDto - requisites object that was sent by client's side and deserialized from
    *                     JSON
    * @return - HTTP response that will be sent to client's side
    */
   @Mapping(value = "/transfer", httpMethod = HttpMethod.POST)
-  public Response transfer(final HttpRequest request, final OperationDto operationDto) {
+  public HttpResponse transfer(final Request request, final OperationDto operationDto) {
     final OperationRequisites requisites = operationDto.extractOperationRequisites();
     try {
+      accAuthorizServ.authorizeTransfer(request.getAuth(), requisites);
       synchronized (accSynchronizer.getLock(requisites.getAccountFrom().getNumber())) {
         accountService.transfer(requisites);
         return new HttpResponse(HttpResponseCode.OK); //NOPMD - suppressed OnlyOneReturn - errors
@@ -163,14 +171,15 @@ public class AccountController implements Controller {
    * after further handling. If handling fails for some reason, response with code 404 or 500 and
    * error text in it will be sent.
    *
-   * @param request - {@link HttpRequest} is an object representation of incoming request
+   * @param request - {@link Request} is an object representation of incoming request
    * @return - HTTP response that will be sent to client's side
    */
   @Mapping(value = "/view", httpMethod = HttpMethod.GET)
-  public Response view(final HttpRequest request) {
-    final Optional<String> accNumString = request.getParameterByName("number");
+  public HttpResponse view(final Request request) {
+    final Optional<String> accNumString = request.getHttpRequest().getParameterByName("number");
     try {
       if (accNumString.isPresent()) {
+        accAuthorizServ.authorizeView(request.getAuth(), accNumString.get());
         synchronized (accSynchronizer.getLock(Integer.parseInt(accNumString.get()))) {
           final Account account =
               accountService.findByNumber(Integer.parseInt(accNumString.get()));
@@ -189,15 +198,19 @@ public class AccountController implements Controller {
   }
 
   private HttpResponse prepareResponseOnException(final Throwable throwable) {
+    HttpResponse httpResponse = new HttpResponse(HttpResponseCode.INTERNALSERVERERROR,
+        new ErrorDto(500, throwable.getMessage()));
     final Throwable cause = throwable.getCause();
     if (cause instanceof IllegalArgumentException) {
-      final ErrorDto errorDto = new ErrorDto(404, throwable.getMessage());
-      return new HttpResponse(HttpResponseCode.NOTFOUND, errorDto); //NOPMD - suppressed
+      httpResponse = new HttpResponse(HttpResponseCode.NOTFOUND,
+          new ErrorDto(404, throwable.getMessage())); //NOPMD - suppressed
       // OnlyOneReturn - errors turned to objects on this level
-    } else {
-      final ErrorDto errorDto = new ErrorDto(500, throwable.getMessage());
-      return new HttpResponse(HttpResponseCode.INTERNALSERVERERROR, errorDto);
     }
+    if (throwable instanceof AuthorizationException) {
+      httpResponse = new HttpResponse(HttpResponseCode.UNAUTHORIZED,
+          new ErrorDto(401, throwable.getMessage()));
+    }
+    return httpResponse;
   }
 
   private AccountDto prepareAccountDto(final Account account) {

@@ -1,6 +1,6 @@
 package com.goryaninaa.web.bank.education.winter.application;
 
-import com.goryaninaa.winter.web.http.server.Controller;
+import com.goryaninaa.winter.web.http.server.request.handler.manager.Controller;
 import java.util.List;
 import java.util.Properties;
 

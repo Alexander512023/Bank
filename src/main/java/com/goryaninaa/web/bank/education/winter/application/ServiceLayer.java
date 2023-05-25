@@ -2,6 +2,8 @@ package com.goryaninaa.web.bank.education.winter.application;
 
 import com.goryaninaa.web.bank.domain.service.account.AccountService;
 import com.goryaninaa.web.bank.domain.service.account.AccountServicePojo;
+import com.goryaninaa.web.bank.domain.service.account.authorization.AccountAuthorizationService;
+import com.goryaninaa.web.bank.domain.service.account.authorization.AccountAuthorizationServiceBasic;
 import com.goryaninaa.web.bank.domain.service.operation.OperationService;
 import com.goryaninaa.web.bank.domain.service.operation.OperationServicePojo;
 import com.goryaninaa.web.bank.domain.service.requisite.RequisiteServicePojo;
@@ -13,6 +15,7 @@ import com.goryaninaa.web.bank.education.winter.repository.operation.OperationRe
 @SuppressWarnings("unused")
 public class ServiceLayer {
   private final AccountService accountService;
+  private final AccountAuthorizationService accAuthorizServ;
   private final OperationService operationService;
   private final RequisiteServicePojo requisiteService;
 
@@ -22,6 +25,8 @@ public class ServiceLayer {
     operationService = new OperationServicePojo(requisiteService, operRep);
     accountService = new AccountServicePojo(repLayer.getAccountRep(), operationService,
         repLayer.getNumberCapacityRep(), requisiteService);
+    accAuthorizServ = new AccountAuthorizationServiceBasic(
+        repLayer.getClientRep(), repLayer.getAccountRep());
   }
 
   /* default */ AccountService getAccountService() {
@@ -34,5 +39,9 @@ public class ServiceLayer {
 
   /* default */ RequisiteServicePojo getRequisiteService() {
     return requisiteService;
+  }
+
+  /* default */ AccountAuthorizationService getAccAuthorizServ() {
+    return accAuthorizServ;
   }
 }
